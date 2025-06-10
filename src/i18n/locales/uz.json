@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "about": "Biz haqimizda",
+    "projects": "Loyihalar",
+    "partners": "Hamkorlar",
+    "contacts": "Aloqa"
+  },
+  "home": {
+    "hero": {
+      "title": "INNOVATSION TRANSPORT",
+      "subtitle": "Ilg'or tadqiqotlar va innovatsiyalar orqali logistika va transportning kelajagini yaratish",
+      "exploreProjects": "Loyihalarni o'rganish",
+      "watchVideo": "Video ko'rish"
+    },
+    "stats": {
+      "activeProjects": "Faol loyihalar",
+      "researchPapers": "Tadqiqot ishlari",
+      "industryPartners": "Sanoat hamkorlari",
+      "yearsOfInnovation": "Innovatsiya yillari"
+    },
+    "features": {
+      "title": "Bizning tadqiqot sohalari",
+      "subtitle": "Transport va logistika texnologiyalarining turli sohalarida innovatsiyalarni rivojlantirish",
+      "smartLogistics": {
+        "title": "Aqlli logistika",
+        "description": "AI asosidagi ilg'or logistika optimallashtirish va marshrut rejalashtirish tizimlari."
+      },
+      "sustainableTransport": {
+        "title": "Barqaror transport",
+        "description": "Yashil kelajak uchun ekologik toza transport yechimlari."
+      },
+      "innovationResearch": {
+        "title": "Innovatsion tadqiqotlar",
+        "description": "Avtonom transport vositalari va aqlli infratuzilma bo'yicha ilg'or tadqiqotlar."
+      }
+    },
+    "newFeatures": {
+      "title": "Nima uchun bizni tanlaysiz",
+      "subtitle": "Bizni transport innovatsiyalari bo'yicha yetakchi tadqiqot markazi qiladigan narsalarni bilib oling",
+      "expertise": {
+        "title": "Jahon darajasidagi tajriba",
+        "description": "Bizning jamoamiz o'nlab yillik birgalikdagi tajribaga ega taniqli tadqiqotchilar va sanoat ekspertlaridan iborat."
+      },
+      "technology": {
+        "title": "Ilg'or texnologiyalar",
+        "description": "Biz tadqiqotlarimizda AI, IoT va mashinani o'rganish kabi eng so'nggi texnologiyalardan foydalanamiz."
+      },
+      "collaboration": {
+        "title": "Global hamkorlik",
+        "description": "Biz innovatsiyalarni rivojlantirish uchun butun dunyo bo'ylab yetakchi muassasalar va kompaniyalar bilan hamkorlik qilamiz."
+      },
+      "impact": {
+        "title": "Haqiqiy ta'sir",
+        "description": "Bizning tadqiqotlarimiz global miqyosda haqiqiy transport muammolarini hal qilishga bevosita hissa qo'shadi."
+      }
+    },
+    "testimonials": {
+      "title": "Hamkorlarimiz nima deyishadi",
+      "subtitle": "Biz bilan hamkorlik qilgan sanoat rahbarlaridan eshiting",
+      "testimonial1": {
+        "text": "INNOVATSION TRANSPORT bilan ishlash bizning logistika operatsiyalarimizni inqilob qildi. Ularning AI asosidagi yechimlari samaradorlikni oshirish bilan birga xarajatlarimizni 30% ga kamaytirdi.",
+        "author": "Sara Chen",
+        "position": "Bosh direktor, Global Logistics Corp"
+      },
+      "testimonial2": {
+        "text": "Ushbu markaz bilan tadqiqot hamkorligi bizning barqaror transport tashabbuslarimizni rivojlantirishda muhim rol o'ynadi. Haqiqatan ham innovatsion ish.",
+        "author": "Dr. Mixael Rodriges",
+        "position": "Innovatsiyalar direktori, EcoTransport"
+      },
+      "testimonial3": {
+        "text": "Ularning avtonom tizimlardagi tajribasi bizning aqlli shahar loyihamizni 18 oyga tezlashtirdi. Ajoyib tadqiqot sifati va amaliy qo'llanmalar.",
+        "author": "Anna Petrova",
+        "position": "Aqlli shahar loyihasi menejeri"
+      }
+    },
+    "newsletter": {
+      "title": "Xabardor bo'ling",
+      "subtitle": "Eng so'nggi tadqiqot g'oyalari va sanoat yangilanishlari uchun bizning axborot byulletenimizga obuna bo'ling",
+      "placeholder": "Email manzilingizni kiriting",
+      "subscribe": "Hozir obuna bo'ling",
+      "privacy": "Biz sizning maxfiyligingizni hurmat qilamiz va hech qachon ma'lumotlaringizni baham ko'rmaymiz."
+    },
+    "cta": {
+      "title": "Transportni o'zgartirishga tayyormisiz?",
+      "subtitle": "Logistika va transport texnologiyalarining kelajagini shakllantirishda bizga qo'shiling",
+      "getInTouch": "Bog'lanish",
+      "learnMore": "Ko'proq bilish"
+    }
+  },
+  "footer": {
+    "description": "Barqaror kelajak uchun logistika va transport texnologiyalarida innovatsiyalarni rivojlantiruvchi yetakchi ilmiy tadqiqot markazi.",
+    "quickLinks": "Tezkor havolalar",
+    "contactInfo": "Aloqa ma'lumotlari",
+    "address": "Innovatsiya ko'chasi 123, Tex Siti, TS 12345",
+    "phone": "+1 (555) 123-4567",
+    "email": "info@innovativetransport.com",
+    "copyright": "© 2024 INNOVATSION TRANSPORT Tadqiqot markazi. Barcha huquqlar himoyalangan."
+  }
+}
