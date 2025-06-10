@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -10,6 +10,7 @@ const isMenuOpen = ref(false)
 const isScrolled = ref(true)
 const isLanguageMenuOpen = ref(false)
 
+const $t = t
 const navigation = [
   { name: 'nav.home', href: '/' },
   { name: 'nav.about', href: '/about' },
@@ -25,7 +26,7 @@ const languages = [
 ]
 
 const handleScroll = () => {
-  isScrolled.value = ture
+  isScrolled.value = true
 }
 
 const toggleMenu = () => {
