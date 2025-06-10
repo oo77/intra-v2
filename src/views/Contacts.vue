@@ -10,7 +10,7 @@ import {
   GlobeAltIcon
 } from '@heroicons/vue/24/outline'
 
-const { t } = useI18n()
+const {t}= useI18n()
 
 const form = ref({
   name: '',
@@ -63,7 +63,7 @@ const contactInfo = ref([
   {
     icon: EnvelopeIcon,
     title: 'Email Us',
-    content: t('footer.email'),
+    content: 'info@innovativetransport.com',
     link: 'mailto:info@innovativetransport.com'
   },
   {
@@ -130,7 +130,7 @@ const toggleFaq = (index) => {
     <section class="bg-gradient-to-r from-primary-600 to-secondary-600 py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center text-white" data-aos="fade-up">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">{{ $t('nav.contacts') }}</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">{{ t('nav.contacts') }}</h1>
           <p class="text-xl max-w-3xl mx-auto">
             Get in touch with our team to discuss collaborations, partnerships, or learn more about our research
           </p>
