@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { 
@@ -11,7 +11,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()
-
+const $t = t
 const form = ref({
   name: '',
   email: '',

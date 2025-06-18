@@ -1,8 +1,9 @@
-<script setup lang="ts">
+<script setup>
 import { useI18n } from 'vue-i18n'
 import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()
+const $t = t
 </script>
 
 <template>

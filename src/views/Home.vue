@@ -1,10 +1,8 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { 
-  TruckIcon, 
-  RocketLaunchIcon, 
+import {
   GlobeAltIcon, 
   ChartBarIcon,
   ArrowRightIcon,
@@ -13,7 +11,6 @@ import {
   CheckCircleIcon,
   LightBulbIcon,
   CogIcon,
-  UsersIcon,
   ArrowTrendingUpIcon,
   AcademicCapIcon,
   BuildingOfficeIcon,
@@ -22,7 +19,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()
-
+const $t = t
 const stats = ref([
   { name: 'home.stats.activeProjects', value: '15+', icon: ChartBarIcon, color: 'from-blue-500 to-cyan-500' },
   { name: 'home.stats.researchPapers', value: '50+', icon: DocumentTextIcon, color: 'from-green-500 to-emerald-500' },

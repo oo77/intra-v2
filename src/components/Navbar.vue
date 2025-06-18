@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon, LanguageIcon } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
 const { t, locale } = useI18n()
+const $t = t
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const isLanguageMenuOpen = ref(false)
@@ -40,7 +41,7 @@ const toggleLanguageMenu = () => {
   isLanguageMenuOpen.value = !isLanguageMenuOpen.value
 }
 
-const changeLanguage = (langCode: string) => {
+const changeLanguage = (langCode) => {
   locale.value = langCode
   isLanguageMenuOpen.value = false
 }
