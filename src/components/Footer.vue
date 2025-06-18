@@ -67,7 +67,7 @@ const $t = t
             </div>
             <div class="flex items-center space-x-3">
               <EnvelopeIcon class="h-5 w-5 text-pink-400 flex-shrink-0" />
-              <span class="text-gray-300 text-sm">{{ $t('footer.email') }}</span>
+              <span class="text-gray-300 text-sm">ilesaliev@mail.ru</span>
             </div>
           </div>
         </div>
