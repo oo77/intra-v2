@@ -1,4 +1,4 @@
-<script setup >
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { 
@@ -10,7 +10,7 @@ import {
   GlobeAltIcon
 } from '@heroicons/vue/24/outline'
 
-const {t}= useI18n()
+const { t } = useI18n()
 
 const form = ref({
   name: '',
@@ -50,26 +50,26 @@ const submitForm = async () => {
 const contactInfo = ref([
   {
     icon: MapPinIcon,
-    title: 'Visit Us',
-    content: t('footer.address'),
+    title: 'Наш адрес',
+    content: 'Ташкентский государственный транспортный университет, Узбекистан',
     link: 'https://maps.google.com'
   },
   {
     icon: PhoneIcon,
-    title: 'Call Us',
-    content: t('footer.phone'),
-    link: 'tel:+15551234567'
+    title: 'Телефон директора',
+    content: '+998 99 806-41-99',
+    link: 'tel:+998998064199'
   },
   {
     icon: EnvelopeIcon,
-    title: 'Email Us',
-    content: 'info@innovativetransport.com',
-    link: 'mailto:info@innovativetransport.com'
+    title: 'Электронная почта',
+    content: 'ilesaliev@mail.ru',
+    link: 'mailto:ilesaliev@mail.ru'
   },
   {
     icon: ClockIcon,
-    title: 'Office Hours',
-    content: 'Mon-Fri: 9:00 AM - 6:00 PM',
+    title: 'Часы работы',
+    content: 'Пн-Пт: 9:00 - 18:00',
     link: null
   }
 ])
@@ -77,43 +77,43 @@ const contactInfo = ref([
 const departments = ref([
   {
     icon: BuildingOfficeIcon,
-    name: 'Research Department',
-    email: 'research@innovativetransport.com',
-    phone: '+1 (555) 123-4568',
-    description: 'For research collaborations and academic partnerships'
+    name: 'Дирекция',
+    email: 'ilesaliev@mail.ru',
+    phone: '+998 99 806-41-99',
+    description: 'Общие вопросы деятельности центра и стратегическое планирование'
   },
   {
     icon: GlobeAltIcon,
-    name: 'Partnerships',
-    email: 'partnerships@innovativetransport.com',
-    phone: '+1 (555) 123-4569',
-    description: 'For industry partnerships and business development'
+    name: 'Научный отдел',
+    email: 'shaxr2107@gmail.com',
+    phone: '+998 93 583-45-69',
+    description: 'Научные исследования и международное сотрудничество'
   },
   {
     icon: EnvelopeIcon,
-    name: 'Media & Press',
-    email: 'media@innovativetransport.com',
-    phone: '+1 (555) 123-4570',
-    description: 'For media inquiries and press relations'
+    name: 'Общие вопросы',
+    email: 'Aleksandr-svetashev@bk.ru',
+    phone: '+998 90 992-77-03',
+    description: 'Организационные вопросы и образовательные программы'
   }
 ])
 
 const faqs = ref([
   {
-    question: 'How can I collaborate with your research center?',
-    answer: 'We welcome collaborations with academic institutions, industry partners, and government agencies. Please contact our partnerships department to discuss potential opportunities.'
+    question: 'Как можно сотрудничать с НИЦ "Инновационный транспорт"?',
+    answer: 'Мы приветствуем сотрудничество с академическими учреждениями, отраслевыми партнерами и государственными организациями. Свяжитесь с нашим отделом партнерств для обсуждения возможностей.'
   },
   {
-    question: 'Do you offer internship programs?',
-    answer: 'Yes, we offer internship programs for undergraduate and graduate students. Applications are typically reviewed quarterly. Please check our careers page for current openings.'
+    question: 'Предлагаете ли вы программы стажировки?',
+    answer: 'Да, мы предлагаем программы стажировки для студентов и молодых специалистов. Заявки рассматриваются ежеквартально. Проверьте наш раздел карьеры для актуальных вакансий.'
   },
   {
-    question: 'Can I visit your facilities?',
-    answer: 'We offer guided tours for educational and professional groups. Please contact us at least two weeks in advance to schedule a visit.'
+    question: 'Можно ли посетить ваши объекты?',
+    answer: 'Мы организуем экскурсии для образовательных и профессиональных групп. Пожалуйста, свяжитесь с нами минимум за две недели для планирования визита.'
   },
   {
-    question: 'How can I access your research publications?',
-    answer: 'Most of our research publications are available through academic databases and our website. For specific requests, please contact our research department.'
+    question: 'Как получить доступ к вашим исследовательским публикациям?',
+    answer: 'Большинство наших исследовательских публикаций доступны через академические базы данных и наш веб-сайт. Для конкретных запросов обращайтесь в наш научный отдел.'
   }
 ])
 
@@ -130,9 +130,9 @@ const toggleFaq = (index) => {
     <section class="bg-gradient-to-r from-primary-600 to-secondary-600 py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center text-white" data-aos="fade-up">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">{{ t('nav.contacts') }}</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">Контакты</h1>
           <p class="text-xl max-w-3xl mx-auto">
-            Get in touch with our team to discuss collaborations, partnerships, or learn more about our research
+            Свяжитесь с нашей командой для обсуждения сотрудничества, партнерства или получения дополнительной информации о наших исследованиях
           </p>
         </div>
       </div>
@@ -161,7 +161,7 @@ const toggleFaq = (index) => {
               rel="noopener noreferrer"
               class="text-primary-600 hover:text-primary-700 font-medium"
             >
-              {{ info.title === 'Visit Us' ? 'View on Map' : 'Contact Now' }}
+              {{ info.title === 'Наш адрес' ? 'Посмотреть на карте' : 'Связаться' }}
             </a>
           </div>
         </div>
@@ -174,12 +174,12 @@ const toggleFaq = (index) => {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <!-- Contact Form -->
           <div data-aos="fade-right">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Send us a Message</h2>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Отправить сообщение</h2>
             <form @submit.prevent="submitForm" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
+                    Полное имя *
                   </label>
                   <input
                     id="name"
@@ -187,12 +187,12 @@ const toggleFaq = (index) => {
                     type="text"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Your full name"
+                    placeholder="Ваше полное имя"
                   >
                 </div>
                 <div>
                   <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
+                    Email адрес *
                   </label>
                   <input
                     id="email"
@@ -208,33 +208,33 @@ const toggleFaq = (index) => {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="organization" class="block text-sm font-medium text-gray-700 mb-2">
-                    Organization
+                    Организация
                   </label>
                   <input
                     id="organization"
                     v-model="form.organization"
                     type="text"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Your organization"
+                    placeholder="Ваша организация"
                   >
                 </div>
                 <div>
                   <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
+                    Номер телефона
                   </label>
                   <input
                     id="phone"
                     v-model="form.phone"
                     type="tel"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+998 90 123-45-67"
                   >
                 </div>
               </div>
 
               <div>
                 <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
-                  Subject *
+                  Тема *
                 </label>
                 <input
                   id="subject"
@@ -242,13 +242,13 @@ const toggleFaq = (index) => {
                   type="text"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Brief subject of your message"
+                  placeholder="Краткая тема вашего сообщения"
                 >
               </div>
 
               <div>
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
+                  Сообщение *
                 </label>
                 <textarea
                   id="message"
@@ -256,7 +256,7 @@ const toggleFaq = (index) => {
                   rows="6"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Tell us about your inquiry, project, or collaboration idea..."
+                  placeholder="Расскажите нам о вашем запросе, проекте или идее сотрудничества..."
                 ></textarea>
               </div>
 
@@ -266,28 +266,28 @@ const toggleFaq = (index) => {
                   :disabled="isSubmitting"
                   class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105"
                 >
-                  <span v-if="!isSubmitting && !isSubmitted">Send Message</span>
+                  <span v-if="!isSubmitting && !isSubmitted">Отправить сообщение</span>
                   <span v-else-if="isSubmitting" class="flex items-center">
                     <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Sending...
+                    Отправка...
                   </span>
                   <span v-else class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Message Sent!
+                    Сообщение отправлено!
                   </span>
                 </button>
               </div>
             </form>
           </div>
 
-          <!-- Google Maps -->
+          <!-- University Location -->
           <div data-aos="fade-left">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Find Our Location</h2>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Наше местоположение</h2>
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316e5b7c5d%3A0x1234567890abcdef!2sInnovation%20Street%2C%20New%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d69.2401!3d41.2995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0x348f651b9b5d2c5a!2sTashkent%20State%20Transport%20University!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
                 width="100%"
                 height="400"
                 style="border:0;"
@@ -299,7 +299,7 @@ const toggleFaq = (index) => {
               <div class="p-4 bg-gradient-to-r from-blue-50 to-purple-50">
                 <div class="flex items-center text-gray-700">
                   <MapPinIcon class="h-5 w-5 mr-2 text-primary-600" />
-                  <span class="font-medium">{{ t('footer.address') }}</span>
+                  <span class="font-medium">Ташкентский государственный транспортный университет</span>
                 </div>
                 <a
                   href="https://maps.google.com"
@@ -307,7 +307,7 @@ const toggleFaq = (index) => {
                   rel="noopener noreferrer"
                   class="inline-block mt-2 text-primary-600 hover:text-primary-700 font-medium"
                 >
-                  Open in Google Maps →
+                  Открыть в Google Maps →
                 </a>
               </div>
             </div>
@@ -320,9 +320,9 @@ const toggleFaq = (index) => {
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">Department Contacts</h2>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">Контакты отделов</h2>
           <p class="text-xl text-gray-600">
-            Contact specific departments for specialized inquiries
+            Обращайтесь в конкретные отделы для специализированных запросов
           </p>
         </div>
 
@@ -366,9 +366,9 @@ const toggleFaq = (index) => {
     <section class="py-20 bg-gray-50">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4">Frequently Asked Questions</h2>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4">Часто задаваемые вопросы</h2>
           <p class="text-xl text-gray-600">
-            Find answers to common questions about our research center
+            Найдите ответы на распространенные вопросы о нашем исследовательском центре
           </p>
         </div>
 

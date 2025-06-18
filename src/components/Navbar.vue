@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -7,10 +7,9 @@ import { Bars3Icon, XMarkIcon, LanguageIcon } from '@heroicons/vue/24/outline'
 const route = useRoute()
 const { t, locale } = useI18n()
 const isMenuOpen = ref(false)
-const isScrolled = ref(true)
+const isScrolled = ref(false)
 const isLanguageMenuOpen = ref(false)
 
-const $t = t
 const navigation = [
   { name: 'nav.home', href: '/' },
   { name: 'nav.about', href: '/about' },
@@ -41,7 +40,7 @@ const toggleLanguageMenu = () => {
   isLanguageMenuOpen.value = !isLanguageMenuOpen.value
 }
 
-const changeLanguage = (langCode) => {
+const changeLanguage = (langCode: string) => {
   locale.value = langCode
   isLanguageMenuOpen.value = false
 }
@@ -51,7 +50,6 @@ const getCurrentLanguage = () => {
 }
 
 onMounted(() => {
-  isScrolled.value=true
   window.addEventListener('scroll', handleScroll)
 })
 

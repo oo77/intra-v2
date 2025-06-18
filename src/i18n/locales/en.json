@@ -9,7 +9,7 @@
   "home": {
     "hero": {
       "title": "INNOVATIVE TRANSPORT",
-      "subtitle": "Pioneering the future of logistics and transportation through cutting-edge research and innovation",
+      "subtitle": "Creating an integrated scientific platform in transport and logistics, promoting sustainable development, innovation and training of highly qualified personnel",
       "exploreProjects": "Explore Projects",
       "watchVideo": "Watch Video"
     },
@@ -21,57 +21,57 @@
     },
     "features": {
       "title": "Our Research Areas",
-      "subtitle": "Driving innovation across multiple domains of transportation and logistics technology",
+      "subtitle": "Key areas of our research and development activities",
       "smartLogistics": {
-        "title": "Smart Logistics",
-        "description": "Advanced AI-powered logistics optimization and route planning systems."
+        "title": "Transport Process Management",
+        "description": "Development of methods for optimizing transport systems and traffic management processes."
       },
       "sustainableTransport": {
-        "title": "Sustainable Transport",
-        "description": "Eco-friendly transportation solutions for a greener future."
+        "title": "Digitalization of Logistics",
+        "description": "Implementation of digital technologies in logistics processes and supply chain management."
       },
       "innovationResearch": {
-        "title": "Innovation Research",
-        "description": "Cutting-edge research in autonomous vehicles and smart infrastructure."
+        "title": "Regulatory Materials",
+        "description": "Development of standards, methodologies and recommendations for the transport industry."
       }
     },
     "newFeatures": {
       "title": "Why Choose Us",
       "subtitle": "Discover what makes us the leading research center in transportation innovation",
       "expertise": {
-        "title": "World-Class Expertise",
-        "description": "Our team consists of renowned researchers and industry experts with decades of combined experience."
+        "title": "Scientific Excellence",
+        "description": "Our team consists of leading researchers and industry experts with decades of experience."
       },
       "technology": {
-        "title": "Cutting-Edge Technology",
-        "description": "We utilize the latest technologies including AI, IoT, and machine learning in our research."
+        "title": "Innovation Focus",
+        "description": "We develop cutting-edge solutions for the transport and logistics industry."
       },
       "collaboration": {
-        "title": "Global Collaboration",
+        "title": "International Cooperation",
         "description": "We partner with leading institutions and companies worldwide to drive innovation."
       },
       "impact": {
-        "title": "Real-World Impact",
-        "description": "Our research directly contributes to solving real transportation challenges globally."
+        "title": "Practical Application",
+        "description": "Our research directly contributes to solving real transportation challenges."
       }
     },
     "testimonials": {
       "title": "What Our Partners Say",
       "subtitle": "Hear from industry leaders who have collaborated with us",
       "testimonial1": {
-        "text": "Working with INNOVATIVE TRANSPORT has revolutionized our logistics operations. Their AI-powered solutions reduced our costs by 30% while improving efficiency.",
-        "author": "Sarah Chen",
-        "position": "CEO, Global Logistics Corp"
+        "text": "Working with INNOVATIVE TRANSPORT has significantly improved our logistics operations. Their expertise in transport systems is exceptional.",
+        "author": "Akmal Karimov",
+        "position": "Director, Uzbekistan Railways"
       },
       "testimonial2": {
-        "text": "The research collaboration with this center has been instrumental in developing our sustainable transportation initiatives. Truly innovative work.",
-        "author": "Dr. Michael Rodriguez",
-        "position": "Director of Innovation, EcoTransport"
+        "text": "The research collaboration with this center has been instrumental in developing our transport infrastructure. Truly innovative work.",
+        "author": "Dr. Gulnara Abdullayeva",
+        "position": "Transport Ministry Advisor"
       },
       "testimonial3": {
-        "text": "Their expertise in autonomous systems helped us accelerate our smart city project by 18 months. Exceptional research quality and practical applications.",
-        "author": "Anna Petrov",
-        "position": "Smart City Project Manager"
+        "text": "Their expertise in logistics optimization helped us improve our supply chain efficiency by 25%. Outstanding research quality.",
+        "author": "Bobur Rakhimov",
+        "position": "Logistics Manager, ADBL"
       }
     },
     "newsletter": {
@@ -89,12 +89,12 @@
     }
   },
   "footer": {
-    "description": "Leading Scientific Research Center advancing innovation in logistics and transport technologies for a sustainable future.",
+    "description": "Leading Scientific Research Center advancing innovation in transport and logistics technologies for sustainable development.",
     "quickLinks": "Quick Links",
     "contactInfo": "Contact Info",
-    "address": "123 Innovation Street, Tech City, TC 12345",
-    "phone": "+1 (555) 123-4567",
-    "email": "info@innovativetransport.com",
+    "address": "Tashkent State Transport University, Uzbekistan",
+    "phone": "+998 99 806-41-99",
+    "email": "ilesaliev@mail.ru",
     "copyright": "© 2024 INNOVATIVE TRANSPORT Research Center. All rights reserved."
   }
 }

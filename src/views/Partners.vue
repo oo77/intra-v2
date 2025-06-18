@@ -1,94 +1,94 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 
 const partners = ref([
   {
     id: 1,
-    name: 'TechCorp Industries',
+    name: 'The Chartered Institute of Logistics and Transport (CILT)',
     logo: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Leading technology partner providing AI and machine learning solutions for autonomous vehicle research.',
-    category: 'Technology',
-    partnership: 'Strategic Alliance',
-    since: '2020',
-    website: 'https://techcorp.com'
+    description: 'Ведущая международная организация в области логистики и транспорта, базирующаяся в Великобритании.',
+    category: 'Международные организации',
+    partnership: 'Международное сотрудничество',
+    since: '2022',
+    website: 'https://ciltinternational.org'
   },
   {
     id: 2,
-    name: 'Global Logistics Solutions',
-    logo: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'International logistics company collaborating on supply chain optimization and smart warehouse solutions.',
-    category: 'Logistics',
-    partnership: 'Research Collaboration',
-    since: '2019',
-    website: 'https://globallogistics.com'
+    name: 'Ташкентский государственный транспортный университет',
+    logo: 'https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Базовый университет, на основе которого создан НИЦ "Инновационный транспорт".',
+    category: 'Образовательные учреждения',
+    partnership: 'Базовое партнерство',
+    since: '2016',
+    website: 'https://tstu.uz'
   },
   {
     id: 3,
-    name: 'EcoTransport Initiative',
-    logo: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Environmental organization focused on sustainable transportation solutions and green technology development.',
-    category: 'Environmental',
-    partnership: 'Joint Research',
+    name: 'АО "Узбекистон темир йуллари"',
+    logo: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Национальная железнодорожная компания Узбекистана, ключевой партнер в области практических исследований.',
+    category: 'Транспортные компании',
+    partnership: 'Хоздоговорные работы',
     since: '2021',
-    website: 'https://ecotransport.org'
+    website: 'https://railway.uz'
   },
   {
     id: 4,
-    name: 'Metropolitan University',
-    logo: 'https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Academic partner providing research expertise and student collaboration opportunities.',
-    category: 'Academic',
-    partnership: 'Academic Partnership',
-    since: '2018',
-    website: 'https://metrouni.edu'
+    name: 'Институт логистики и транспорта (AzTU)',
+    logo: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Азербайджанский технический университет, партнер в области научных исследований и обмена опытом.',
+    category: 'Образовательные учреждения',
+    partnership: 'Научное сотрудничество',
+    since: '2022',
+    website: 'https://aztu.edu.az'
   },
   {
     id: 5,
-    name: 'Smart City Solutions',
-    logo: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Urban planning and smart city technology company working on integrated transportation systems.',
-    category: 'Urban Planning',
-    partnership: 'Technology Partnership',
-    since: '2022',
-    website: 'https://smartcitysolutions.com'
+    name: 'Transportation Systems and Logistics Lab (IUST)',
+    logo: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Лаборатория транспортных систем и логистики Иранского университета науки и технологий.',
+    category: 'Научные лаборатории',
+    partnership: 'Исследовательское партнерство',
+    since: '2023',
+    website: 'https://tsl.iust.ac.ir'
   },
   {
     id: 6,
-    name: 'InnovateAI Labs',
-    logo: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'AI research laboratory specializing in machine learning applications for transportation optimization.',
-    category: 'AI/ML',
-    partnership: 'Research Partnership',
-    since: '2023',
-    website: 'https://innovateai.com'
+    name: 'Uluslararası EMI Kongresi',
+    logo: 'https://images.pexels.com/photos/3184460/pexels-photo-3184460.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Международный конгресс по железнодорожному машиностроению в Турции.',
+    category: 'Научные мероприятия',
+    partnership: 'Участие в конференциях',
+    since: '2022',
+    website: 'https://emissc.org'
   },
   {
     id: 7,
-    name: 'GreenTech Ventures',
-    logo: 'https://images.pexels.com/photos/3184460/pexels-photo-3184460.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Venture capital firm investing in sustainable transportation technologies and green innovation.',
-    category: 'Finance',
-    partnership: 'Investment Partner',
-    since: '2021',
-    website: 'https://greentechvc.com'
+    name: 'Научно-технический центр "STU-ENGINEERING"',
+    logo: 'https://images.pexels.com/photos/3184340/pexels-photo-3184340.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Казахстанский научно-технический центр в области транспортных технологий.',
+    category: 'Научные центры',
+    partnership: 'Техническое сотрудничество',
+    since: '2023',
+    website: 'https://kstu.kz'
   },
   {
     id: 8,
-    name: 'Future Mobility Consortium',
-    logo: 'https://images.pexels.com/photos/3184340/pexels-photo-3184340.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Industry consortium focused on developing next-generation mobility solutions and standards.',
-    category: 'Industry',
-    partnership: 'Consortium Member',
-    since: '2020',
-    website: 'https://futuremobility.org'
+    name: 'Ассоциация по развитию бизнес логистики (ADBL)',
+    logo: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=300',
+    description: 'Узбекская ассоциация, объединяющая предприятия и специалистов в области логистики.',
+    category: 'Отраслевые ассоциации',
+    partnership: 'Отраслевое партнерство',
+    since: '2021',
+    website: 'https://adbl.uz'
   }
 ])
 
-const categories = ref(['All', 'Technology', 'Logistics', 'Environmental', 'Academic', 'Urban Planning', 'AI/ML', 'Finance', 'Industry'])
-const activeCategory = ref('All')
+const categories = ref(['Все', 'Международные организации', 'Образовательные учреждения', 'Транспортные компании', 'Научные лаборатории', 'Научные мероприятия', 'Научные центры', 'Отраслевые ассоциации'])
+const activeCategory = ref('Все')
 
 const filteredPartners = computed(() => {
-  if (activeCategory.value === 'All') {
+  if (activeCategory.value === 'Все') {
     return partners.value
   }
   return partners.value.filter(partner => partner.category === activeCategory.value)
@@ -96,23 +96,22 @@ const filteredPartners = computed(() => {
 
 const getCategoryColor = (category) => {
   const colors = {
-    'Technology': 'bg-blue-100 text-blue-800',
-    'Logistics': 'bg-green-100 text-green-800',
-    'Environmental': 'bg-emerald-100 text-emerald-800',
-    'Academic': 'bg-purple-100 text-purple-800',
-    'Urban Planning': 'bg-orange-100 text-orange-800',
-    'AI/ML': 'bg-red-100 text-red-800',
-    'Finance': 'bg-yellow-100 text-yellow-800',
-    'Industry': 'bg-indigo-100 text-indigo-800'
+    'Международные организации': 'bg-blue-100 text-blue-800',
+    'Образовательные учреждения': 'bg-green-100 text-green-800',
+    'Транспортные компании': 'bg-emerald-100 text-emerald-800',
+    'Научные лаборатории': 'bg-purple-100 text-purple-800',
+    'Научные мероприятия': 'bg-orange-100 text-orange-800',
+    'Научные центры': 'bg-red-100 text-red-800',
+    'Отраслевые ассоциации': 'bg-yellow-100 text-yellow-800'
   }
   return colors[category] || 'bg-gray-100 text-gray-800'
 }
 
 const stats = ref([
-  { name: 'Active Partnerships', value: '30+', description: 'Ongoing collaborations worldwide' },
-  { name: 'Countries', value: '15+', description: 'International presence and reach' },
-  { name: 'Joint Projects', value: '50+', description: 'Collaborative research initiatives' },
-  { name: 'Years of Collaboration', value: '25+', description: 'Combined partnership experience' }
+  { name: 'Активные партнерства', value: '8+', description: 'Действующие соглашения о сотрудничестве' },
+  { name: 'Стран', value: '6+', description: 'Международное присутствие и охват' },
+  { name: 'Совместные проекты', value: '15+', description: 'Реализованные исследовательские инициативы' },
+  { name: 'Лет сотрудничества', value: '8+', description: 'Совокупный опыт партнерства' }
 ])
 </script>
 
@@ -122,9 +121,9 @@ const stats = ref([
     <section class="bg-gradient-to-r from-primary-600 to-secondary-600 py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center text-white" data-aos="fade-up">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">Our Partners</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">Наши партнеры</h1>
           <p class="text-xl max-w-3xl mx-auto">
-            Collaborating with industry leaders, academic institutions, and innovative organizations to advance transportation technology
+            Сотрудничество с ведущими университетами, отраслевыми компаниями и международными организациями для развития транспортных технологий
           </p>
         </div>
       </div>
@@ -208,11 +207,11 @@ const stats = ref([
               <!-- Partnership Details -->
               <div class="space-y-2 text-sm text-gray-500 mb-4">
                 <div class="flex justify-between">
-                  <span>Partnership:</span>
+                  <span>Партнерство:</span>
                   <span class="font-medium">{{ partner.partnership }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>Since:</span>
+                  <span>С:</span>
                   <span class="font-medium">{{ partner.since }}</span>
                 </div>
               </div>
@@ -224,7 +223,7 @@ const stats = ref([
                 rel="noopener noreferrer"
                 class="block w-full text-center bg-primary-50 text-primary-600 py-2 rounded-md hover:bg-primary-100 transition-colors duration-200 font-medium"
               >
-                Visit Website
+                Посетить сайт
               </a>
             </div>
           </div>
@@ -236,9 +235,9 @@ const stats = ref([
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Partnership Opportunities</h2>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Возможности партнерства</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Join our network of partners and collaborate with us to shape the future of transportation
+            Присоединяйтесь к нашей сети партнеров и сотрудничайте с нами в формировании будущего транспорта и логистики
           </p>
         </div>
 
@@ -249,8 +248,8 @@ const stats = ref([
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Research Collaboration</h3>
-            <p class="text-gray-600">Partner with us on cutting-edge research projects and innovation initiatives.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Научное сотрудничество</h3>
+            <p class="text-gray-600">Участвуйте в совместных исследовательских проектах и инновационных инициативах.</p>
           </div>
 
           <div class="text-center p-6" data-aos="fade-up" data-aos-delay="200">
@@ -259,24 +258,24 @@ const stats = ref([
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Industry Partnership</h3>
-            <p class="text-gray-600">Join our industry network to develop practical solutions and market applications.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Отраслевое партнерство</h3>
+            <p class="text-gray-600">Присоединяйтесь к нашей отраслевой сети для разработки практических решений.</p>
           </div>
 
           <div class="text-center p-6" data-aos="fade-up" data-aos-delay="300">
             <div class="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Investment Opportunities</h3>
-            <p class="text-gray-600">Invest in groundbreaking transportation technologies and sustainable solutions.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Образовательные программы</h3>
+            <p class="text-gray-600">Сотрудничайте в области подготовки кадров и повышения квалификации специалистов.</p>
           </div>
         </div>
 
         <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="400">
           <a href="/contacts" class="btn-primary inline-flex items-center">
-            Become a Partner
+            Стать партнером
             <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>

@@ -1,13 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import {
-  AcademicCapIcon,
-  UserGroupIcon,
-  TrophyIcon,
+import { 
+  AcademicCapIcon, 
+  UserGroupIcon, 
+  TrophyIcon, 
   GlobeAltIcon,
   XMarkIcon,
   EnvelopeIcon,
   PhoneIcon,
+  MapPinIcon,
+  CalendarIcon,
+  BuildingOfficeIcon,
   ChartBarIcon,
   LightBulbIcon,
   CogIcon,
@@ -19,157 +22,187 @@ const selectedMember = ref(null)
 // История НИЦ - основные вехи
 const historyMilestones = ref([
   {
-    year: '2009',
-    title: 'Основание НИЦ',
-    description: 'Создание научно-исследовательского центра "INNOVATIVE TRANSPORT" для развития инновационных транспортных технологий'
+    year: '2016',
+    title: 'Зарождение идеи',
+    description: 'Инициатива создания НИЦ на базе ТашИИТ под руководством д.т.н., профессора Д.И. Илесалиева'
   },
   {
-    year: '2012',
-    title: 'Первые крупные проекты',
-    description: 'Запуск исследований в области автономных транспортных систем и умной логистики'
-  },
-  {
-    year: '2015',
-    title: 'Международное признание',
-    description: 'Получение статуса ведущего исследовательского центра в области транспортных инноваций'
-  },
-  {
-    year: '2018',
-    title: 'Расширение деятельности',
-    description: 'Открытие новых направлений исследований: устойчивый транспорт и зеленые технологии'
+    year: '2017-2020',
+    title: 'Формирование команды',
+    description: 'Объединение преподавателей кафедр "Транспортная логистика и сервис" и "Управление эксплуатационной работой"'
   },
   {
     year: '2021',
-    title: 'Цифровая трансформация',
-    description: 'Внедрение AI и машинного обучения в транспортные решения'
+    title: 'Официальное создание',
+    description: 'Оформление НИЦ как структурного подразделения при Ташкентском государственном транспортном университете'
+  },
+  {
+    year: '2022',
+    title: 'Развитие партнерств',
+    description: 'Установление сотрудничества с АО "Узбекистон темир йуллари" и международными партнерами'
+  },
+  {
+    year: '2023',
+    title: 'Научные достижения',
+    description: 'Защита докторских и кандидатских диссертаций, публикация монографий и научных статей'
   },
   {
     year: '2024',
-    title: 'Глобальное партнерство',
-    description: 'Создание международной сети партнеров и исследовательских центров'
+    title: 'Цифровая трансформация',
+    description: 'Активное развитие направления цифровизации логистических систем и транспортных процессов'
   }
 ])
 
 // Команда НИЦ
 const teamMembers = ref([
   {
-    name: 'Др. Александр Петров',
+    name: 'Илесалиев Дауренбек Ихтиярович',
     role: 'Директор НИЦ',
-    bio: 'Ведущий эксперт в области транспортных систем с более чем 20-летним опытом в инновационных технологиях.',
+    bio: 'Доктор технических наук, и.о. профессора. Основатель и идейный вдохновитель НИЦ "Инновационный транспорт".',
     image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
-    expertise: ['Стратегическое планирование', 'Инновационный менеджмент', 'Транспортные системы'],
-    email: 'a.petrov@innovativetransport.com',
-    phone: '+7 (495) 123-4571',
+    expertise: ['Транспортные системы', 'Управление перевозками', 'Научное руководство'],
+    email: 'ilesaliev@mail.ru',
+    phone: '+998 99 806-41-99',
     education: [
-      'Д.т.н. в области транспортных систем, МГУ (2005)',
-      'К.т.н. в области автоматизации, МГТУ им. Баумана (2001)',
-      'Инженер-механик, МАДИ (1999)'
+      'Д.т.н. в области транспортных систем',
+      'И.о. профессора по специальности "Транспорт"',
+      'Специалист в области управления эксплуатационной работой'
     ],
     experience: [
-      'Директор НИЦ INNOVATIVE TRANSPORT (2015-настоящее время)',
-      'Заместитель директора по науке, НИИ Транспорта (2010-2015)',
-      'Ведущий инженер, РЖД (2005-2010)',
-      'Инженер-исследователь, ЦНИИ МПС (2001-2005)'
+      'Директор НИЦ "Инновационный транспорт" (2021-настоящее время)',
+      'Профессор кафедры "Управление эксплуатационной работой"',
+      'Руководитель научных проектов и грантов',
+      'Научный руководитель докторских и кандидатских диссертаций'
     ],
     publications: [
-      'Интеллектуальные транспортные системы будущего (Транспорт России, 2023)',
-      'Автономные транспортные средства: вызовы и перспективы (Наука и техника, 2022)',
-      'Цифровизация транспортной отрасли (Инновации в транспорте, 2021)'
+      'Монографии по управлению транспортными системами',
+      'Научные статьи в области логистики и транспорта',
+      'Нормативно-методические документы для отрасли'
     ],
     awards: [
-      'Премия Правительства РФ в области науки и техники (2023)',
-      'Лауреат премии "Транспортник года" (2021)',
-      'Почетная грамота Минтранса РФ (2019)'
+      'Признание в научном сообществе Узбекистана',
+      'Руководство успешными научными проектами',
+      'Подготовка высококвалифицированных кадров'
     ]
   },
   {
-    name: 'Др. Елена Смирнова',
+    name: 'Камалетдинов Шахрух Шухратович',
     role: 'Заместитель директора по науке',
-    bio: 'Специалист в области устойчивых транспортных решений и экологических технологий.',
-    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
-    expertise: ['Экологические технологии', 'Устойчивое развитие', 'Зеленый транспорт'],
-    email: 'e.smirnova@innovativetransport.com',
-    phone: '+7 (495) 123-4572',
-    education: [
-      'Д.т.н. в области экологии транспорта, МАДИ (2008)',
-      'К.т.н. в области охраны окружающей среды, МГУ (2004)',
-      'Инженер-эколог, РУДН (2002)'
-    ],
-    experience: [
-      'Зам. директора по науке, НИЦ INNOVATIVE TRANSPORT (2018-настоящее время)',
-      'Руководитель отдела экологии, НИИ Транспорта (2012-2018)',
-      'Старший научный сотрудник, Институт экологии РАН (2008-2012)',
-      'Инженер-эколог, Мосэкомониторинг (2004-2008)'
-    ],
-    publications: [
-      'Экологические аспекты электрификации транспорта (Экология и промышленность, 2023)',
-      'Снижение углеродного следа в транспортной отрасли (Природа, 2022)',
-      'Зеленые технологии в городском транспорте (Экология города, 2021)'
-    ],
-    awards: [
-      'Премия РАН за лучшую научную работу (2022)',
-      'Диплом "Эколог года" (2020)',
-      'Благодарность Минприроды РФ (2018)'
-    ]
-  },
-  {
-    name: 'Др. Михаил Козлов',
-    role: 'Руководитель отдела автономных систем',
-    bio: 'Эксперт в области искусственного интеллекта и автономных транспортных средств.',
+    bio: 'PhD, и.о. доцента. Специалист в области научных исследований и инновационных решений в транспорте.',
     image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
-    expertise: ['Искусственный интеллект', 'Автономные системы', 'Машинное обучение'],
-    email: 'm.kozlov@innovativetransport.com',
-    phone: '+7 (495) 123-4573',
+    expertise: ['Научные исследования', 'Инновации в транспорте', 'Методология исследований'],
+    email: 'shaxr2107@gmail.com',
+    phone: '+998 93 583-45-69',
     education: [
-      'Д.т.н. в области искусственного интеллекта, МФТИ (2010)',
-      'К.т.н. в области кибернетики, МГТУ им. Баумана (2006)',
-      'Инженер-программист, МАИ (2004)'
+      'PhD в области транспортных технологий',
+      'И.о. доцента по транспортным специальностям',
+      'Специализация в области научных исследований'
     ],
     experience: [
-      'Руководитель отдела автономных систем, НИЦ INNOVATIVE TRANSPORT (2020-настоящее время)',
-      'Ведущий разработчик, Яндекс.Беспилотники (2016-2020)',
-      'Старший инженер, Cognitive Technologies (2012-2016)',
-      'Программист-исследователь, ИПМ РАН (2010-2012)'
+      'Заместитель директора по науке НИЦ (2021-настоящее время)',
+      'Участие в международных научных проектах',
+      'Разработка методических материалов',
+      'Координация научной деятельности центра'
     ],
     publications: [
-      'Алгоритмы машинного обучения для автономного вождения (Программирование, 2023)',
-      'Системы компьютерного зрения в транспорте (Искусственный интеллект, 2022)',
-      'Нейронные сети в задачах навигации (Информатика, 2021)'
+      'Научные статьи по транспортным технологиям',
+      'Участие в подготовке монографий',
+      'Методические рекомендации для отрасли'
     ],
     awards: [
-      'Премия в области IT-инноваций (2023)',
-      'Лауреат конкурса "Лучший AI-проект" (2021)',
-      'Диплом за инновационную разработку (2019)'
+      'Успешная защита PhD диссертации',
+      'Участие в грантовых проектах',
+      'Признание в научном сообществе'
     ]
   },
   {
-    name: 'Др. Анна Волкова',
-    role: 'Руководитель отдела логистики',
-    bio: 'Специалист по оптимизации логистических процессов и цепей поставок.',
-    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=400',
-    expertise: ['Логистика', 'Оптимизация', 'Цепи поставок'],
-    email: 'a.volkova@innovativetransport.com',
-    phone: '+7 (495) 123-4574',
+    name: 'Светашев Александр Александрович',
+    role: 'Заместитель директора по общим вопросам',
+    bio: 'Кандидат технических наук, доцент. Специалист в области организации научной и образовательной деятельности.',
+    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
+    expertise: ['Управление проектами', 'Образовательные программы', 'Организация деятельности'],
+    email: 'Aleksandr-svetashev@bk.ru',
+    phone: '+998 90 992-77-03',
     education: [
-      'Д.э.н. в области логистики, ГУУ (2012)',
-      'К.э.н. в области управления, РЭУ им. Плеханова (2008)',
-      'Экономист-логист, МГИМО (2006)'
+      'К.т.н. в области транспортных систем',
+      'Доцент по транспортным специальностям',
+      'Специализация в области управления'
     ],
     experience: [
-      'Руководитель отдела логистики, НИЦ INNOVATIVE TRANSPORT (2019-настоящее время)',
-      'Директор по логистике, X5 Retail Group (2015-2019)',
-      'Руководитель проектов, PwC Consulting (2012-2015)',
-      'Аналитик, McKinsey & Company (2008-2012)'
+      'Заместитель директора по общим вопросам НИЦ (2021-настоящее время)',
+      'Доцент кафедры транспортной логистики',
+      'Координация образовательных программ',
+      'Организация научных мероприятий'
     ],
     publications: [
-      'Цифровая трансформация логистики (Логистика сегодня, 2023)',
-      'Оптимизация последней мили доставки (Российская торговля, 2022)',
-      'Устойчивые цепи поставок (Логистика и управление, 2021)'
+      'Учебные пособия по транспортной логистике',
+      'Научные статьи в области образования',
+      'Методические материалы для студентов'
     ],
     awards: [
-      'Премия "Логист года" (2022)',
-      'Диплом за инновации в логистике (2020)',
-      'Благодарность Торгово-промышленной палаты (2018)'
+      'Успешная организация научных мероприятий',
+      'Развитие образовательных программ',
+      'Признание в педагогическом сообществе'
+    ]
+  },
+  {
+    name: 'Шихназаров Жамол Алишерович',
+    role: 'Главный специалист',
+    bio: 'Ассистент, специалист в области практического применения транспортных технологий и логистических решений.',
+    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=400',
+    expertise: ['Транспортные технологии', 'Логистические решения', 'Практическое применение'],
+    email: 'jamol.alisherovich@mail.ru',
+    phone: '+998 97 780-61-33',
+    education: [
+      'Ассистент кафедры транспортных систем',
+      'Специализация в области логистики',
+      'Практический опыт в транспортной отрасли'
+    ],
+    experience: [
+      'Главный специалист НИЦ (2021-настоящее время)',
+      'Участие в хоздоговорных работах',
+      'Разработка практических решений',
+      'Взаимодействие с предприятиями отрасли'
+    ],
+    publications: [
+      'Практические рекомендации для транспортных предприятий',
+      'Участие в подготовке методических материалов',
+      'Отчеты по выполненным проектам'
+    ],
+    awards: [
+      'Успешное выполнение практических проектов',
+      'Признание со стороны предприятий-партнеров',
+      'Вклад в развитие отрасли'
+    ]
+  },
+  {
+    name: 'Дехконов Мирали Мирхон угли',
+    role: 'Ведущий специалист',
+    bio: 'Ассистент, молодой специалист, активно участвующий в научных исследованиях и разработке инновационных решений.',
+    image: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400',
+    expertise: ['Научные исследования', 'Инновационные решения', 'Цифровые технологии'],
+    email: 'mirali.dehqonov@gmail.com',
+    phone: '+998 90 992-77-03',
+    education: [
+      'Ассистент кафедры транспортных систем',
+      'Специализация в области цифровых технологий',
+      'Участие в научных исследованиях'
+    ],
+    experience: [
+      'Ведущий специалист НИЦ (2022-настоящее время)',
+      'Участие в научных проектах',
+      'Разработка цифровых решений',
+      'Поддержка образовательных программ'
+    ],
+    publications: [
+      'Участие в подготовке научных статей',
+      'Разработка методических материалов',
+      'Вклад в исследовательские проекты'
+    ],
+    awards: [
+      'Активное участие в научной деятельности',
+      'Перспективный молодой специалист',
+      'Вклад в развитие центра'
     ]
   }
 ])
@@ -179,25 +212,25 @@ const achievements = ref([
   {
     icon: AcademicCapIcon,
     title: 'Научные публикации',
-    description: 'Более 150 публикаций в ведущих научных журналах',
+    description: 'Монографии, учебные пособия, научные статьи и рекомендации',
     color: 'from-blue-500 to-indigo-500'
   },
   {
     icon: TrophyIcon,
-    title: 'Награды и премии',
-    description: '12 престижных наград за инновации в транспорте',
+    title: 'Диссертации',
+    description: 'Защищенные докторские и кандидатские диссертации под руководством центра',
     color: 'from-yellow-500 to-orange-500'
   },
   {
     icon: UserGroupIcon,
     title: 'Партнерства',
-    description: 'Сотрудничество с 25+ организациями по всему миру',
+    description: 'Сотрудничество с ведущими университетами и предприятиями',
     color: 'from-green-500 to-teal-500'
   },
   {
     icon: GlobeAltIcon,
-    title: 'Международные проекты',
-    description: 'Реализация проектов в 15+ странах',
+    title: 'Международное сотрудничество',
+    description: 'Совместные проекты с зарубежными партнерами',
     color: 'from-purple-500 to-pink-500'
   }
 ])
@@ -206,26 +239,26 @@ const achievements = ref([
 const researchAreas = ref([
   {
     icon: CogIcon,
-    title: 'Автономные транспортные системы',
-    description: 'Разработка беспилотных транспортных средств и систем управления движением',
+    title: 'Управление и моделирование транспортных процессов',
+    description: 'Разработка методов оптимизации транспортных систем и процессов управления перевозками',
     color: 'from-blue-500 to-cyan-500'
   },
   {
     icon: LightBulbIcon,
-    title: 'Умная логистика',
-    description: 'Оптимизация логистических процессов с использованием AI и IoT технологий',
+    title: 'Цифровизация логистических систем',
+    description: 'Внедрение цифровых технологий в логистические процессы и управление цепями поставок',
     color: 'from-green-500 to-emerald-500'
   },
   {
     icon: ArrowTrendingUpIcon,
-    title: 'Устойчивый транспорт',
-    description: 'Экологически чистые транспортные решения и зеленые технологии',
+    title: 'Разработка нормативных и методических материалов',
+    description: 'Создание стандартов, методик и рекомендаций для транспортной отрасли',
     color: 'from-purple-500 to-violet-500'
   },
   {
     icon: ChartBarIcon,
-    title: 'Цифровизация транспорта',
-    description: 'Внедрение цифровых технологий в транспортную инфраструктуру',
+    title: 'Консалтинг, экспертиза и научные мероприятия',
+    description: 'Предоставление экспертных услуг и организация научных конференций и семинаров',
     color: 'from-orange-500 to-red-500'
   }
 ])
@@ -247,34 +280,75 @@ const closeMemberModal = () => {
         <div class="text-center text-white" data-aos="fade-up">
           <h1 class="text-4xl md:text-5xl font-bold mb-6">О нашем центре</h1>
           <p class="text-xl max-w-3xl mx-auto">
-            Научно-исследовательский центр "INNOVATIVE TRANSPORT" - ведущая организация в области инновационных транспортных технологий
+            Научно-исследовательский центр "Инновационный транспорт" - ведущая организация в области транспортных систем и логистики в Узбекистане
           </p>
         </div>
       </div>
     </section>
 
-    <!-- История НИЦ -->
+    <!-- Миссия и цели -->
     <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Наша миссия</h2>
+            <p class="text-lg text-gray-600 mb-6">
+              Создание интеграционной научной платформы в области транспорта и логистики, 
+              способствующей устойчивому развитию, инновациям и подготовке высококвалифицированных кадров.
+            </p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Наши цели:</h3>
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <div class="w-2 h-2 bg-primary-500 rounded-full mt-2"></div>
+                <span class="text-gray-700">Развитие научных исследований в области транспортных систем и логистики</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="w-2 h-2 bg-primary-500 rounded-full mt-2"></div>
+                <span class="text-gray-700">Внедрение инновационных решений в отрасль</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="w-2 h-2 bg-primary-500 rounded-full mt-2"></div>
+                <span class="text-gray-700">Поддержка образовательных программ и повышение квалификации специалистов</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="w-2 h-2 bg-primary-500 rounded-full mt-2"></div>
+                <span class="text-gray-700">Международное сотрудничество в научной и практической сферах</span>
+              </div>
+            </div>
+          </div>
+          <div data-aos="fade-left">
+            <img 
+              src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800" 
+              alt="Исследовательская лаборатория" 
+              class="rounded-lg shadow-lg w-full h-96 object-cover"
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- История НИЦ -->
+    <section class="py-20 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">История развития</h2>
-          <p class="text-xl text-gray-600">Путь от создания до лидерства в транспортных инновациях</p>
+          <p class="text-xl text-gray-600">Путь от идеи до ведущего научного центра Узбекистана</p>
         </div>
 
         <div class="relative">
           <!-- Timeline line -->
           <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500"></div>
-
+          
           <div class="space-y-12">
-            <div
-                v-for="(milestone, index) in historyMilestones"
-                :key="milestone.year"
-                :class="[
+            <div 
+              v-for="(milestone, index) in historyMilestones" 
+              :key="milestone.year"
+              :class="[
                 'flex items-center',
                 index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
               ]"
-                data-aos="fade-up"
-                :data-aos-delay="index * 100"
+              data-aos="fade-up"
+              :data-aos-delay="index * 100"
             >
               <div :class="[
                 'w-5/12',
@@ -286,12 +360,12 @@ const closeMemberModal = () => {
                   <p class="text-gray-600">{{ milestone.description }}</p>
                 </div>
               </div>
-
+              
               <!-- Timeline dot -->
               <div class="w-2/12 flex justify-center">
                 <div class="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-white shadow-lg"></div>
               </div>
-
+              
               <div class="w-5/12"></div>
             </div>
           </div>
@@ -300,20 +374,20 @@ const closeMemberModal = () => {
     </section>
 
     <!-- Направления деятельности -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Направления деятельности</h2>
-          <p class="text-xl text-gray-600">Основные области наших исследований и разработок</p>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Основные направления деятельности</h2>
+          <p class="text-xl text-gray-600">Ключевые области наших исследований и разработок</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div
-              v-for="(area, index) in researchAreas"
-              :key="area.title"
-              class="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300 card-hover"
-              data-aos="fade-up"
-              :data-aos-delay="index * 100"
+          <div 
+            v-for="(area, index) in researchAreas" 
+            :key="area.title"
+            class="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-all duration-300 card-hover border border-gray-100"
+            data-aos="fade-up"
+            :data-aos-delay="index * 100"
           >
             <div :class="[
               'inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 bg-gradient-to-r',
@@ -329,20 +403,20 @@ const closeMemberModal = () => {
     </section>
 
     <!-- Достижения -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">Наши достижения</h2>
-          <p class="text-xl text-gray-600">Результаты многолетней работы и признание экспертного сообщества</p>
+          <p class="text-xl text-gray-600">Результаты научной и образовательной деятельности</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div
-              v-for="(achievement, index) in achievements"
-              :key="achievement.title"
-              class="bg-white rounded-lg p-6 shadow-lg text-center card-hover border border-gray-100"
-              data-aos="fade-up"
-              :data-aos-delay="index * 100"
+          <div 
+            v-for="(achievement, index) in achievements" 
+            :key="achievement.title"
+            class="bg-white rounded-lg p-6 shadow-lg text-center card-hover border border-gray-100"
+            data-aos="fade-up"
+            :data-aos-delay="index * 100"
           >
             <div :class="[
               'inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r mb-4',
@@ -358,90 +432,44 @@ const closeMemberModal = () => {
     </section>
 
     <!-- Команда -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">Наша команда</h2>
-          <p class="text-xl text-gray-600">Ведущие эксперты в области транспортных инноваций</p>
+          <p class="text-xl text-gray-600">Ведущие специалисты в области транспорта и логистики</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div
-              v-for="(member, index) in teamMembers"
-              :key="member.name"
-              class="bg-white rounded-lg overflow-hidden shadow-lg card-hover cursor-pointer transform transition-all duration-300 hover:scale-105"
-              data-aos="fade-up"
-              :data-aos-delay="index * 100"
-              @click="openMemberModal(member)"
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div 
+            v-for="(member, index) in teamMembers" 
+            :key="member.name"
+            class="bg-white rounded-lg overflow-hidden shadow-lg card-hover cursor-pointer transform transition-all duration-300 hover:scale-105"
+            data-aos="fade-up"
+            :data-aos-delay="index * 100"
+            @click="openMemberModal(member)"
           >
-            <img
-                :src="member.image"
-                :alt="member.name"
-                class="w-full h-64 object-cover"
+            <img 
+              :src="member.image" 
+              :alt="member.name"
+              class="w-full h-64 object-cover"
             >
             <div class="p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ member.name }}</h3>
               <p class="text-primary-600 font-medium mb-3">{{ member.role }}</p>
               <p class="text-gray-600 text-sm mb-4">{{ member.bio }}</p>
-              <div class="flex flex-wrap gap-2">
-                <span
-                    v-for="skill in member.expertise"
-                    :key="skill"
-                    class="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full"
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span 
+                  v-for="skill in member.expertise" 
+                  :key="skill"
+                  class="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full"
                 >
                   {{ skill }}
                 </span>
               </div>
-              <div class="mt-4 text-center">
+              <div class="text-center">
                 <span class="text-primary-600 text-sm font-medium">Нажмите для подробностей</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Миссия и ценности -->
-    <section class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div data-aos="fade-right">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Наша миссия</h2>
-            <p class="text-lg text-gray-600 mb-6">
-              Научно-исследовательский центр "INNOVATIVE TRANSPORT" создан для развития и внедрения
-              инновационных технологий в транспортной отрасли. Мы стремимся к созданию более
-              эффективных, безопасных и экологически чистых транспортных решений.
-            </p>
-            <p class="text-lg text-gray-600 mb-6">
-              Наша работа направлена на решение актуальных проблем современного транспорта:
-              снижение выбросов, повышение безопасности, оптимизация логистических процессов
-              и создание интеллектуальных транспортных систем.
-            </p>
-            <div class="space-y-4">
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                <span class="text-gray-700">Инновационные исследования в области транспорта</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                <span class="text-gray-700">Разработка экологически чистых решений</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                <span class="text-gray-700">Создание интеллектуальных транспортных систем</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
-                <span class="text-gray-700">Международное сотрудничество и обмен опытом</span>
-              </div>
-            </div>
-          </div>
-          <div data-aos="fade-left">
-            <img
-                src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Исследовательская лаборатория"
-                class="rounded-lg shadow-lg w-full h-96 object-cover"
-            >
           </div>
         </div>
       </div>
@@ -451,37 +479,37 @@ const closeMemberModal = () => {
     <Teleport to="body">
       <Transition name="modal">
         <div
-            v-if="selectedMember"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-            @click="closeMemberModal"
+          v-if="selectedMember"
+          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          @click="closeMemberModal"
         >
           <div
-              class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              @click.stop
+            class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            @click.stop
           >
             <!-- Заголовок с фото и основной информацией -->
             <div class="relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white p-8">
               <button
-                  @click="closeMemberModal"
-                  class="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
+                @click="closeMemberModal"
+                class="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
               >
                 <XMarkIcon class="h-6 w-6" />
               </button>
-
+              
               <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
                 <img
-                    :src="selectedMember.image"
-                    :alt="selectedMember.name"
-                    class="w-32 h-32 rounded-full object-cover border-4 border-white/20"
+                  :src="selectedMember.image"
+                  :alt="selectedMember.name"
+                  class="w-32 h-32 rounded-full object-cover border-4 border-white/20"
                 >
                 <div class="text-center md:text-left">
                   <h2 class="text-3xl font-bold mb-2">{{ selectedMember.name }}</h2>
                   <p class="text-xl text-blue-100 mb-4">{{ selectedMember.role }}</p>
                   <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                     <span
-                        v-for="skill in selectedMember.expertise"
-                        :key="skill"
-                        class="px-3 py-1 bg-white/20 text-white text-sm rounded-full"
+                      v-for="skill in selectedMember.expertise"
+                      :key="skill"
+                      class="px-3 py-1 bg-white/20 text-white text-sm rounded-full"
                     >
                       {{ skill }}
                     </span>
@@ -519,12 +547,12 @@ const closeMemberModal = () => {
 
               <!-- Образование -->
               <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Образование</h3>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Образование и квалификация</h3>
                 <ul class="space-y-2">
                   <li
-                      v-for="education in selectedMember.education"
-                      :key="education"
-                      class="flex items-start"
+                    v-for="education in selectedMember.education"
+                    :key="education"
+                    class="flex items-start"
                   >
                     <div class="w-2 h-2 bg-primary-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                     <span class="text-gray-600">{{ education }}</span>
@@ -537,9 +565,9 @@ const closeMemberModal = () => {
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Профессиональный опыт</h3>
                 <ul class="space-y-3">
                   <li
-                      v-for="experience in selectedMember.experience"
-                      :key="experience"
-                      class="flex items-start"
+                    v-for="experience in selectedMember.experience"
+                    :key="experience"
+                    class="flex items-start"
                   >
                     <div class="w-2 h-2 bg-secondary-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                     <span class="text-gray-600">{{ experience }}</span>
@@ -552,9 +580,9 @@ const closeMemberModal = () => {
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Основные публикации</h3>
                 <ul class="space-y-3">
                   <li
-                      v-for="publication in selectedMember.publications"
-                      :key="publication"
-                      class="flex items-start"
+                    v-for="publication in selectedMember.publications"
+                    :key="publication"
+                    class="flex items-start"
                   >
                     <div class="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                     <span class="text-gray-600 italic">{{ publication }}</span>
@@ -564,12 +592,12 @@ const closeMemberModal = () => {
 
               <!-- Награды -->
               <div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Награды и признание</h3>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Достижения и признание</h3>
                 <ul class="space-y-2">
                   <li
-                      v-for="award in selectedMember.awards"
-                      :key="award"
-                      class="flex items-start"
+                    v-for="award in selectedMember.awards"
+                    :key="award"
+                    class="flex items-start"
                   >
                     <TrophyIcon class="h-5 w-5 text-yellow-500 mt-0.5 mr-3 flex-shrink-0" />
                     <span class="text-gray-600">{{ award }}</span>
