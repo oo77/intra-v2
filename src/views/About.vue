@@ -50,13 +50,18 @@ const historyMilestones = ref([
   }
 ])
 
+//
+//
+//
+//
+
 // Команда НИЦ
 const teamMembers = ref([
   {
     name: 'Илесалиев Дауренбек Ихтиярович',
     role: 'Директор НИЦ',
     bio: 'Доктор технических наук, и.о. профессора. Основатель и идейный вдохновитель НИЦ "Инновационный транспорт".',
-    image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: 'https://i.postimg.cc/FK4CVwfr/1-8-hh.jpg',
     expertise: ['Транспортные системы', 'Управление перевозками', 'Научное руководство'],
     email: 'ilesaliev@mail.ru',
     phone: '+998 99 806-41-99',
@@ -86,7 +91,7 @@ const teamMembers = ref([
     name: 'Камалетдинов Шахрух Шухратович',
     role: 'Заместитель директора по науке',
     bio: 'PhD, и.о. доцента. Специалист в области научных исследований и инновационных решений в транспорте.',
-    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: 'https://i.postimg.cc/TPJ77Qmr/1-19.jpg',
     expertise: ['Научные исследования', 'Инновации в транспорте', 'Методология исследований'],
     email: 'shaxr2107@gmail.com',
     phone: '+998 93 583-45-69',
@@ -116,7 +121,7 @@ const teamMembers = ref([
     name: 'Светашев Александр Александрович',
     role: 'Заместитель директора по общим вопросам',
     bio: 'Кандидат технических наук, доцент. Специалист в области организации научной и образовательной деятельности.',
-    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: 'https://i.postimg.cc/TPJ77Qmr/1-19.jpg',
     expertise: ['Управление проектами', 'Образовательные программы', 'Организация деятельности'],
     email: 'Aleksandr-svetashev@bk.ru',
     phone: '+998 90 992-77-03',
@@ -146,7 +151,7 @@ const teamMembers = ref([
     name: 'Шихназаров Жамол Алишерович',
     role: 'Главный специалист',
     bio: 'Ассистент, специалист в области практического применения транспортных технологий и логистических решений.',
-    image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: 'https://i.postimg.cc/HngLYYjG/1-27-2.jpg',
     expertise: ['Транспортные технологии', 'Логистические решения', 'Практическое применение'],
     email: 'jamol.alisherovich@mail.ru',
     phone: '+998 97 780-61-33',
@@ -176,7 +181,7 @@ const teamMembers = ref([
     name: 'Дехконов Мирали Мирхон угли',
     role: 'Ведущий специалист',
     bio: 'Ассистент, молодой специалист, активно участвующий в научных исследованиях и разработке инновационных решений.',
-    image: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: 'https://i.postimg.cc/SxyzLrS0/1-24-2.jpg',
     expertise: ['Научные исследования', 'Инновационные решения', 'Цифровые технологии'],
     email: 'mirali.dehqonov@gmail.com',
     phone: '+998 90 992-77-03',
