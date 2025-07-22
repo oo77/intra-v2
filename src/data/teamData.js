@@ -181,7 +181,7 @@ export const teamMembersData = {
   },
   "svetashev": {
     id: 'svetashev',
-    image: 'https://i.postimg.cc/TPJ77Qmr/1-19.jpg',
+    image: 'https://i.postimg.cc/9XgjTjyC/aleksandr.jpg',
     email: 'Aleksandr-svetashev@bk.ru',
     phone: '+998 90 992-77-03',
     ru: {
