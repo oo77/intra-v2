@@ -183,6 +183,206 @@ const closeMemberModal = () => {
       </div>
     </section>
 
+    <!-- Галерея -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="text-center" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-white mb-4">{{ $t('about.gallery.title') }}</h2>
+          <p class="text-xl text-gray-300">{{ $t('about.gallery.subtitle') }}</p>
+        </div>
+      </div>
+
+      <!-- Первая лента (движется вправо) -->
+      <div class="relative mb-8">
+        <div class="flex animate-scroll-right space-x-6">
+          <div class="flex space-x-6 min-w-max">
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Лаборатория 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Исследования 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Команда работает 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Технологии 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Оборудование 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Конференция 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+          </div>
+          <!-- Дублируем для бесшовной анимации -->
+          <div class="flex space-x-6 min-w-max">
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Лаборатория 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Исследования 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Команда работает 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Технологии 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Оборудование 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Конференция 1" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Вторая лента (движется влево) -->
+      <div class="relative">
+        <div class="flex animate-scroll-left space-x-6">
+          <div class="flex space-x-6 min-w-max">
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Презентация 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Анализ данных 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Совещание 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Эксперимент 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Разработка 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Инновации 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+          </div>
+          <!-- Дублируем для бесшовной анимации -->
+          <div class="flex space-x-6 min-w-max">
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Презентация 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Анализ данных 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Совещание 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Эксперимент 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Разработка 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              <img 
+                src="https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                alt="Инновации 2" 
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Команда -->
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

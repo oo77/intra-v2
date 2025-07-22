@@ -140,7 +140,7 @@ onMounted(() => {
       <!-- Dynamic Background -->
       <div class="absolute inset-0">
         <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"></div>
-        <div class="absolute inset-0 bg-[url('https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-10"></div>
+        <div class="absolute inset-0 bg-[url('https://i.postimg.cc/3RvYJSb2/gallery3.jpg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-10"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-slate-900/40"></div>
       </div>
       

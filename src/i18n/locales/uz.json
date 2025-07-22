@@ -171,6 +171,10 @@
         "description": "Xorijiy hamkorlar bilan qo'shma loyihalar"
       }
     },
+    "gallery": {
+      "title": "Bizning galereya",
+      "subtitle": "Transport innovatsiyalari sohasidagi ishlarimiz, tadqiqotlarimiz va yutuqlarimizga nazar tashlang"
+    },
     "team": {
       "title": "Bizning jamoamiz",
       "subtitle": "Transport va logistika sohasidagi yetakchi mutaxassislar",
