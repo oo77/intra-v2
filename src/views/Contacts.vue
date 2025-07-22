@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { 
   MapPinIcon, 
@@ -47,73 +47,73 @@ const submitForm = async () => {
   }, 3000)
 }
 
-const contactInfo = ref([
+const contactInfo = computed(() => [
   {
     icon: MapPinIcon,
-    title: 'Наш адрес',
-    content: 'Ташкентский государственный транспортный университет, Узбекистан',
+    title: $t('contacts.info.address.title'),
+    content: $t('contacts.info.address.content'),
     link: 'https://maps.google.com'
   },
   {
     icon: PhoneIcon,
-    title: 'Телефон директора',
-    content: '+998 99 806-41-99',
+    title: $t('contacts.info.phone.title'),
+    content: $t('contacts.info.phone.content'),
     link: 'tel:+998998064199'
   },
   {
     icon: EnvelopeIcon,
-    title: 'Электронная почта',
-    content: 'ilesaliev@mail.ru',
+    title: $t('contacts.info.email.title'),
+    content: $t('contacts.info.email.content'),
     link: 'mailto:ilesaliev@mail.ru'
   },
   {
     icon: ClockIcon,
-    title: 'Часы работы',
-    content: 'Пн-Пт: 9:00 - 18:00',
+    title: $t('contacts.info.hours.title'),
+    content: $t('contacts.info.hours.content'),
     link: null
   }
 ])
 
-const departments = ref([
+const departments = computed(() => [
   {
     icon: BuildingOfficeIcon,
-    name: 'Дирекция',
+    name: $t('contacts.departments.direction.name'),
     email: 'ilesaliev@mail.ru',
     phone: '+998 99 806-41-99',
-    description: 'Общие вопросы деятельности центра и стратегическое планирование'
+    description: $t('contacts.departments.direction.description')
   },
   {
     icon: GlobeAltIcon,
-    name: 'Научный отдел',
+    name: $t('contacts.departments.science.name'),
     email: 'shaxr2107@gmail.com',
     phone: '+998 93 583-45-69',
-    description: 'Научные исследования и международное сотрудничество'
+    description: $t('contacts.departments.science.description')
   },
   {
     icon: EnvelopeIcon,
-    name: 'Общие вопросы',
+    name: $t('contacts.departments.general.name'),
     email: 'Aleksandr-svetashev@bk.ru',
     phone: '+998 90 992-77-03',
-    description: 'Организационные вопросы и образовательные программы'
+    description: $t('contacts.departments.general.description')
   }
 ])
 
-const faqs = ref([
+const faqs = computed(() => [
   {
-    question: 'Как можно сотрудничать с НИЦ "Инновационный транспорт"?',
-    answer: 'Мы приветствуем сотрудничество с академическими учреждениями, отраслевыми партнерами и государственными организациями. Свяжитесь с нашим отделом партнерств для обсуждения возможностей.'
+    question: $t('contacts.faq.q1.question'),
+    answer: $t('contacts.faq.q1.answer')
   },
   {
-    question: 'Предлагаете ли вы программы стажировки?',
-    answer: 'Да, мы предлагаем программы стажировки для студентов и молодых специалистов. Заявки рассматриваются ежеквартально. Проверьте наш раздел карьеры для актуальных вакансий.'
+    question: $t('contacts.faq.q2.question'),
+    answer: $t('contacts.faq.q2.answer')
   },
   {
-    question: 'Можно ли посетить ваши объекты?',
-    answer: 'Мы организуем экскурсии для образовательных и профессиональных групп. Пожалуйста, свяжитесь с нами минимум за две недели для планирования визита.'
+    question: $t('contacts.faq.q3.question'),
+    answer: $t('contacts.faq.q3.answer')
   },
   {
-    question: 'Как получить доступ к вашим исследовательским публикациям?',
-    answer: 'Большинство наших исследовательских публикаций доступны через академические базы данных и наш веб-сайт. Для конкретных запросов обращайтесь в наш научный отдел.'
+    question: $t('contacts.faq.q4.question'),
+    answer: $t('contacts.faq.q4.answer')
   }
 ])
 
@@ -130,9 +130,9 @@ const toggleFaq = (index) => {
     <section class="bg-gradient-to-r from-primary-600 to-secondary-600 py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center text-white" data-aos="fade-up">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">Контакты</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">{{ $t('contacts.title') }}</h1>
           <p class="text-xl max-w-3xl mx-auto">
-            Свяжитесь с нашей командой для обсуждения сотрудничества, партнерства или получения дополнительной информации о наших исследованиях
+            {{ $t('contacts.subtitle') }}
           </p>
         </div>
       </div>
@@ -161,7 +161,7 @@ const toggleFaq = (index) => {
               rel="noopener noreferrer"
               class="text-primary-600 hover:text-primary-700 font-medium"
             >
-              {{ info.title === 'Наш адрес' ? 'Посмотреть на карте' : 'Связаться' }}
+              {{ info.title === $t('contacts.info.address.title') ? $t('contacts.info.address.viewOnMap') : $t('contacts.info.phone.contact') }}
             </a>
           </div>
         </div>
@@ -174,12 +174,12 @@ const toggleFaq = (index) => {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <!-- Contact Form -->
           <div data-aos="fade-right">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Отправить сообщение</h2>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">{{ $t('contacts.form.title') }}</h2>
             <form @submit.prevent="submitForm" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Полное имя *
+                    {{ $t('contacts.form.name') }} {{ $t('contacts.form.required') }}
                   </label>
                   <input
                     id="name"
@@ -187,12 +187,12 @@ const toggleFaq = (index) => {
                     type="text"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Ваше полное имя"
+                    :placeholder="$t('contacts.form.namePlaceholder')"
                   >
                 </div>
                 <div>
                   <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                    Email адрес *
+                    {{ $t('contacts.form.email') }} {{ $t('contacts.form.required') }}
                   </label>
                   <input
                     id="email"
@@ -200,7 +200,7 @@ const toggleFaq = (index) => {
                     type="email"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="your.email@example.com"
+                    :placeholder="$t('contacts.form.emailPlaceholder')"
                   >
                 </div>
               </div>
@@ -208,33 +208,33 @@ const toggleFaq = (index) => {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="organization" class="block text-sm font-medium text-gray-700 mb-2">
-                    Организация
+                    {{ $t('contacts.form.organization') }}
                   </label>
                   <input
                     id="organization"
                     v-model="form.organization"
                     type="text"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Ваша организация"
+                    :placeholder="$t('contacts.form.organizationPlaceholder')"
                   >
                 </div>
                 <div>
                   <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                    Номер телефона
+                    {{ $t('contacts.form.phone') }}
                   </label>
                   <input
                     id="phone"
                     v-model="form.phone"
                     type="tel"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                    placeholder="+998 90 123-45-67"
+                    :placeholder="$t('contacts.form.phonePlaceholder')"
                   >
                 </div>
               </div>
 
               <div>
                 <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
-                  Тема *
+                  {{ $t('contacts.form.subject') }} {{ $t('contacts.form.required') }}
                 </label>
                 <input
                   id="subject"
@@ -242,13 +242,13 @@ const toggleFaq = (index) => {
                   type="text"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Краткая тема вашего сообщения"
+                  :placeholder="$t('contacts.form.subjectPlaceholder')"
                 >
               </div>
 
               <div>
                 <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                  Сообщение *
+                  {{ $t('contacts.form.message') }} {{ $t('contacts.form.required') }}
                 </label>
                 <textarea
                   id="message"
@@ -256,7 +256,7 @@ const toggleFaq = (index) => {
                   rows="6"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Расскажите нам о вашем запросе, проекте или идее сотрудничества..."
+                  :placeholder="$t('contacts.form.messagePlaceholder')"
                 ></textarea>
               </div>
 
@@ -266,16 +266,16 @@ const toggleFaq = (index) => {
                   :disabled="isSubmitting"
                   class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transform hover:scale-105"
                 >
-                  <span v-if="!isSubmitting && !isSubmitted">Отправить сообщение</span>
+                  <span v-if="!isSubmitting && !isSubmitted">{{ $t('contacts.form.submit') }}</span>
                   <span v-else-if="isSubmitting" class="flex items-center">
                     <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Отправка...
+                    {{ $t('contacts.form.sending') }}
                   </span>
                   <span v-else class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    Сообщение отправлено!
+                    {{ $t('contacts.form.sent') }}
                   </span>
                 </button>
               </div>
@@ -284,7 +284,7 @@ const toggleFaq = (index) => {
 
           <!-- University Location -->
           <div data-aos="fade-left">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">Наше местоположение</h2>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">{{ $t('contacts.location.title') }}</h2>
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d69.2401!3d41.2995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0x348f651b9b5d2c5a!2sTashkent%20State%20Transport%20University!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
@@ -299,7 +299,7 @@ const toggleFaq = (index) => {
               <div class="p-4 bg-gradient-to-r from-blue-50 to-purple-50">
                 <div class="flex items-center text-gray-700">
                   <MapPinIcon class="h-5 w-5 mr-2 text-primary-600" />
-                  <span class="font-medium">Ташкентский государственный транспортный университет</span>
+                  <span class="font-medium">{{ $t('contacts.map.universityName') }}</span>
                 </div>
                 <a
                   href="https://maps.google.com"
@@ -307,7 +307,7 @@ const toggleFaq = (index) => {
                   rel="noopener noreferrer"
                   class="inline-block mt-2 text-primary-600 hover:text-primary-700 font-medium"
                 >
-                  Открыть в Google Maps →
+                  {{ $t('contacts.map.openInGoogleMaps') }} →
                 </a>
               </div>
             </div>
@@ -320,9 +320,9 @@ const toggleFaq = (index) => {
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">Контакты отделов</h2>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">{{ $t('contacts.departments.title') }}</h2>
           <p class="text-xl text-gray-600">
-            Обращайтесь в конкретные отделы для специализированных запросов
+            {{ $t('contacts.departments.subtitle') }}
           </p>
         </div>
 
@@ -366,9 +366,9 @@ const toggleFaq = (index) => {
     <section class="py-20 bg-gray-50">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4">Часто задаваемые вопросы</h2>
+          <h2 class="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4">{{ $t('contacts.faq.title') }}</h2>
           <p class="text-xl text-gray-600">
-            Найдите ответы на распространенные вопросы о нашем исследовательском центре
+            {{ $t('contacts.faq.subtitle') }}
           </p>
         </div>
 

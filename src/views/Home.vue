@@ -208,8 +208,8 @@ onMounted(() => {
                     <CogIcon class="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div class="text-sm font-semibold text-gray-900">Управление процессами</div>
-                    <div class="text-xs text-gray-600">Оптимизация транспорта</div>
+                    <div class="text-sm font-semibold text-gray-900">{{ $t('home.hero.cards.management.title') }}</div>
+                    <div class="text-xs text-gray-600">{{ $t('home.hero.cards.management.subtitle') }}</div>
                   </div>
                 </div>
               </div>
@@ -220,8 +220,8 @@ onMounted(() => {
                     <LightBulbIcon class="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div class="text-sm font-semibold text-gray-900">Цифровизация</div>
-                    <div class="text-xs text-gray-600">Логистические системы</div>
+                    <div class="text-sm font-semibold text-gray-900">{{ $t('home.hero.cards.digitalization.title') }}</div>
+                    <div class="text-xs text-gray-600">{{ $t('home.hero.cards.digitalization.subtitle') }}</div>
                   </div>
                 </div>
               </div>
@@ -244,10 +244,10 @@ onMounted(() => {
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-4">
-            Наши достижения в цифрах
+            {{ $t('home.stats.title') }}
           </h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Результаты многолетней работы в области транспортных инноваций
+            {{ $t('home.stats.subtitle') }}
           </p>
         </div>
 
@@ -438,7 +438,7 @@ onMounted(() => {
                 <span v-if="!isSubscribed">{{ $t('home.newsletter.subscribe') }}</span>
                 <span v-else class="flex items-center">
                   <CheckCircleIcon class="w-5 h-5 mr-2" />
-                  Подписка оформлена!
+                  {{ $t('home.newsletter.subscribed') }}
                 </span>
               </button>
             </div>
@@ -498,7 +498,7 @@ onMounted(() => {
             @click.stop
           >
             <div class="flex justify-between items-center mb-6">
-              <h3 class="text-2xl font-bold text-gray-900">О НИЦ "Инновационный транспорт"</h3>
+              <h3 class="text-2xl font-bold text-gray-900">{{ $t('home.video.title') }}</h3>
               <button 
                 @click="closeVideoModal"
                 class="text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -511,8 +511,8 @@ onMounted(() => {
             <div class="aspect-video bg-gradient-to-br from-gray-900 to-gray-700 rounded-xl flex items-center justify-center">
               <div class="text-white text-center">
                 <PlayIcon class="h-16 w-16 mx-auto mb-4 opacity-80" />
-                <p class="text-lg">Презентационное видео о центре</p>
-                <p class="text-sm opacity-60 mt-2">Видео будет добавлено позже</p>
+                <p class="text-lg">{{ $t('home.video.description') }}</p>
+                <p class="text-sm opacity-60 mt-2">{{ $t('home.video.comingSoon') }}</p>
               </div>
             </div>
           </div>

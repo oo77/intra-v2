@@ -11,9 +11,21 @@
       "title": "INNOVATIVE TRANSPORT",
       "subtitle": "Creating an integrated scientific platform in transport and logistics, promoting sustainable development, innovation and training of highly qualified personnel",
       "exploreProjects": "Explore Projects",
-      "watchVideo": "Watch Video"
+      "watchVideo": "Watch Video",
+      "cards": {
+        "management": {
+          "title": "Process Management",
+          "subtitle": "Transport Optimization"
+        },
+        "digitalization": {
+          "title": "Digitalization",
+          "subtitle": "Logistics Systems"
+        }
+      }
     },
     "stats": {
+      "title": "Our Achievements in Numbers",
+      "subtitle": "Results of years of work in transport innovation",
       "activeProjects": "Active Projects",
       "researchPapers": "Research Papers",
       "industryPartners": "Industry Partners",
@@ -79,6 +91,7 @@
       "subtitle": "Subscribe to our newsletter for the latest research insights and industry updates",
       "placeholder": "Enter your email address",
       "subscribe": "Subscribe Now",
+      "subscribed": "Subscribed successfully!",
       "privacy": "We respect your privacy and never share your information."
     },
     "cta": {
@@ -86,6 +99,11 @@
       "subtitle": "Join us in shaping the future of logistics and transportation technology",
       "getInTouch": "Get In Touch",
       "learnMore": "Learn More"
+    },
+    "video": {
+      "title": "About INNOVATIVE TRANSPORT Research Center",
+      "description": "Presentation video about the center",
+      "comingSoon": "Video will be added later"
     }
   },
   "footer": {
@@ -96,5 +114,303 @@
     "phone": "+998 99 806-41-99",
     "email": "ilesaliev@mail.ru",
     "copyright": "© 2024 INNOVATIVE TRANSPORT Research Center. All rights reserved."
+  },
+  "about": {
+    "title": "About Our Center",
+    "subtitle": "INNOVATIVE TRANSPORT Research Center - a leading organization in the field of transport systems and logistics in Uzbekistan",
+    "mission": {
+      "title": "Our Mission",
+      "description": "Creating an integrated scientific platform in transport and logistics, promoting sustainable development, innovation and training of highly qualified personnel.",
+      "goalsTitle": "Our Goals:",
+      "goal1": "Development of scientific research in transport systems and logistics",
+      "goal2": "Implementation of innovative solutions in the industry",
+      "goal3": "Support for educational programs and professional development of specialists",
+      "goal4": "International cooperation in scientific and practical spheres"
+    },
+    "history": {
+      "title": "Development History",
+      "subtitle": "The journey from idea to leading research center in Uzbekistan"
+    },
+    "researchAreas": {
+      "title": "Main Areas of Activity",
+      "subtitle": "Key areas of our research and development activities",
+      "area1": {
+        "title": "Transport Process Management and Modeling",
+        "description": "Development of methods for optimizing transport systems and traffic management processes"
+      },
+      "area2": {
+        "title": "Digitalization of Logistics Systems",
+        "description": "Implementation of digital technologies in logistics processes and supply chain management"
+      },
+      "area3": {
+        "title": "Development of Regulatory and Methodological Materials",
+        "description": "Creation of standards, methodologies and recommendations for the transport industry"
+      },
+      "area4": {
+        "title": "Consulting, Expertise and Scientific Events",
+        "description": "Providing expert services and organizing scientific conferences and seminars"
+      }
+    },
+    "achievements": {
+      "title": "Our Achievements",
+      "subtitle": "Results of scientific and educational activities",
+      "publications": {
+        "title": "Scientific Publications",
+        "description": "Monographs, textbooks, scientific articles and recommendations"
+      },
+      "dissertations": {
+        "title": "Dissertations",
+        "description": "Defended doctoral and candidate dissertations under the center's supervision"
+      },
+      "partnerships": {
+        "title": "Partnerships",
+        "description": "Collaboration with leading universities and enterprises"
+      },
+      "international": {
+        "title": "International Cooperation",
+        "description": "Joint projects with foreign partners"
+      }
+    },
+    "team": {
+      "title": "Our Team",
+      "subtitle": "Leading specialists in transport and logistics",
+      "clickForDetails": "Click for details",
+      "contactInfo": "Contact Information",
+      "biography": "Biography",
+      "education": "Education and Qualifications",
+      "experience": "Professional Experience",
+      "publications": "Main Publications",
+      "achievements": "Achievements and Recognition"
+    }
+  },
+  "contacts": {
+    "title": "Contacts",
+    "subtitle": "Contact our team to discuss collaboration, partnership or get additional information about our research",
+    "info": {
+      "address": {
+        "title": "Our Address",
+        "content": "Tashkent State Transport University, Uzbekistan",
+        "viewOnMap": "View on map"
+      },
+      "phone": {
+        "title": "Director's Phone",
+        "content": "+998 99 806-41-99",
+        "contact": "Contact"
+      },
+      "email": {
+        "title": "Email",
+        "content": "ilesaliev@mail.ru"
+      },
+      "hours": {
+        "title": "Working Hours",
+        "content": "Mon-Fri: 9:00 - 18:00"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "name": "Full Name",
+      "email": "Email Address",
+      "organization": "Organization",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Message",
+      "namePlaceholder": "Your full name",
+      "emailPlaceholder": "your.email@example.com",
+      "organizationPlaceholder": "Your organization",
+      "phonePlaceholder": "+998 90 123-45-67",
+      "subjectPlaceholder": "Brief subject of your message",
+      "messagePlaceholder": "Tell us about your request, project or collaboration idea...",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "sent": "Message sent!",
+      "required": "*"
+    },
+    "location": {
+      "title": "Our Location",
+      "university": "Tashkent State Transport University",
+      "openInMaps": "Open in Google Maps"
+    },
+    "departments": {
+      "title": "Department Contacts",
+      "subtitle": "Contact specific departments for specialized inquiries",
+      "direction": {
+        "name": "Directorate",
+        "description": "General issues of center activities and strategic planning"
+      },
+      "science": {
+        "name": "Scientific Department",
+        "description": "Scientific research and international cooperation"
+      },
+      "general": {
+        "name": "General Issues",
+        "description": "Organizational issues and educational programs"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions about our research center",
+      "q1": {
+        "question": "How can I collaborate with INNOVATIVE TRANSPORT Research Center?",
+        "answer": "We welcome collaboration with academic institutions, industry partners and government organizations. Contact our partnerships department to discuss opportunities."
+      },
+      "q2": {
+        "question": "Do you offer internship programs?",
+        "answer": "Yes, we offer internship programs for students and young professionals. Applications are reviewed quarterly. Check our careers section for current openings."
+      },
+      "q3": {
+        "question": "Can I visit your facilities?",
+        "answer": "We organize tours for educational and professional groups. Please contact us at least two weeks in advance to plan your visit."
+      },
+      "q4": {
+        "question": "How can I access your research publications?",
+        "answer": "Most of our research publications are available through academic databases and our website. For specific requests, contact our scientific department."
+      }
+    },
+    "map": {
+      "universityName": "Tashkent State Transport University",
+      "openInGoogleMaps": "Open in Google Maps"
+    }
+  },
+  "projects": {
+    "title": "Our Projects",
+    "subtitle": "Explore our cutting-edge research projects that are shaping the future of transportation and logistics",
+    "filters": {
+      "all": "All",
+      "autonomousVehicles": "Autonomous Vehicles",
+      "supplyChain": "Supply Chain",
+      "sustainability": "Sustainability",
+      "urbanPlanning": "Urban Planning",
+      "autonomousSystems": "Autonomous Systems",
+      "infrastructure": "Infrastructure"
+    },
+    "status": {
+      "active": "Active",
+      "completed": "Completed",
+      "planning": "Planning"
+    },
+    "viewDetails": "View Details",
+    "duration": "Duration",
+    "team": "Team",
+    "modal": {
+      "overview": "Project Overview",
+      "objectives": "Key Objectives",
+      "technologies": "Technologies Used",
+      "impact": "Expected Impact"
+    }
+  },
+  "partners": {
+    "title": "Our Partners",
+    "subtitle": "Collaboration with leading universities, industry companies and international organizations for the development of transport technologies",
+    "stats": {
+      "partnerships": {
+        "value": "8+",
+        "name": "Active Partnerships",
+        "description": "Current cooperation agreements"
+      },
+      "countries": {
+        "value": "6+",
+        "name": "Countries",
+        "description": "International presence and coverage"
+      },
+      "projects": {
+        "value": "15+",
+        "name": "Joint Projects",
+        "description": "Implemented research initiatives"
+      },
+      "years": {
+        "value": "8+",
+        "name": "Years of Cooperation",
+        "description": "Cumulative partnership experience"
+      }
+    },
+    "categories": {
+      "all": "All",
+      "international": "International Organizations",
+      "educational": "Educational Institutions",
+      "transport": "Transport Companies",
+      "labs": "Research Laboratories",
+      "events": "Scientific Events",
+      "centers": "Research Centers",
+      "associations": "Industry Associations"
+    },
+    "partnership": "Partnership",
+    "since": "Since",
+    "visitWebsite": "Visit Website",
+    "opportunities": {
+      "title": "Partnership Opportunities",
+      "subtitle": "Join our network of partners and collaborate with us in shaping the future of transport and logistics",
+      "research": {
+        "title": "Scientific Cooperation",
+        "description": "Participate in joint research projects and innovative initiatives."
+      },
+      "industry": {
+        "title": "Industry Partnership",
+        "description": "Join our industry network to develop practical solutions."
+      },
+      "education": {
+        "title": "Educational Programs",
+        "description": "Collaborate in training and professional development of specialists."
+      },
+      "becomePartner": "Become a Partner"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "reset": "Reset",
+    "apply": "Apply",
+    "download": "Download",
+    "upload": "Upload",
+    "share": "Share",
+    "copy": "Copy",
+    "print": "Print",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh",
+    "retry": "Retry",
+    "viewMore": "View More",
+    "viewLess": "View Less",
+    "readMore": "Read More",
+    "readLess": "Read Less",
+    "showAll": "Show All",
+    "hideAll": "Hide All",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "noData": "No Data",
+    "noResults": "No Results Found",
+    "notFound": "Not Found",
+    "comingSoon": "Coming Soon",
+    "underConstruction": "Under Construction",
+    "maintenance": "Maintenance",
+    "offline": "Offline",
+    "online": "Online",
+    "yes": "Yes",
+    "no": "No",
+    "maybe": "Maybe",
+    "unknown": "Unknown",
+    "optional": "Optional",
+    "required": "Required",
+    "recommended": "Recommended",
+    "deprecated": "Deprecated",
+    "new": "New",
+    "updated": "Updated",
+    "beta": "Beta",
+    "alpha": "Alpha",
+    "stable": "Stable",
+    "experimental": "Experimental",
+    "preview": "Preview"
   }
 }

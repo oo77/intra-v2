@@ -21,11 +21,11 @@ const routes = [
     name: 'Projects',
     component: Projects
   },
-  {
-    path: '/partners',
-    name: 'Partners',
-    component: Partners
-  },
+  // {
+  //   path: '/partners',
+  //   name: 'Partners',
+  //   component: Partners
+  // },
   {
     path: '/contacts',
     name: 'Contacts',

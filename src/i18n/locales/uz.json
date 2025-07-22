@@ -11,9 +11,21 @@
       "title": "INNOVATSION TRANSPORT",
       "subtitle": "Transport va logistika sohasida integratsion ilmiy platformani yaratish, barqaror rivojlanish, innovatsiyalar va yuqori malakali kadrlar tayyorlashga yordam berish",
       "exploreProjects": "Loyihalarni o'rganish",
-      "watchVideo": "Video ko'rish"
+      "watchVideo": "Video ko'rish",
+      "cards": {
+        "management": {
+          "title": "Jarayonlarni boshqarish",
+          "subtitle": "Transportni optimallashtirish"
+        },
+        "digitalization": {
+          "title": "Raqamlashtirish",
+          "subtitle": "Logistika tizimlari"
+        }
+      }
     },
     "stats": {
+      "title": "Raqamlarda bizning yutuqlarimiz",
+      "subtitle": "Transport innovatsiyalari sohasidagi ko'p yillik ish natijalari",
       "activeProjects": "Faol loyihalar",
       "researchPapers": "Tadqiqot ishlari",
       "industryPartners": "Hamkorlar",
@@ -79,6 +91,7 @@
       "subtitle": "Eng so'nggi tadqiqot g'oyalari va sanoat yangilanishlari uchun bizning axborot byulletenimizga obuna bo'ling",
       "placeholder": "Email manzilingizni kiriting",
       "subscribe": "Hozir obuna bo'ling",
+      "subscribed": "Muvaffaqiyatli obuna bo'ldingiz!",
       "privacy": "Biz sizning maxfiyligingizni hurmat qilamiz va hech qachon ma'lumotlaringizni baham ko'rmaymiz."
     },
     "cta": {
@@ -86,6 +99,11 @@
       "subtitle": "Logistika va transport texnologiyalarining kelajagini shakllantirishda bizga qo'shiling",
       "getInTouch": "Bog'lanish",
       "learnMore": "Ko'proq bilish"
+    },
+    "video": {
+      "title": "INNOVATSION TRANSPORT Tadqiqot markazi haqida",
+      "description": "Markaz haqida taqdimot videosi",
+      "comingSoon": "Video keyinroq qo'shiladi"
     }
   },
   "footer": {
@@ -96,5 +114,244 @@
     "phone": "+998 99 806-41-99",
     "email": "ilesaliev@mail.ru",
     "copyright": "© 2024 INNOVATSION TRANSPORT Tadqiqot markazi. Barcha huquqlar himoyalangan."
+  },
+  "about": {
+    "title": "Bizning markaz haqida",
+    "subtitle": "INNOVATSION TRANSPORT Tadqiqot markazi - O'zbekistonda transport tizimlari va logistika sohasidagi yetakchi tashkilot",
+    "mission": {
+      "title": "Bizning missiyamiz",
+      "description": "Transport va logistika sohasida integratsion ilmiy platformani yaratish, barqaror rivojlanish, innovatsiyalar va yuqori malakali kadrlar tayyorlashga yordam berish.",
+      "goalsTitle": "Bizning maqsadlarimiz:",
+      "goal1": "Transport tizimlari va logistika sohasida ilmiy tadqiqotlarni rivojlantirish",
+      "goal2": "Sohaga innovatsion yechimlarni joriy etish",
+      "goal3": "Ta'lim dasturlari va mutaxassislarning malakasini oshirishni qo'llab-quvvatlash",
+      "goal4": "Ilmiy va amaliy sohalarda xalqaro hamkorlik"
+    },
+    "history": {
+      "title": "Rivojlanish tarixi",
+      "subtitle": "G'oyadan O'zbekistonning yetakchi ilmiy markazigacha bo'lgan yo'l"
+    },
+    "researchAreas": {
+      "title": "Asosiy faoliyat yo'nalishlari",
+      "subtitle": "Tadqiqot va ishlanmalar faoliyatimizning asosiy sohalari",
+      "area1": {
+        "title": "Transport jarayonlarini boshqarish va modellashtirish",
+        "description": "Transport tizimlarini optimallashtirish va yuk tashish jarayonlarini boshqarish usullarini ishlab chiqish"
+      },
+      "area2": {
+        "title": "Logistika tizimlarini raqamlashtirish",
+        "description": "Logistika jarayonlari va ta'minot zanjiri boshqaruviga raqamli texnologiyalarni joriy etish"
+      },
+      "area3": {
+        "title": "Me'yoriy va metodologik materiallar ishlab chiqish",
+        "description": "Transport sohasi uchun standartlar, metodikalar va tavsiyalar yaratish"
+      },
+      "area4": {
+        "title": "Konsalting, ekspertiza va ilmiy tadbirlar",
+        "description": "Ekspert xizmatlarini ko'rsatish va ilmiy konferensiyalar va seminarlar tashkil etish"
+      }
+    },
+    "achievements": {
+      "title": "Bizning yutuqlarimiz",
+      "subtitle": "Ilmiy va ta'lim faoliyati natijalari",
+      "publications": {
+        "title": "Ilmiy nashrlar",
+        "description": "Monografiyalar, darsliklar, ilmiy maqolalar va tavsiyalar"
+      },
+      "dissertations": {
+        "title": "Dissertatsiyalar",
+        "description": "Markaz rahbarligida himoya qilingan doktorlik va nomzodlik dissertatsiyalari"
+      },
+      "partnerships": {
+        "title": "Hamkorliklar",
+        "description": "Yetakchi universitetlar va korxonalar bilan hamkorlik"
+      },
+      "international": {
+        "title": "Xalqaro hamkorlik",
+        "description": "Xorijiy hamkorlar bilan qo'shma loyihalar"
+      }
+    },
+    "team": {
+      "title": "Bizning jamoamiz",
+      "subtitle": "Transport va logistika sohasidagi yetakchi mutaxassislar",
+      "clickForDetails": "Tafsilotlar uchun bosing",
+      "contactInfo": "Aloqa ma'lumotlari",
+      "biography": "Biografiya",
+      "education": "Ta'lim va malaka",
+      "experience": "Kasbiy tajriba",
+      "publications": "Asosiy nashrlar",
+      "achievements": "Yutuqlar va e'tirof"
+    }
+  },
+  "contacts": {
+    "title": "Aloqa",
+    "subtitle": "Hamkorlik, sheriklik yoki tadqiqotlarimiz haqida qo'shimcha ma'lumot olish uchun jamoamiz bilan bog'laning",
+    "info": {
+      "address": {
+        "title": "Bizning manzilimiz",
+        "content": "Toshkent davlat transport universiteti, O'zbekiston",
+        "viewOnMap": "Xaritada ko'rish"
+      },
+      "phone": {
+        "title": "Direktor telefoni",
+        "content": "+998 99 806-41-99",
+        "contact": "Bog'lanish"
+      },
+      "email": {
+        "title": "Elektron pochta",
+        "content": "ilesaliev@mail.ru"
+      },
+      "hours": {
+        "title": "Ish vaqti",
+        "content": "Du-Ju: 9:00 - 18:00"
+      }
+    },
+    "form": {
+      "title": "Xabar yuborish",
+      "name": "To'liq ism",
+      "email": "Email manzil",
+      "organization": "Tashkilot",
+      "phone": "Telefon raqami",
+      "subject": "Mavzu",
+      "message": "Xabar",
+      "namePlaceholder": "Sizning to'liq ismingiz",
+      "emailPlaceholder": "your.email@example.com",
+      "organizationPlaceholder": "Sizning tashkilotingiz",
+      "phonePlaceholder": "+998 90 123-45-67",
+      "subjectPlaceholder": "Xabaringizning qisqa mavzusi",
+      "messagePlaceholder": "So'rovingiz, loyihangiz yoki hamkorlik g'oyangiz haqida bizga ayting...",
+      "submit": "Xabar yuborish",
+      "sending": "Yuborilmoqda...",
+      "sent": "Xabar yuborildi!",
+      "required": "*"
+    },
+    "location": {
+      "title": "Bizning joylashuvimiz",
+      "university": "Toshkent davlat transport universiteti",
+      "openInMaps": "Google Maps da ochish"
+    },
+    "departments": {
+      "title": "Bo'limlar aloqasi",
+      "subtitle": "Maxsus so'rovlar uchun tegishli bo'limlarga murojaat qiling",
+      "direction": {
+        "name": "Direksiya",
+        "description": "Markaz faoliyatining umumiy masalalari va strategik rejalashtirish"
+      },
+      "science": {
+        "name": "Ilmiy bo'lim",
+        "description": "Ilmiy tadqiqotlar va xalqaro hamkorlik"
+      },
+      "general": {
+        "name": "Umumiy masalalar",
+        "description": "Tashkiliy masalalar va ta'lim dasturlari"
+      }
+    },
+    "faq": {
+      "title": "Tez-tez beriladigan savollar",
+      "subtitle": "Tadqiqot markazimiz haqida umumiy savollarga javoblarni toping",
+      "q1": {
+        "question": "INNOVATSION TRANSPORT Tadqiqot markazi bilan qanday hamkorlik qilish mumkin?",
+        "answer": "Biz akademik muassasalar, sanoat hamkorlari va davlat tashkilotlari bilan hamkorlikni mamnuniyat bilan qabul qilamiz. Imkoniyatlarni muhokama qilish uchun hamkorlik bo'limiga murojaat qiling."
+      },
+      "q2": {
+        "question": "Siz amaliyot dasturlarini taklif qilasizmi?",
+        "answer": "Ha, biz talabalar va yosh mutaxassislar uchun amaliyot dasturlarini taklif qilamiz. Arizalar har chorakda ko'rib chiqiladi. Joriy bo'sh o'rinlar uchun karyera bo'limini tekshiring."
+      },
+      "q3": {
+        "question": "Sizning ob'ektlaringizga tashrif buyurish mumkinmi?",
+        "answer": "Biz ta'lim va professional guruhlar uchun ekskursiyalar tashkil qilamiz. Tashrifingizni rejalashtirish uchun kamida ikki hafta oldin biz bilan bog'laning."
+      },
+      "q4": {
+        "question": "Tadqiqot nashrlaringizga qanday kirish mumkin?",
+        "answer": "Tadqiqot nashrlarimizning aksariyati akademik ma'lumotlar bazalari va veb-saytimiz orqali mavjud. Maxsus so'rovlar uchun ilmiy bo'limga murojaat qiling."
+      }
+    },
+    "map": {
+      "universityName": "Toshkent davlat transport universiteti",
+      "openInGoogleMaps": "Google Maps da ochish"
+    }
+  },
+  "projects": {
+    "title": "Bizning loyihalarimiz",
+    "subtitle": "Transport va logistikaning kelajagini shakllantiruvchi ilg'or tadqiqot loyihalarimizni o'rganing",
+    "filters": {
+      "all": "Barchasi",
+      "autonomousVehicles": "Avtonom transport vositalari",
+      "supplyChain": "Ta'minot zanjiri",
+      "sustainability": "Barqaror rivojlanish",
+      "urbanPlanning": "Shahar rejalashtirish",
+      "autonomousSystems": "Avtonom tizimlar",
+      "infrastructure": "Infratuzilma"
+    },
+    "status": {
+      "active": "Faol",
+      "completed": "Tugallangan",
+      "planning": "Rejalashtirilmoqda"
+    },
+    "viewDetails": "Tafsilotlarni ko'rish",
+    "duration": "Davomiyligi",
+    "team": "Jamoa",
+    "modal": {
+      "overview": "Loyiha sharhi",
+      "objectives": "Asosiy maqsadlar",
+      "technologies": "Foydalanilgan texnologiyalar",
+      "impact": "Kutilayotgan ta'sir"
+    }
+  },
+  "partners": {
+    "title": "Bizning hamkorlarimiz",
+    "subtitle": "Transport texnologiyalarini rivojlantirish uchun yetakchi universitetlar, sanoat kompaniyalari va xalqaro tashkilotlar bilan hamkorlik",
+    "stats": {
+      "partnerships": {
+        "value": "8+",
+        "name": "Faol hamkorliklar",
+        "description": "Joriy hamkorlik shartnomalar"
+      },
+      "countries": {
+        "value": "6+",
+        "name": "Mamlakatlar",
+        "description": "Xalqaro mavjudlik va qamrov"
+      },
+      "projects": {
+        "value": "15+",
+        "name": "Qo'shma loyihalar",
+        "description": "Amalga oshirilgan tadqiqot tashabbuslari"
+      },
+      "years": {
+        "value": "8+",
+        "name": "Hamkorlik yillari",
+        "description": "Umumiy hamkorlik tajribasi"
+      }
+    },
+    "categories": {
+      "all": "Barchasi",
+      "international": "Xalqaro tashkilotlar",
+      "educational": "Ta'lim muassasalari",
+      "transport": "Transport kompaniyalari",
+      "labs": "Tadqiqot laboratoriyalari",
+      "events": "Ilmiy tadbirlar",
+      "centers": "Tadqiqot markazlari",
+      "associations": "Sanoat uyushmalari"
+    },
+    "partnership": "Hamkorlik",
+    "since": "Dan beri",
+    "visitWebsite": "Veb-saytga tashrif",
+    "opportunities": {
+      "title": "Hamkorlik imkoniyatlari",
+      "subtitle": "Hamkorlar tarmog'imizga qo'shiling va transport va logistikaning kelajagini shakllantirishda biz bilan hamkorlik qiling",
+      "research": {
+        "title": "Ilmiy hamkorlik",
+        "description": "Qo'shma tadqiqot loyihalari va innovatsion tashabbuslarda ishtirok eting."
+      },
+      "industry": {
+        "title": "Sanoat hamkorligi",
+        "description": "Amaliy yechimlar ishlab chiqish uchun sanoat tarmog'imizga qo'shiling."
+      },
+      "education": {
+        "title": "Ta'lim dasturlari",
+        "description": "Kadrlar tayyorlash va mutaxassislarning malakasini oshirishda hamkorlik qiling."
+      },
+      "becomePartner": "Hamkor bo'lish"
+    }
   }
 }

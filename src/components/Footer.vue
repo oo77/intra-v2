@@ -48,7 +48,7 @@ const $t = t
           <ul class="space-y-2">
             <li><a href="/about" class="text-gray-300 hover:text-blue-400 transition-colors duration-200">{{ $t('nav.about') }}</a></li>
             <li><a href="/projects" class="text-gray-300 hover:text-purple-400 transition-colors duration-200">{{ $t('nav.projects') }}</a></li>
-            <li><a href="/partners" class="text-gray-300 hover:text-pink-400 transition-colors duration-200">{{ $t('nav.partners') }}</a></li>
+            <!-- <li><a href="/partners" class="text-gray-300 hover:text-pink-400 transition-colors duration-200">{{ $t('nav.partners') }}</a></li> -->
             <li><a href="/contacts" class="text-gray-300 hover:text-green-400 transition-colors duration-200">{{ $t('nav.contacts') }}</a></li>
           </ul>
         </div>
