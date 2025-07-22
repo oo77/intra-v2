@@ -112,7 +112,7 @@
     "contactInfo": "Contact Info",
     "address": "Tashkent State Transport University, Uzbekistan",
     "phone": "+998 99 806-41-99",
-    "email": "ilesaliev@mail.ru",
+    "email": "ilesaliev{'@'}mail.ru",
     "copyright": "© 2024 INNOVATIVE TRANSPORT Research Center. All rights reserved."
   },
   "about": {
@@ -199,7 +199,7 @@
       },
       "email": {
         "title": "Email",
-        "content": "ilesaliev@mail.ru"
+        "content": "ilesaliev{'@'}mail.ru"
       },
       "hours": {
         "title": "Working Hours",
@@ -215,7 +215,7 @@
       "subject": "Subject",
       "message": "Message",
       "namePlaceholder": "Your full name",
-      "emailPlaceholder": "your.email@example.com",
+      "emailPlaceholder": "your.email{'@'}example.com",
       "organizationPlaceholder": "Your organization",
       "phonePlaceholder": "+998 90 123-45-67",
       "subjectPlaceholder": "Brief subject of your message",

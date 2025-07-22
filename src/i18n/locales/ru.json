@@ -112,7 +112,7 @@
     "contactInfo": "Контактная информация",
     "address": "Ташкентский государственный транспортный университет, Узбекистан",
     "phone": "+998 99 806-41-99",
-    "email": "ilesaliev@mail.ru",
+    "email": "ilesaliev{'@'}mail.ru",
     "copyright": "© 2024 Исследовательский центр ИННОВАЦИОННЫЙ ТРАНСПОРТ. Все права защищены."
   },
   "about": {
@@ -215,7 +215,7 @@
       "subject": "Тема",
       "message": "Сообщение",
       "namePlaceholder": "Ваше полное имя",
-      "emailPlaceholder": "your.email@example.com",
+      "emailPlaceholder": "your.email{'@'}example.com",
       "organizationPlaceholder": "Ваша организация",
       "phonePlaceholder": "+998 90 123-45-67",
       "subjectPlaceholder": "Краткая тема вашего сообщения",
