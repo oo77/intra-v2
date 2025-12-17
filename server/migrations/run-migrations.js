@@ -1,6 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const { pool, testConnection } = require('../config/database');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { pool, testConnection } from '../config/database.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function runMigrations() {
     console.log('🚀 Запуск миграций базы данных...\n');
@@ -12,7 +16,7 @@ async function runMigrations() {
         process.exit(1);
     }
 
-    const migrationsDir = path.join(__dirname);
+    const migrationsDir = __dirname;
     const migrationFiles = fs.readdirSync(migrationsDir)
         .filter(file => file.endsWith('.sql'))
         .sort();

@@ -1,11 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { testConnection } from './config/database.js';
+import teamRoutes from './routes/team.js';
+import projectsRoutes from './routes/projects.js';
+import galleryRoutes from './routes/gallery.js';
 
-const { testConnection } = require('./config/database');
-const teamRoutes = require('./routes/team');
-const projectsRoutes = require('./routes/projects');
-const galleryRoutes = require('./routes/gallery');
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;

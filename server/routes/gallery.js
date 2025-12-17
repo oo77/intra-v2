@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import { query, transaction } from '../config/database.js';
+
 const router = express.Router();
-const { query, transaction } = require('../config/database');
 
 // Получить всю галерею
 router.get('/', async (req, res) => {
@@ -121,4 +122,4 @@ router.put('/reorder', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

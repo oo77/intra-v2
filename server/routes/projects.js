@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import { query, transaction } from '../config/database.js';
+
 const router = express.Router();
-const { query, transaction } = require('../config/database');
 
 // Получить все проекты
 router.get('/', async (req, res) => {
@@ -163,4 +164,4 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
