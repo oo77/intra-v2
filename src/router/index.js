@@ -6,6 +6,7 @@ import Partners from '@/views/Partners.vue'
 import Contacts from '@/views/Contacts.vue'
 import TeamAdmin from '@/views/TeamAdmin.vue'
 import ProjectsAdmin from '@/views/ProjectsAdmin.vue'
+import GalleryAdmin from '@/views/GalleryAdmin.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/admin/projects',
     name: 'ProjectsAdmin',
     component: ProjectsAdmin
+  },
+  {
+    path: '/admin/gallery',
+    name: 'GalleryAdmin',
+    component: GalleryAdmin
   }
 ]
 

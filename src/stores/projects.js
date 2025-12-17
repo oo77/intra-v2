@@ -1,0 +1,109 @@
+import { defineStore } from 'pinia'
+import { projectsAPI } from '@/api/client'
+
+export const useProjectsStore = defineStore('projects', {
+    state: () => ({
+        projects: [],
+        loading: false,
+        error: null,
+        lastFetch: null
+    }),
+
+    getters: {
+        allProjects: (state) => state.projects,
+        getProjectById: (state) => (id) => state.projects.find(p => p.id === id),
+        activeProjects: (state) => state.projects.filter(p => p.status === 'Active'),
+        completedProjects: (state) => state.projects.filter(p => p.status === 'Completed'),
+        isLoading: (state) => state.loading,
+        hasError: (state) => !!state.error
+    },
+
+    actions: {
+        // Загрузить все проекты
+        async fetchProjects(force = false) {
+            // Кэширование
+            if (!force && this.lastFetch && Date.now() - this.lastFetch < 5 * 60 * 1000) {
+                console.log('📦 Используем кэшированные данные проектов')
+                return
+            }
+
+            this.loading = true
+            this.error = null
+
+            try {
+                const response = await projectsAPI.getAll()
+                this.projects = response.data
+                this.lastFetch = Date.now()
+                console.log('✅ Проекты загружены из базы данных')
+            } catch (error) {
+                this.error = error.message
+                console.error('❌ Ошибка загрузки проектов:', error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        // Создать или обновить проект
+        async saveProject(projectData) {
+            this.loading = true
+            this.error = null
+
+            try {
+                const response = await projectsAPI.update(projectData)
+
+                // Обновляем локальное состояние
+                const index = this.projects.findIndex(p => p.id === projectData.id)
+                if (index !== -1) {
+                    this.projects[index] = projectData
+                } else {
+                    // Если это новый проект, добавляем его с ID из ответа
+                    this.projects.push({ ...projectData, id: response.data.id })
+                }
+
+                console.log('✅ Проект сохранен в базу данных')
+                return response.data
+            } catch (error) {
+                this.error = error.message
+                console.error('❌ Ошибка сохранения проекта:', error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        // Удалить проект
+        async deleteProject(id) {
+            this.loading = true
+            this.error = null
+
+            try {
+                await projectsAPI.delete(id)
+
+                // Удаляем из локального состояния
+                this.projects = this.projects.filter(p => p.id !== id)
+
+                console.log('✅ Проект удален из базы данных')
+            } catch (error) {
+                this.error = error.message
+                console.error('❌ Ошибка удаления проекта:', error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        // Очистить ошибку
+        clearError() {
+            this.error = null
+        },
+
+        // Сбросить состояние
+        reset() {
+            this.projects = []
+            this.loading = false
+            this.error = null
+            this.lastFetch = null
+        }
+    }
+})

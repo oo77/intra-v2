@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import TeamMemberCard from '@/components/TeamMemberCard.vue'
 import { getTeamMembersByLanguage } from '@/data/teamData.js'
 import { historyMilestones, achievements, researchAreas, getLocalizedData } from '@/data/aboutData.js'
@@ -7,6 +7,18 @@ import { useI18n } from 'vue-i18n'
 
 const { t, locale } = useI18n()
 const selectedMember = ref(null)
+const galleryData = ref({ row1: [], row2: [] })
+
+// Загрузка галереи
+onMounted(async () => {
+  try {
+    const timestamp = new Date().getTime()
+    const response = await fetch(`/gallery.json?t=${timestamp}`)
+    galleryData.value = await response.json()
+  } catch (error) {
+    console.error('Ошибка загрузки галереи:', error)
+  }
+})
 
 // Локализованные данные с использованием импортированных данных
 const localizedHistoryMilestones = computed(() => getLocalizedData(historyMilestones, locale.value))
@@ -196,90 +208,28 @@ const closeMemberModal = () => {
       <div class="relative mb-8">
         <div class="flex animate-scroll-right space-x-6">
           <div class="flex space-x-6 min-w-max">
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+            <div 
+              v-for="image in galleryData.row1" 
+              :key="image.id"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+            >
               <img 
-                src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Лаборатория 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Исследования 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Команда работает 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Технологии 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Оборудование 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Конференция 1" 
+                :src="image.url" 
+                :alt="image.alt[locale] || image.alt.ru" 
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               >
             </div>
           </div>
           <!-- Дублируем для бесшовной анимации -->
           <div class="flex space-x-6 min-w-max">
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+            <div 
+              v-for="image in galleryData.row1" 
+              :key="`dup-${image.id}`"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+            >
               <img 
-                src="https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Лаборатория 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Исследования 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Команда работает 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Технологии 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Оборудование 1" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Конференция 1" 
+                :src="image.url" 
+                :alt="image.alt[locale] || image.alt.ru" 
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               >
             </div>
@@ -291,90 +241,28 @@ const closeMemberModal = () => {
       <div class="relative">
         <div class="flex animate-scroll-left space-x-6">
           <div class="flex space-x-6 min-w-max">
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+            <div 
+              v-for="image in galleryData.row2" 
+              :key="image.id"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+            >
               <img 
-                src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Презентация 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Анализ данных 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Совещание 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Эксперимент 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Разработка 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Инновации 2" 
+                :src="image.url" 
+                :alt="image.alt[locale] || image.alt.ru" 
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               >
             </div>
           </div>
           <!-- Дублируем для бесшовной анимации -->
           <div class="flex space-x-6 min-w-max">
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+            <div 
+              v-for="image in galleryData.row2" 
+              :key="`dup-${image.id}`"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+            >
               <img 
-                src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Презентация 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Анализ данных 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Совещание 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Эксперимент 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Разработка 2" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
-            <div class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-              <img 
-                src="https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                alt="Инновации 2" 
+                :src="image.url" 
+                :alt="image.alt[locale] || image.alt.ru" 
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               >
             </div>

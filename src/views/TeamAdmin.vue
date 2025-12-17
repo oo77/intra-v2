@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { uploadImageToCloudinary, isCloudinaryConfigured } from '@/utils/imageUpload.js'
 
 const teamMembers = ref({})
 const currentMember = ref(null)
@@ -161,16 +162,40 @@ const removeField = (lang, field, index) => {
 }
 
 // Обработка загрузки изображения
-const handleImageUpload = (event) => {
+const handleImageUpload = async (event) => {
   const file = event.target.files[0]
-  if (file) {
-    uploadedImage.value = file
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      imagePreview.value = e.target.result
-      formData.value.image = e.target.result
-    }
-    reader.readAsDataURL(file)
+  if (!file) return
+
+  // Проверяем конфигурацию Cloudinary
+  if (!isCloudinaryConfigured()) {
+    alert('⚠️ Cloudinary не настроен!\n\nПожалуйста, настройте Cloudinary в файле:\nsrc/utils/imageUpload.js\n\nИнструкция находится в комментариях файла.')
+    return
+  }
+
+  try {
+    isSaving.value = true
+    saveStatus.value = 'uploading'
+
+    // Загружаем в Cloudinary с SEO-оптимизацией
+    const result = await uploadImageToCloudinary(file, {
+      folder: 'intra-v2/team',
+      onProgress: (progress) => {
+        console.log(`Загрузка: ${progress}%`)
+      }
+    })
+
+    // Используем оптимизированный URL
+    imagePreview.value = result.optimizedUrl
+    formData.value.image = result.optimizedUrl
+
+    saveStatus.value = 'success'
+    alert(`✅ Изображение загружено и оптимизировано!\n\n📊 Информация:\n- Формат: ${result.format} (автоматически WebP/AVIF)\n- Размер: ${Math.round(result.size / 1024)} KB\n- Разрешение: ${result.width}x${result.height}\n- SEO: Оптимизировано для быстрой загрузки`)
+  } catch (error) {
+    console.error('Ошибка загрузки:', error)
+    saveStatus.value = 'error'
+    alert('❌ Ошибка загрузки изображения: ' + error.message)
+  } finally {
+    isSaving.value = false
   }
 }
 
