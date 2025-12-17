@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "title": {
+      "en": "Autonomous Fleet Management System",
+      "ru": "Система управления автономным автопарком",
+      "uz": "Avtonom avtoparkni boshqarish tizimi"
+    },
+    "description": {
+      "en": "Advanced AI-powered system for managing autonomous vehicle fleets in urban environments.",
+      "ru": "Передовая система на основе ИИ для управления автономными автопарками в городской среде.",
+      "uz": "Shahar muhitida avtonom transport vositalarini boshqarish uchun sun'iy intellektga asoslangan ilg'or tizim."
+    },
+    "image": "https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "category": {
+      "en": "Autonomous Vehicles",
+      "ru": "Автономные транспортные средства",
+      "uz": "Avtonom transport vositalari"
+    },
+    "status": "Active",
+    "duration": "2023-2025",
+    "team": "Dr. Sarah Johnson, Prof. Michael Chen",
+    "details": {
+      "overview": {
+        "en": "This project focuses on developing a comprehensive fleet management system for autonomous vehicles operating in complex urban environments. The system utilizes advanced machine learning algorithms to optimize routes, manage vehicle maintenance, and ensure passenger safety.",
+        "ru": "Этот проект направлен на разработку комплексной системы управления автопарком автономных транспортных средств, работающих в сложных городских условиях. Система использует передовые алгоритмы машинного обучения для оптимизации маршрутов, управления техническим обслуживанием и обеспечения безопасности пассажиров.",
+        "uz": "Ushbu loyiha murakkab shahar muhitida ishlaydigan avtonom transport vositalarini boshqarish uchun keng qamrovli tizimni ishlab chiqishga qaratilgan. Tizim marshrutlarni optimallashtirish, transport vositalarining texnik xizmat ko'rsatishini boshqarish va yo'lovchilar xavfsizligini ta'minlash uchun ilg'or mashinani o'rganish algoritmlaridan foydalanadi."
+      },
+      "objectives": {
+        "en": [
+          "Develop real-time fleet optimization algorithms",
+          "Implement predictive maintenance systems",
+          "Create safety monitoring and emergency response protocols",
+          "Design user-friendly interfaces for fleet operators"
+        ],
+        "ru": [
+          "Разработать алгоритмы оптимизации автопарка в реальном времени",
+          "Внедрить системы прогнозного технического обслуживания",
+          "Создать протоколы мониторинга безопасности и экстренного реагирования",
+          "Разработать удобные интерфейсы для операторов автопарка"
+        ],
+        "uz": [
+          "Real vaqtda avtoparkni optimallashtirish algoritmlarini ishlab chiqish",
+          "Bashoratli texnik xizmat ko'rsatish tizimlarini joriy etish",
+          "Xavfsizlikni monitoring qilish va favqulodda vaziyatlarga javob berish protokollarini yaratish",
+          "Avtopark operatorlari uchun foydalanuvchi-do'st interfeyslari yaratish"
+        ]
+      },
+      "technologies": {
+        "en": ["Machine Learning", "IoT Sensors", "Cloud Computing", "Real-time Analytics"],
+        "ru": ["Машинное обучение", "IoT датчики", "Облачные вычисления", "Аналитика в реальном времени"],
+        "uz": ["Mashinani o'rganish", "IoT sensorlar", "Bulutli hisoblash", "Real vaqt tahlili"]
+      },
+      "impact": {
+        "en": "Expected to reduce operational costs by 30% and improve service reliability by 45%.",
+        "ru": "Ожидается снижение операционных расходов на 30% и повышение надежности обслуживания на 45%.",
+        "uz": "Operatsion xarajatlarni 30% ga kamaytirish va xizmat ishonchliligini 45% ga oshirish kutilmoqda."
+      }
+    }
+  }
+]

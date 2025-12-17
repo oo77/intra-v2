@@ -4,6 +4,7 @@ import About from '@/views/About.vue'
 import Projects from '@/views/Projects.vue'
 import Partners from '@/views/Partners.vue'
 import Contacts from '@/views/Contacts.vue'
+import TeamAdmin from '@/views/TeamAdmin.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/contacts',
     name: 'Contacts',
     component: Contacts
+  },
+  {
+    path: '/admin/team',
+    name: 'TeamAdmin',
+    component: TeamAdmin
   }
 ]
 

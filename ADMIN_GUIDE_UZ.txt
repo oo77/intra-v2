@@ -1,0 +1,98 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    ADMIN PANEL FOYDALANISH BO'YICHA QISQA QO'LLANMA
+                  "INNOVATSION TRANSPORT" ITM
+═══════════════════════════════════════════════════════════════════════════════
+
+📌 ADMIN PANELGA KIRISH:
+   URL: http://localhost:5173/admin/team
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 ASOSIY IMKONIYATLAR:
+
+1. ➕ YANGI XODIM QO'SHISH
+   - "+ Добавить члена команды" tugmasini bosing
+   - Barcha maydonlarni to'ldiring (3 tilda)
+   - Rasmni yuklang yoki URL kiriting
+   - "💾 Сохранить" tugmasini bosing
+
+2. ✏️ XODIM MA'LUMOTLARINI TAHRIRLASH
+   - Kerakli kartochkani toping
+   - "✏️ Редактировать" tugmasini bosing
+   - O'zgarishlar kiriting
+   - Saqlang
+
+3. 🗑️ XODIMNI O'CHIRISH
+   - "🗑️ Удалить" tugmasini bosing
+   - Tasdiqlang
+
+4. 📸 RASM YUKLASH
+   - Fayl yuklash: "Изображение" maydonidan faylni tanlang
+   - URL orqali: Rasm havolasini kiriting
+   - Tavsiya: 400x400px va undan katta
+
+5. 📋 DINAMIK MAYDONLAR
+   - "+ Добавить" - yangi element qo'shish
+   - "✕" - elementni o'chirish
+
+6. 💾 MA'LUMOTLARNI SAQLASH
+   - Saqlangandan keyin avtomatik JSON fayl yuklab olinadi
+   - Faylni /public/team-members.json ga almashtiring
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📝 SO'ROVNOMA (team_member_questionnaire.txt):
+
+1. So'rovnomani chop eting yoki yuboring
+2. To'ldirilgan ma'lumotlarni admin panelga kiriting
+3. Bu jarayonni osonlashtiradi
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ MUHIM ESLATMALAR:
+
+✓ ID noyob bo'lishi kerak (lotin harflari, kichik, bo'sh joysiz)
+✓ Barcha 3 tilni to'ldiring (🇷🇺 🇬🇧 🇺🇿)
+✓ Zaxira nusxalarini saqlang
+✓ Saqlashdan keyin saytda tekshiring
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 MAYDONLARNI TO'LDIRISH BO'YICHA MASLAHATLAR:
+
+• Qisqa tarjimai hol (bio): 1-2 jumla, asosiy ma'lumotlar
+• To'liq tarjimai hol (biography): 3-5 jumla, batafsil
+• Mutaxassislik sohalari: 4-5 ta asosiy yo'nalish
+• Ta'lim: Ilmiy darajalar va unvonlar
+• Ish tajribasi: Hozirgi va oldingi lavozimlar + yillar
+• Nashrlar: Asosiy nashr turlari
+• Yutuqlar: Muhim yutuqlar va mukofotlar
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔧 MUAMMOLARNI HAL QILISH:
+
+❌ Rasm yuklanmayapti?
+   → Fayl formatini tekshiring (JPG, PNG, WebP)
+   → Fayl hajmini tekshiring (5 MB gacha)
+   → URL ishlatib ko'ring
+
+❌ Ma'lumotlar saqlanmayapti?
+   → ID maydonini to'ldirilganligini tekshiring
+   → Majburiy maydonlarni tekshiring
+   → Brauzer konsolini tekshiring (F12)
+
+❌ JSON fayl yuklab olinmayapti?
+   → Brauzer sozlamalarini tekshiring
+   → Boshqa brauzerda sinab ko'ring
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📞 YORDAM:
+   - Brauzer konsolini tekshiring (F12 → Console)
+   - Loyiha ishga tushganligini tekshiring (npm run dev)
+   - Barcha fayllar joyida ekanligini tekshiring
+
+═══════════════════════════════════════════════════════════════════════════════
+                         MUVAFFAQIYATLAR TILAYMIZ!
+═══════════════════════════════════════════════════════════════════════════════
