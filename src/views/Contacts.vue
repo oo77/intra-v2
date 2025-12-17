@@ -27,24 +27,66 @@ const isSubmitted = ref(false)
 const submitForm = async () => {
   isSubmitting.value = true
   
-  // Simulate form submission
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  
-  isSubmitting.value = false
-  isSubmitted.value = true
-  
-  // Reset form after 3 seconds
-  setTimeout(() => {
-    isSubmitted.value = false
-    form.value = {
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-      organization: '',
-      phone: ''
+  try {
+    // Telegram Bot API credentials
+    const botToken = '8335328034:AAFwylv6zS5Gzf9ImqUiVsRwFBgE3aaYQk8'
+    const chatId = -1003503179531 // ID группы/канала Telegram
+    
+    // Формируем сообщение
+    const message = `
+🔔 *Новое сообщение с сайта*
+
+👤 *Имя:* ${form.value.name}
+📧 *Email:* ${form.value.email}
+${form.value.organization ? `🏢 *Организация:* ${form.value.organization}` : ''}
+${form.value.phone ? `📱 *Телефон:* ${form.value.phone}` : ''}
+📝 *Тема:* ${form.value.subject}
+
+💬 *Сообщение:*
+${form.value.message}
+
+⏰ *Время:* ${new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Tashkent' })}
+    `.trim()
+    
+    // Отправляем сообщение в Telegram
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    })
+    
+    const data = await response.json()
+    
+    if (!data.ok) {
+      throw new Error(data.description || 'Ошибка отправки сообщения')
     }
-  }, 3000)
+    
+    isSubmitting.value = false
+    isSubmitted.value = true
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      isSubmitted.value = false
+      form.value = {
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        organization: '',
+        phone: ''
+      }
+    }, 3000)
+  } catch (error) {
+    console.error('Ошибка при отправке в Telegram:', error)
+    isSubmitting.value = false
+    alert('Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте позже.')
+  }
 }
 
 const contactInfo = computed(() => [

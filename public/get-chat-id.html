@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Получение Chat ID для Telegram бота</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .step {
+            background: #f7f9fc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .step-content {
+            color: #555;
+            line-height: 1.6;
+            margin-left: 40px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .chat-id {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            margin: 10px 0;
+            border: 2px dashed #667eea;
+        }
+        
+        .copy-btn {
+            background: #4caf50;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        
+        .error {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #c62828;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Настройка Telegram Бота</h1>
+        <p class="subtitle">Получение Chat ID для @intra_notice_bot</p>
+        
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Откройте бота в Telegram
+            </div>
+            <div class="step-content">
+                Перейдите по ссылке: <a href="https://t.me/intra_notice_bot" target="_blank">@intra_notice_bot</a>
+                и нажмите кнопку <strong>START</strong> или отправьте команду <code>/start</code>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Получите Chat ID
+            </div>
+            <div class="step-content">
+                После того как вы отправили <code>/start</code> боту, нажмите кнопку ниже для получения вашего Chat ID
+            </div>
+        </div>
+        
+        <button onclick="getChatId()">📱 Получить Chat ID</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Получение данных...</p>
+        </div>
+        
+        <div class="result" id="result">
+            <div class="result-title">✅ Chat ID успешно получен!</div>
+            <p>Ваш Chat ID:</p>
+            <div class="chat-id" id="chatId"></div>
+            <button class="copy-btn" onclick="copyChatId()">📋 Копировать Chat ID</button>
+            <p style="margin-top: 15px; font-size: 14px; color: #555;">
+                Используйте этот ID в файле <code>src/views/Contacts.vue</code>
+            </p>
+        </div>
+        
+        <div class="error" id="error">
+            <strong>❌ Ошибка!</strong>
+            <p id="errorMessage"></p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                Убедитесь, что вы отправили <code>/start</code> боту <a href="https://t.me/intra_notice_bot" target="_blank">@intra_notice_bot</a>
+            </p>
+        </div>
+        
+        <div class="step" style="margin-top: 30px;">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Обновите код
+            </div>
+            <div class="step-content">
+                После получения Chat ID, замените в файле <code>src/views/Contacts.vue</code>:
+                <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">const chatId = '@intra_notice_bot'</pre>
+                на:
+                <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">const chatId = 'ВАШ_CHAT_ID'</pre>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const BOT_TOKEN = '8335328034:AAFwylv6zS5Gzf9ImqUiVsRwFBgE3aaYQk8';
+        let currentChatId = '';
+        
+        async function getChatId() {
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const error = document.getElementById('error');
+            
+            // Скрываем предыдущие результаты
+            result.classList.remove('show');
+            error.classList.remove('show');
+            loading.classList.add('show');
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`);
+                const data = await response.json();
+                
+                if (!data.ok) {
+                    throw new Error(data.description || 'Ошибка при получении данных');
+                }
+                
+                if (!data.result || data.result.length === 0) {
+                    throw new Error('Нет сообщений. Пожалуйста, отправьте /start боту.');
+                }
+                
+                // Получаем последнее сообщение
+                const lastUpdate = data.result[data.result.length - 1];
+                const chatId = lastUpdate.message?.chat?.id || lastUpdate.my_chat_member?.chat?.id;
+                
+                if (!chatId) {
+                    throw new Error('Не удалось получить Chat ID. Попробуйте отправить /start боту еще раз.');
+                }
+                
+                currentChatId = chatId;
+                document.getElementById('chatId').textContent = chatId;
+                loading.classList.remove('show');
+                result.classList.add('show');
+                
+            } catch (err) {
+                loading.classList.remove('show');
+                document.getElementById('errorMessage').textContent = err.message;
+                error.classList.add('show');
+            }
+        }
+        
+        function copyChatId() {
+            navigator.clipboard.writeText(currentChatId).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Скопировано!';
+                btn.style.background = '#45a049';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#4caf50';
+                }, 2000);
+            }).catch(err => {
+                alert('Ошибка при копировании: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{
+    "row1": [
+        {
+            "id": 1,
+            "url": "https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Лаборатория 1",
+                "en": "Laboratory 1",
+                "uz": "Laboratoriya 1"
+            }
+        },
+        {
+            "id": 2,
+            "url": "https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Исследования 1",
+                "en": "Research 1",
+                "uz": "Tadqiqot 1"
+            }
+        },
+        {
+            "id": 3,
+            "url": "https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Команда работает 1",
+                "en": "Team working 1",
+                "uz": "Jamoa ishlayapti 1"
+            }
+        },
+        {
+            "id": 4,
+            "url": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Технологии 1",
+                "en": "Technologies 1",
+                "uz": "Texnologiyalar 1"
+            }
+        },
+        {
+            "id": 5,
+            "url": "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Оборудование 1",
+                "en": "Equipment 1",
+                "uz": "Jihozlar 1"
+            }
+        },
+        {
+            "id": 6,
+            "url": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Конференция 1",
+                "en": "Conference 1",
+                "uz": "Konferensiya 1"
+            }
+        }
+    ],
+    "row2": [
+        {
+            "id": 7,
+            "url": "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Презентация 2",
+                "en": "Presentation 2",
+                "uz": "Taqdimot 2"
+            }
+        },
+        {
+            "id": 8,
+            "url": "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Анализ данных 2",
+                "en": "Data analysis 2",
+                "uz": "Ma'lumotlar tahlili 2"
+            }
+        },
+        {
+            "id": 9,
+            "url": "https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Совещание 2",
+                "en": "Meeting 2",
+                "uz": "Yig'ilish 2"
+            }
+        },
+        {
+            "id": 10,
+            "url": "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Эксперимент 2",
+                "en": "Experiment 2",
+                "uz": "Tajriba 2"
+            }
+        },
+        {
+            "id": 11,
+            "url": "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Разработка 2",
+                "en": "Development 2",
+                "uz": "Ishlab chiqish 2"
+            }
+        },
+        {
+            "id": 12,
+            "url": "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+            "alt": {
+                "ru": "Инновации 2",
+                "en": "Innovations 2",
+                "uz": "Innovatsiyalar 2"
+            }
+        }
+    ]
+}
