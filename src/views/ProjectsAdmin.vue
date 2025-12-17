@@ -332,7 +332,259 @@ const statuses = ['Planning', 'Active', 'Completed']
         </div>
       </div>
 
-      <!-- Модальное окно (будет добавлено в следующем сообщении из-за ограничения размера) -->
+      <!-- Модальное окно для добавления/редактирования -->
+      <div
+        v-if="showModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto"
+        @click.self="closeModal"
+      >
+        <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full my-8 max-h-[90vh] overflow-y-auto">
+          <div class="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl z-10">
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-bold text-gray-900">
+                {{ isEditing ? 'Редактировать проект' : 'Добавить проект' }}
+              </h2>
+              <button
+                @click="closeModal"
+                class="text-gray-500 hover:text-gray-700 text-3xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <!-- Основная информация -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-blue-500">
+                Основная информация
+              </h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Статус *</label>
+                  <select
+                    v-model="formData.status"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option v-for="status in statuses" :key="status" :value="status">
+                      {{ status }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Длительность *</label>
+                  <input
+                    v-model="formData.duration"
+                    type="text"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="2023-2025"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Команда *</label>
+                <input
+                  v-model="formData.team"
+                  type="text"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Dr. Sarah Johnson, Prof. Michael Chen"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Изображение</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  @change="handleImageUpload"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              <div v-if="imagePreview" class="mb-4">
+                <img :src="imagePreview" alt="Preview" class="w-full h-48 object-cover rounded-lg shadow-md" />
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">URL изображения (альтернатива)</label>
+                <input
+                  v-model="formData.image"
+                  type="text"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+            </div>
+
+            <!-- Табы для языков -->
+            <div class="mb-4">
+              <div class="flex gap-2 border-b border-gray-200">
+                <button
+                  @click="currentLanguage = 'ru'"
+                  :class="[
+                    'px-6 py-3 font-semibold transition-all',
+                    currentLanguage === 'ru'
+                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  ]"
+                >
+                  🇷🇺 Русский
+                </button>
+                <button
+                  @click="currentLanguage = 'en'"
+                  :class="[
+                    'px-6 py-3 font-semibold transition-all',
+                    currentLanguage === 'en'
+                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  ]"
+                >
+                  🇬🇧 English
+                </button>
+                <button
+                  @click="currentLanguage = 'uz'"
+                  :class="[
+                    'px-6 py-3 font-semibold transition-all',
+                    currentLanguage === 'uz'
+                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  ]"
+                >
+                  🇺🇿 O'zbekcha
+                </button>
+              </div>
+            </div>
+
+            <!-- Форма для выбранного языка -->
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Название проекта *</label>
+                <input
+                  v-model="formData.title[currentLanguage]"
+                  type="text"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Категория *</label>
+                <input
+                  v-model="formData.category[currentLanguage]"
+                  type="text"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Autonomous Vehicles"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Краткое описание *</label>
+                <textarea
+                  v-model="formData.description[currentLanguage]"
+                  rows="2"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ></textarea>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Обзор проекта *</label>
+                <textarea
+                  v-model="formData.details.overview[currentLanguage]"
+                  rows="4"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ></textarea>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Влияние/Результаты *</label>
+                <textarea
+                  v-model="formData.details.impact[currentLanguage]"
+                  rows="2"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                ></textarea>
+              </div>
+
+              <!-- Цели проекта -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Цели проекта</label>
+                <div
+                  v-for="(item, index) in formData.details.objectives[currentLanguage]"
+                  :key="index"
+                  class="flex gap-2 mb-2"
+                >
+                  <input
+                    v-model="formData.details.objectives[currentLanguage][index]"
+                    type="text"
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <button
+                    @click="removeField(currentLanguage, 'objectives', index)"
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <button
+                  @click="addField(currentLanguage, 'objectives')"
+                  class="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                >
+                  + Добавить цель
+                </button>
+              </div>
+
+              <!-- Технологии/Теги -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">🏷️ Технологии/Теги</label>
+                <div
+                  v-for="(item, index) in formData.details.technologies[currentLanguage]"
+                  :key="index"
+                  class="flex gap-2 mb-2"
+                >
+                  <input
+                    v-model="formData.details.technologies[currentLanguage][index]"
+                    type="text"
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Machine Learning"
+                  />
+                  <button
+                    @click="removeField(currentLanguage, 'technologies', index)"
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <button
+                  @click="addField(currentLanguage, 'technologies')"
+                  class="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                >
+                  + Добавить технологию
+                </button>
+              </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="flex gap-4 mt-8 pt-6 border-t border-gray-200">
+              <button
+                @click="saveProject"
+                :disabled="isSaving"
+                class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                <span v-if="isSaving" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></span>
+                <span>{{ isSaving ? 'Сохранение...' : '💾 Сохранить' }}</span>
+              </button>
+              <button
+                @click="closeModal"
+                :disabled="isSaving"
+                class="flex-1 bg-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Отмена
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -343,5 +595,24 @@ const statuses = ['Planning', 'Active', 'Completed']
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #3b82f6, #9333ea);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #2563eb, #7c3aed);
 }
 </style>

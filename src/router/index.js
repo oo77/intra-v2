@@ -5,6 +5,7 @@ import Projects from '@/views/Projects.vue'
 import Partners from '@/views/Partners.vue'
 import Contacts from '@/views/Contacts.vue'
 import TeamAdmin from '@/views/TeamAdmin.vue'
+import ProjectsAdmin from '@/views/ProjectsAdmin.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/admin/team',
     name: 'TeamAdmin',
     component: TeamAdmin
+  },
+  {
+    path: '/admin/projects',
+    name: 'ProjectsAdmin',
+    component: ProjectsAdmin
   }
 ]
 
