@@ -6,7 +6,6 @@ import Partners from '@/views/Partners.vue'
 import Contacts from '@/views/Contacts.vue'
 import TeamAdmin from '@/views/TeamAdmin.vue'
 import ProjectsAdmin from '@/views/ProjectsAdmin.vue'
-import GalleryAdmin from '@/views/GalleryAdmin.vue'
 import AboutGalleryAdmin from '@/views/AboutGalleryAdmin.vue'
 
 const routes = [
@@ -47,11 +46,6 @@ const routes = [
   },
   {
     path: '/admin/gallery',
-    name: 'GalleryAdmin',
-    component: GalleryAdmin
-  },
-  {
-    path: '/  ',
     name: 'AboutGalleryAdmin',
     component: AboutGalleryAdmin
   },

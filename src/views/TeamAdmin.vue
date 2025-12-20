@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useTeamStore } from '@/stores/team'
 import ConfirmModal from '@/components/ConfirmModal.vue'
+import AdminNav from '@/components/AdminNav.vue'
 import { uploadImageToCloudinary, isCloudinaryConfigured } from '@/utils/imageUpload.js'
 
 const teamStore = useTeamStore()
@@ -222,7 +223,11 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <!-- Навигационная панель -->
+    <AdminNav />
+    
+    <div class="py-12 px-4 sm:px-6 lg:px-8">
     <!-- Индикатор загрузки -->
     <div v-if="isSaving" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-2xl p-8 shadow-2xl text-center">
@@ -543,6 +548,7 @@ const closeModal = () => {
       @confirm="showNotificationModal = false"
       @close="showNotificationModal = false"
     />
+    </div>
   </div>
 </template>
 
