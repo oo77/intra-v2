@@ -1,18 +1,23 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useTeamStore } from '@/stores/team'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 import { uploadImageToCloudinary, isCloudinaryConfigured } from '@/utils/imageUpload.js'
 
-const teamMembers = ref({})
-const currentMember = ref(null)
-const isEditing = ref(false)
-const currentLanguage = ref('ru')
-const showModal = ref(false)
-const imagePreview = ref('')
-const uploadedImage = ref(null)
-const saveStatus = ref('')
-const isSaving = ref(false)
+const teamStore = useTeamStore()
 
-// Форма для нового/редактируемого члена команды
+// State
+const showModal = ref(false)
+const showDeleteConfirm = ref(false)
+const showNotificationModal = ref(false)
+const notificationData = ref({ type: 'info', title: '', message: '' })
+const currentDeleteId = ref(null)
+const isEditing = ref(false)
+const isSaving = ref(false)
+const currentLanguage = ref('ru')
+const imagePreview = ref('')
+
+// Форма
 const formData = ref({
   id: '',
   image: '',
@@ -53,59 +58,38 @@ const formData = ref({
   }
 })
 
-// Загрузка данных из JSON
+// Загрузка данных
 onMounted(async () => {
-  await loadTeamData()
+  try {
+    await teamStore.fetchMembers()
+  } catch (error) {
+    showNotification('error', 'Ошибка загрузки', error.message)
+  }
 })
 
-// Функция загрузки данных
-const loadTeamData = async () => {
-  try {
-    // Сначала проверяем localStorage
-    const localData = localStorage.getItem('teamMembersData')
-    if (localData) {
-      try {
-        teamMembers.value = JSON.parse(localData)
-        console.log('✅ Данные загружены из localStorage (несохраненные изменения)')
-        return
-      } catch (e) {
-        console.warn('Ошибка парсинга localStorage, загружаем из файла')
-      }
-    }
-    
-    // Если нет в localStorage, загружаем из файла
-    const timestamp = new Date().getTime()
-    const response = await fetch(`/team-members.json?t=${timestamp}`)
-    teamMembers.value = await response.json()
-    console.log('✅ Данные загружены из team-members.json')
-  } catch (error) {
-    console.error('Ошибка загрузки данных:', error)
-    saveStatus.value = 'error'
-  }
+// Computed
+const membersList = computed(() => teamStore.membersList)
+const isLoading = computed(() => teamStore.isLoading)
+
+// Methods
+const showNotification = (type, title, message) => {
+  notificationData.value = { type, title, message }
+  showNotificationModal.value = true
 }
 
-// Список членов команды
-const membersList = computed(() => {
-  return Object.values(teamMembers.value)
-})
-
-// Открыть форму для добавления нового члена
 const openAddForm = () => {
   resetForm()
   isEditing.value = false
   showModal.value = true
 }
 
-// Открыть форму для редактирования
 const openEditForm = (member) => {
-  currentMember.value = member.id
   formData.value = JSON.parse(JSON.stringify(member))
   imagePreview.value = member.image
   isEditing.value = true
   showModal.value = true
 }
 
-// Сброс формы
 const resetForm = () => {
   formData.value = {
     id: '',
@@ -147,169 +131,90 @@ const resetForm = () => {
     }
   }
   imagePreview.value = ''
-  uploadedImage.value = null
-  currentMember.value = null
 }
 
-// Добавить поле в массив
 const addField = (lang, field) => {
   formData.value[lang][field].push('')
 }
 
-// Удалить поле из массива
 const removeField = (lang, field, index) => {
   formData.value[lang][field].splice(index, 1)
 }
 
-// Обработка загрузки изображения
 const handleImageUpload = async (event) => {
   const file = event.target.files[0]
   if (!file) return
 
-  // Проверяем конфигурацию Cloudinary
   if (!isCloudinaryConfigured()) {
-    alert('⚠️ Cloudinary не настроен!\n\nПожалуйста, настройте Cloudinary в файле:\nsrc/utils/imageUpload.js\n\nИнструкция находится в комментариях файла.')
+    showNotification('warning', 'Cloudinary не настроен', 'Пожалуйста, настройте Cloudinary в файле src/utils/imageUpload.js')
     return
   }
 
   try {
     isSaving.value = true
-    saveStatus.value = 'uploading'
-
-    // Загружаем в Cloudinary с SEO-оптимизацией
     const result = await uploadImageToCloudinary(file, {
-      folder: 'intra-v2/team',
-      onProgress: (progress) => {
-        console.log(`Загрузка: ${progress}%`)
-      }
+      folder: 'intra-v2/team'
     })
-
-    // Используем оптимизированный URL
+    
     imagePreview.value = result.optimizedUrl
     formData.value.image = result.optimizedUrl
-
-    saveStatus.value = 'success'
-    alert(`✅ Изображение загружено и оптимизировано!\n\n📊 Информация:\n- Формат: ${result.format} (автоматически WebP/AVIF)\n- Размер: ${Math.round(result.size / 1024)} KB\n- Разрешение: ${result.width}x${result.height}\n- SEO: Оптимизировано для быстрой загрузки`)
+    
+    showNotification('success', 'Загружено!', `Изображение успешно загружено и оптимизировано (${Math.round(result.size / 1024)} KB)`)
   } catch (error) {
-    console.error('Ошибка загрузки:', error)
-    saveStatus.value = 'error'
-    alert('❌ Ошибка загрузки изображения: ' + error.message)
+    showNotification('error', 'Ошибка загрузки', error.message)
   } finally {
     isSaving.value = false
   }
 }
 
-// Сохранить данные
 const saveMember = async () => {
   if (!formData.value.id) {
-    alert('ID обязателен!')
+    showNotification('error', 'Ошибка', 'ID обязателен!')
+    return
+  }
+
+  if (!formData.value.ru.name || !formData.value.en.name || !formData.value.uz.name) {
+    showNotification('error', 'Ошибка', 'Имена на всех языках обязательны!')
     return
   }
 
   isSaving.value = true
-  saveStatus.value = 'saving'
-
+  
   try {
-    // Очистка пустых полей в массивах
+    // Очистка пустых полей
     ['ru', 'en', 'uz'].forEach(lang => {
       ['expertise', 'education', 'experience', 'publications', 'achievements'].forEach(field => {
         formData.value[lang][field] = formData.value[lang][field].filter(item => item.trim() !== '')
       })
     })
 
-    // Обновляем данные в памяти
-    teamMembers.value[formData.value.id] = JSON.parse(JSON.stringify(formData.value))
+    await teamStore.saveMember(formData.value)
     
-    // Сохраняем в localStorage
-    localStorage.setItem('teamMembersData', JSON.stringify(teamMembers.value))
-    
-    saveStatus.value = 'success'
-    
-    // Показываем уведомление
-    alert('✅ Данные успешно сохранены!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать файл для замены.')
-    
+    showNotification('success', 'Успешно!', 'Данные сохранены в базе данных')
     showModal.value = false
     resetForm()
-    
-    // Перезагружаем данные для синхронизации
-    await loadTeamData()
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
-    saveStatus.value = 'error'
-    alert('❌ Ошибка при сохранении данных: ' + error.message)
+    showNotification('error', 'Ошибка сохранения', error.message)
   } finally {
     isSaving.value = false
   }
 }
 
-// Удалить члена команды
-const deleteMember = async (id) => {
-  if (confirm('Вы уверены, что хотите удалить этого члена команды?')) {
-    isSaving.value = true
-    try {
-      delete teamMembers.value[id]
-      
-      // Сохраняем в localStorage
-      localStorage.setItem('teamMembersData', JSON.stringify(teamMembers.value))
-      
-      alert('✅ Член команды удален!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать обновленный файл.')
-      await loadTeamData()
-    } catch (error) {
-      console.error('Ошибка удаления:', error)
-      alert('❌ Ошибка при удалении: ' + error.message)
-    } finally {
-      isSaving.value = false
-    }
+const deleteMember = (id) => {
+  currentDeleteId.value = id
+  showDeleteConfirm.value = true
+}
+
+const confirmDelete = async () => {
+  try {
+    await teamStore.deleteMember(currentDeleteId.value)
+    showNotification('success', 'Удалено!', 'Член команды удален из базы данных')
+  } catch (error) {
+    showNotification('error', 'Ошибка удаления', error.message)
   }
+  showDeleteConfirm.value = false
 }
 
-// Экспортировать JSON файл (вызывается вручную)
-const exportJSON = () => {
-  const jsonData = JSON.stringify(teamMembers.value, null, 2)
-  downloadFile('team-members.json', jsonData, 'application/json')
-  alert('✅ Файл team-members.json скачан!\n\n📝 Замените файл /public/team-members.json этим файлом.')
-}
-
-// Сбросить изменения и загрузить из файла
-const resetChanges = async () => {
-  if (confirm('Вы уверены? Все несохраненные изменения будут потеряны!')) {
-    localStorage.removeItem('teamMembersData')
-    await loadTeamData()
-    alert('✅ Данные сброшены! Загружены оригинальные данные из файла.')
-  }
-}
-
-// Сохранить в файлы (только JSON) - не используется автоматически
-const saveToFiles = async () => {
-  const jsonData = JSON.stringify(teamMembers.value, null, 2)
-  
-  // Скачиваем только JSON файл
-  downloadFile('team-members.json', jsonData, 'application/json')
-  
-  // Показываем инструкцию
-  console.log('📁 Файл team-members.json скачан')
-  console.log('📝 Замените файл /public/team-members.json')
-  console.log('✅ Изменения автоматически отобразятся на сайте после обновления страницы!')
-}
-
-// Универсальная функция скачивания файла
-const downloadFile = (filename, content, mimeType) => {
-  const blob = new Blob([content], { type: mimeType })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = filename
-  link.click()
-  URL.revokeObjectURL(url)
-}
-
-// Скачать обновленный JSON (оставляем для совместимости)
-const downloadJSON = () => {
-  const dataStr = JSON.stringify(teamMembers.value, null, 2)
-  downloadFile('team-members.json', dataStr, 'application/json')
-}
-
-// Закрыть модальное окно
 const closeModal = () => {
   showModal.value = false
   resetForm()
@@ -335,57 +240,24 @@ const closeModal = () => {
             <h1 class="text-4xl font-bold text-gray-900 mb-2">Управление командой</h1>
             <p class="text-gray-600">Добавляйте и редактируйте информацию о членах команды</p>
           </div>
-          <div class="flex gap-3">
-            <button
-              @click="resetChanges"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Сбросить все несохраненные изменения"
-            >
-              🔄 Сбросить
-            </button>
-            <button
-              @click="exportJSON"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              📥 Экспортировать JSON
-            </button>
-            <button
-              @click="openAddForm"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              + Добавить члена команды
-            </button>
-          </div>
+          <button
+            @click="openAddForm"
+            :disabled="isSaving"
+            class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            + Добавить члена команды
+          </button>
         </div>
       </div>
 
-      <!-- Инструкция по обновлению файлов -->
-      <div class="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-2xl p-6 mb-8">
-        <div class="flex items-start gap-4">
-          <div class="text-4xl">✅</div>
-          <div class="flex-1">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Как работать с админ-панелью:</h3>
-            <ol class="list-decimal list-inside space-y-2 text-gray-700">
-              <li><strong>Добавляйте/редактируйте</strong> членов команды и нажимайте <strong>"💾 Сохранить"</strong> - данные сохраняются в браузере</li>
-              <li>Когда закончите все изменения, нажмите <strong class="text-green-600">"📥 Экспортировать JSON"</strong> - скачается файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">team-members.json</code></li>
-              <li>Замените файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">/public/team-members.json</code> скачанным файлом</li>
-              <li>Обновите страницу сайта (F5) - все изменения отобразятся! 🎉</li>
-            </ol>
-            <div class="mt-4 p-3 bg-white rounded-lg border border-green-200">
-              <p class="text-sm text-gray-600">
-                <strong>💡 Преимущество:</strong> Теперь вы можете сделать несколько изменений подряд, 
-                и только потом один раз экспортировать файл. Файл не скачивается при каждом сохранении!
-              </p>
-            </div>
-          </div>
-        </div>
+      <!-- Индикатор загрузки списка -->
+      <div v-if="isLoading && membersList.length === 0" class="text-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto mb-4"></div>
+        <p class="text-gray-600">Загрузка данных...</p>
       </div>
 
       <!-- Список членов команды -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="member in membersList"
           :key="member.id"
@@ -395,7 +267,7 @@ const closeModal = () => {
             <img
               v-if="member.image"
               :src="member.image"
-              :alt="member.ru.name"
+              :alt="member.ru?.name"
               class="w-full h-full object-cover"
             />
             <div v-else class="w-full h-full flex items-center justify-center text-white text-6xl">
@@ -404,8 +276,8 @@ const closeModal = () => {
           </div>
           
           <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ member.ru.name }}</h3>
-            <p class="text-gray-600 mb-2">{{ member.ru.role }}</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ member.ru?.name }}</h3>
+            <p class="text-gray-600 mb-2">{{ member.ru?.role }}</p>
             <p class="text-sm text-gray-500 mb-4">{{ member.email }}</p>
             
             <div class="flex gap-2">
@@ -647,6 +519,30 @@ const closeModal = () => {
         </div>
       </div>
     </div>
+
+    <!-- Модальные окна подтверждения -->
+    <ConfirmModal
+      :isVisible="showDeleteConfirm"
+      type="warning"
+      title="Удалить члена команды?"
+      message="Это действие нельзя отменить. Данные будут удалены из базы данных."
+      confirmText="Удалить"
+      cancelText="Отмена"
+      :showCancel="true"
+      @confirm="confirmDelete"
+      @cancel="showDeleteConfirm = false"
+      @close="showDeleteConfirm = false"
+    />
+
+    <ConfirmModal
+      :isVisible="showNotificationModal"
+      :type="notificationData.type"
+      :title="notificationData.title"
+      :message="notificationData.message"
+      confirmText="OK"
+      @confirm="showNotificationModal = false"
+      @close="showNotificationModal = false"
+    />
   </div>
 </template>
 

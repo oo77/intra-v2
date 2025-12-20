@@ -6,7 +6,7 @@ dotenv.config();
 // Конфигурация подключения к базе данных
 const dbConfig = {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
+    port: parseInt(process.env.DB_PORT) || 3306,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
@@ -14,7 +14,11 @@ const dbConfig = {
     connectionLimit: 10,
     queueLimit: 0,
     enableKeepAlive: true,
-    keepAliveInitialDelay: 0
+    keepAliveInitialDelay: 0,
+    connectTimeout: 60000, // 60 секунд
+    acquireTimeout: 60000,
+    timeout: 60000,
+    charset: 'utf8mb4'
 };
 
 // Создаем пул подключений

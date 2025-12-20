@@ -1,33 +1,58 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import TeamMemberCard from '@/components/TeamMemberCard.vue'
-import { getTeamMembersByLanguage } from '@/data/teamData.js'
 import { historyMilestones, achievements, researchAreas, getLocalizedData } from '@/data/aboutData.js'
 import { useI18n } from 'vue-i18n'
+import { useGalleryStore } from '@/stores/gallery'
+import { useTeamStore } from '@/stores/team'
 
 const { t, locale } = useI18n()
 const selectedMember = ref(null)
-const galleryData = ref({ row1: [], row2: [] })
+const galleryStore = useGalleryStore()
+const teamStore = useTeamStore()
 
-// Загрузка галереи
+// Загрузка данных из базы данных через API
 onMounted(async () => {
   try {
-    const timestamp = new Date().getTime()
-    const response = await fetch(`/gallery.json?t=${timestamp}`)
-    galleryData.value = await response.json()
+    await Promise.all([
+      galleryStore.fetchGallery(),
+      teamStore.fetchMembers()
+    ])
   } catch (error) {
-    console.error('Ошибка загрузки галереи:', error)
+    console.error('Ошибка загрузки данных:', error)
   }
 })
 
-// Локализованные данные с использованием импортированных данных
+// Получаем данные из stores
+const galleryData = computed(() => galleryStore.gallery)
+
+// Локализованные данные
 const localizedHistoryMilestones = computed(() => getLocalizedData(historyMilestones, locale.value))
 const localizedAchievements = computed(() => getLocalizedData(achievements, locale.value))
 const localizedResearchAreas = computed(() => getLocalizedData(researchAreas, locale.value))
 
-// Команда НИЦ - используем данные из отдельного файла
-const teamMembers = computed(() => getTeamMembersByLanguage(locale.value))
+// Команда НИЦ - получаем из базы данных
+const teamMembers = computed(() => {
+  const members = teamStore.membersList
+  // Преобразуем данные для отображения с учетом языка
+  return members.map(member => ({
+    id: member.id,
+    image: member.image,
+    email: member.email,
+    phone: member.phone,
+    name: member[locale.value]?.name || member.ru?.name,
+    role: member[locale.value]?.role || member.ru?.role,
+    bio: member[locale.value]?.bio || member.ru?.bio,
+    biography: member[locale.value]?.biography || member.ru?.biography,
+    expertise: member[locale.value]?.expertise || member.ru?.expertise || [],
+    education: member[locale.value]?.education || member.ru?.education || [],
+    experience: member[locale.value]?.experience || member.ru?.experience || [],
+    publications: member[locale.value]?.publications || member.ru?.publications || [],
+    achievements: member[locale.value]?.achievements || member.ru?.achievements || []
+  }))
+})
 
+// Функции для модального окна
 const openMemberModal = (member) => {
   selectedMember.value = member
 }
@@ -283,6 +308,7 @@ const closeMemberModal = () => {
           <div 
             v-for="(member, index) in teamMembers" 
             :key="member.id"
+            class="flex"
             data-aos="fade-up"
             :data-aos-delay="index * 100"
           >

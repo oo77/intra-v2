@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { testConnection } from './config/database.js';
-import teamRoutes from './routes/team.js';
+import teamRoutes from './routes/team-members.js';
 import projectsRoutes from './routes/projects.js';
 import galleryRoutes from './routes/gallery.js';
 

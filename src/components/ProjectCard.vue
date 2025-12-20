@@ -75,7 +75,7 @@ const handleCardClick = () => {
 
 <template>
   <div
-    class="bg-white rounded-lg shadow-lg overflow-hidden card-hover cursor-pointer"
+    class="bg-white rounded-lg shadow-lg overflow-hidden card-hover cursor-pointer flex flex-col h-full"
     data-aos="fade-up"
     :data-aos-delay="index * 100"
     @click="handleCardClick"
@@ -83,9 +83,9 @@ const handleCardClick = () => {
     <img
       :src="project.image"
       :alt="localizedTitle"
-      class="w-full h-48 object-cover"
+      class="w-full h-48 object-cover flex-shrink-0"
     >
-    <div class="p-6">
+    <div class="p-6 flex flex-col flex-grow">
       <div class="flex items-center justify-between mb-2">
         <span class="text-sm font-medium text-primary-600">{{ localizedCategory }}</span>
         <span :class="[
@@ -95,10 +95,10 @@ const handleCardClick = () => {
           {{ getLocalizedStatus(project.status) }}
         </span>
       </div>
-      <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ localizedTitle }}</h3>
-      <p class="text-gray-600 mb-4">{{ localizedDescription }}</p>
+      <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">{{ localizedTitle }}</h3>
+      <p class="text-gray-600 mb-4 line-clamp-3 flex-grow">{{ localizedDescription }}</p>
       
-      <div class="space-y-2 text-sm text-gray-500">
+      <div class="space-y-2 text-sm text-gray-500 mb-4">
         <div class="flex items-center">
           <CalendarIcon class="h-4 w-4 mr-2" />
           <span>{{ project.duration }}</span>
@@ -109,7 +109,7 @@ const handleCardClick = () => {
         </div>
       </div>
 
-      <div class="mt-4 flex items-center justify-between">
+      <div class="mt-auto pt-2 flex items-center justify-between">
         <button class="text-primary-600 hover:text-primary-700 font-medium flex items-center">
           <EyeIcon class="h-4 w-4 mr-1" />
           {{ $t('projects.viewDetails') }}
@@ -118,3 +118,31 @@ const handleCardClick = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Ограничение текста */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

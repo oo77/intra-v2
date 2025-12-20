@@ -1,165 +1,216 @@
 import express from 'express';
-import { query, transaction } from '../config/database.js';
+import { query } from '../config/database.js';
 
 const router = express.Router();
+
+// Безопасный парсинг JSON
+function safeJSONParse(jsonString, defaultValue = []) {
+    try {
+        if (!jsonString) return defaultValue;
+        // Если это уже массив или объект, возвращаем как есть
+        if (typeof jsonString === 'object') return jsonString;
+        return JSON.parse(jsonString);
+    } catch (error) {
+        // Возвращаем значение по умолчанию при ошибке парсинга
+        return defaultValue;
+    }
+}
+
+// Вспомогательная функция для форматирования проекта
+function formatProject(project) {
+    try {
+        return {
+            id: project.id,
+            title: {
+                en: project.title_en,
+                ru: project.title_ru,
+                uz: project.title_uz
+            },
+            description: {
+                en: project.description_en,
+                ru: project.description_ru,
+                uz: project.description_uz
+            },
+            image: project.image,
+            category: {
+                en: project.category_en,
+                ru: project.category_ru,
+                uz: project.category_uz
+            },
+            status: project.status,
+            duration: project.duration,
+            team: project.team,
+            details: {
+                overview: {
+                    en: project.overview_en,
+                    ru: project.overview_ru,
+                    uz: project.overview_uz
+                },
+                objectives: {
+                    en: safeJSONParse(project.objectives_en, []),
+                    ru: safeJSONParse(project.objectives_ru, []),
+                    uz: safeJSONParse(project.objectives_uz, [])
+                },
+                technologies: {
+                    en: safeJSONParse(project.technologies_en, []),
+                    ru: safeJSONParse(project.technologies_ru, []),
+                    uz: safeJSONParse(project.technologies_uz, [])
+                },
+                impact: {
+                    en: project.impact_en,
+                    ru: project.impact_ru,
+                    uz: project.impact_uz
+                }
+            }
+        };
+    } catch (error) {
+        console.error('Ошибка форматирования проекта:', project.id, error);
+        throw error;
+    }
+}
 
 // Получить все проекты
 router.get('/', async (req, res) => {
     try {
-        const projects = await query(`
-      SELECT id, image, status, duration, team, created_at, updated_at
-      FROM projects
-      ORDER BY created_at DESC
-    `);
-
-        const result = [];
-
-        for (const project of projects) {
-            // Получаем переводы
-            const translations = await query(`
-        SELECT language, title, category, description, overview, impact
-        FROM projects_i18n
-        WHERE project_id = ?
-      `, [project.id]);
-
-            // Получаем массивы
-            const arrays = await query(`
-        SELECT language, field_type, value, sort_order
-        FROM projects_arrays
-        WHERE project_id = ?
-        ORDER BY sort_order
-      `, [project.id]);
-
-            // Формируем структуру
-            const projectData = {
-                id: project.id,
-                image: project.image,
-                status: project.status,
-                duration: project.duration,
-                team: project.team,
-                title: { ru: '', en: '', uz: '' },
-                category: { ru: '', en: '', uz: '' },
-                description: { ru: '', en: '', uz: '' },
-                details: {
-                    overview: { ru: '', en: '', uz: '' },
-                    objectives: { ru: [], en: [], uz: [] },
-                    technologies: { ru: [], en: [], uz: [] },
-                    impact: { ru: '', en: '', uz: '' }
-                }
-            };
-
-            // Заполняем переводы
-            translations.forEach(t => {
-                projectData.title[t.language] = t.title || '';
-                projectData.category[t.language] = t.category || '';
-                projectData.description[t.language] = t.description || '';
-                projectData.details.overview[t.language] = t.overview || '';
-                projectData.details.impact[t.language] = t.impact || '';
-            });
-
-            // Заполняем массивы
-            arrays.forEach(a => {
-                if (projectData.details[a.field_type]) {
-                    projectData.details[a.field_type][a.language].push(a.value);
-                }
-            });
-
-            result.push(projectData);
-        }
-
-        res.json(result);
+        const projects = await query('SELECT * FROM projects ORDER BY id');
+        const formattedProjects = projects.map(formatProject);
+        res.json(formattedProjects);
     } catch (error) {
-        console.error('Ошибка получения проектов:', error);
+        console.error('Ошибка при получении проектов:', error);
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
 
-// Создать или обновить проект
+// Получить один проект по ID
+router.get('/:id', async (req, res) => {
+    try {
+        const projects = await query(
+            'SELECT * FROM projects WHERE id = ?',
+            [req.params.id]
+        );
+
+        if (projects.length === 0) {
+            return res.status(404).json({ error: 'Проект не найден' });
+        }
+
+        res.json(formatProject(projects[0]));
+    } catch (error) {
+        console.error('Ошибка при получении проекта:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+
+// Добавить новый проект
 router.post('/', async (req, res) => {
     try {
-        const projectData = req.body;
+        const { title, description, image, category, status, duration, team, details } = req.body;
 
-        const result = await transaction(async (connection) => {
-            let projectId = projectData.id;
+        if (!title || !description) {
+            return res.status(400).json({ error: 'Название и описание обязательны' });
+        }
 
-            if (projectId) {
-                // Обновляем существующий
-                await connection.execute(
-                    'UPDATE projects SET image = ?, status = ?, duration = ?, team = ?, updated_at = NOW() WHERE id = ?',
-                    [projectData.image, projectData.status, projectData.duration, projectData.team, projectId]
-                );
+        const result = await query(
+            `INSERT INTO projects (
+                title_en, title_ru, title_uz,
+                description_en, description_ru, description_uz,
+                image, category_en, category_ru, category_uz,
+                status, duration, team,
+                overview_en, overview_ru, overview_uz,
+                objectives_en, objectives_ru, objectives_uz,
+                technologies_en, technologies_ru, technologies_uz,
+                impact_en, impact_ru, impact_uz
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                title.en, title.ru, title.uz,
+                description.en, description.ru, description.uz,
+                image,
+                category?.en, category?.ru, category?.uz,
+                status || 'Planning',
+                duration,
+                team,
+                details?.overview?.en, details?.overview?.ru, details?.overview?.uz,
+                JSON.stringify(details?.objectives?.en || []),
+                JSON.stringify(details?.objectives?.ru || []),
+                JSON.stringify(details?.objectives?.uz || []),
+                JSON.stringify(details?.technologies?.en || []),
+                JSON.stringify(details?.technologies?.ru || []),
+                JSON.stringify(details?.technologies?.uz || []),
+                details?.impact?.en, details?.impact?.ru, details?.impact?.uz
+            ]
+        );
 
-                // Удаляем старые переводы и массивы
-                await connection.execute('DELETE FROM projects_i18n WHERE project_id = ?', [projectId]);
-                await connection.execute('DELETE FROM projects_arrays WHERE project_id = ?', [projectId]);
-            } else {
-                // Создаем новый
-                const [insertResult] = await connection.execute(
-                    'INSERT INTO projects (image, status, duration, team) VALUES (?, ?, ?, ?)',
-                    [projectData.image, projectData.status, projectData.duration, projectData.team]
-                );
-                projectId = insertResult.insertId;
-            }
-
-            // Добавляем переводы
-            for (const lang of ['ru', 'en', 'uz']) {
-                await connection.execute(
-                    'INSERT INTO projects_i18n (project_id, language, title, category, description, overview, impact) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    [
-                        projectId,
-                        lang,
-                        projectData.title[lang] || '',
-                        projectData.category[lang] || '',
-                        projectData.description[lang] || '',
-                        projectData.details.overview[lang] || '',
-                        projectData.details.impact[lang] || ''
-                    ]
-                );
-
-                // Добавляем objectives
-                if (projectData.details.objectives[lang] && Array.isArray(projectData.details.objectives[lang])) {
-                    for (let i = 0; i < projectData.details.objectives[lang].length; i++) {
-                        const value = projectData.details.objectives[lang][i];
-                        if (value && value.trim()) {
-                            await connection.execute(
-                                'INSERT INTO projects_arrays (project_id, language, field_type, value, sort_order) VALUES (?, ?, ?, ?, ?)',
-                                [projectId, lang, 'objectives', value, i]
-                            );
-                        }
-                    }
-                }
-
-                // Добавляем technologies
-                if (projectData.details.technologies[lang] && Array.isArray(projectData.details.technologies[lang])) {
-                    for (let i = 0; i < projectData.details.technologies[lang].length; i++) {
-                        const value = projectData.details.technologies[lang][i];
-                        if (value && value.trim()) {
-                            await connection.execute(
-                                'INSERT INTO projects_arrays (project_id, language, field_type, value, sort_order) VALUES (?, ?, ?, ?, ?)',
-                                [projectId, lang, 'technologies', value, i]
-                            );
-                        }
-                    }
-                }
-            }
-
-            return projectId;
+        res.status(201).json({
+            id: result.insertId,
+            message: 'Проект создан'
         });
-
-        res.json({ success: true, message: 'Проект сохранен', id: result });
     } catch (error) {
-        console.error('Ошибка сохранения проекта:', error);
-        res.status(500).json({ error: 'Ошибка сервера', details: error.message });
+        console.error('Ошибка при создании проекта:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+
+// Обновить проект
+router.put('/:id', async (req, res) => {
+    try {
+        const { title, description, image, category, status, duration, team, details } = req.body;
+
+        const result = await query(
+            `UPDATE projects SET
+                title_en = ?, title_ru = ?, title_uz = ?,
+                description_en = ?, description_ru = ?, description_uz = ?,
+                image = ?, category_en = ?, category_ru = ?, category_uz = ?,
+                status = ?, duration = ?, team = ?,
+                overview_en = ?, overview_ru = ?, overview_uz = ?,
+                objectives_en = ?, objectives_ru = ?, objectives_uz = ?,
+                technologies_en = ?, technologies_ru = ?, technologies_uz = ?,
+                impact_en = ?, impact_ru = ?, impact_uz = ?
+             WHERE id = ?`,
+            [
+                title.en, title.ru, title.uz,
+                description.en, description.ru, description.uz,
+                image,
+                category?.en, category?.ru, category?.uz,
+                status,
+                duration,
+                team,
+                details?.overview?.en, details?.overview?.ru, details?.overview?.uz,
+                JSON.stringify(details?.objectives?.en || []),
+                JSON.stringify(details?.objectives?.ru || []),
+                JSON.stringify(details?.objectives?.uz || []),
+                JSON.stringify(details?.technologies?.en || []),
+                JSON.stringify(details?.technologies?.ru || []),
+                JSON.stringify(details?.technologies?.uz || []),
+                details?.impact?.en, details?.impact?.ru, details?.impact?.uz,
+                req.params.id
+            ]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Проект не найден' });
+        }
+
+        res.json({ message: 'Проект обновлен' });
+    } catch (error) {
+        console.error('Ошибка при обновлении проекта:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
 
 // Удалить проект
 router.delete('/:id', async (req, res) => {
     try {
-        await query('DELETE FROM projects WHERE id = ?', [req.params.id]);
-        res.json({ success: true, message: 'Проект удален' });
+        const result = await query(
+            'DELETE FROM projects WHERE id = ?',
+            [req.params.id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Проект не найден' });
+        }
+
+        res.json({ message: 'Проект удален' });
     } catch (error) {
-        console.error('Ошибка удаления проекта:', error);
+        console.error('Ошибка при удалении проекта:', error);
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });

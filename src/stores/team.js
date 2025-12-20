@@ -48,10 +48,18 @@ export const useTeamStore = defineStore('team', {
             this.error = null
 
             try {
-                const response = await teamAPI.update(memberData)
+                let response
 
-                // Обновляем локальное состояние
-                this.members[memberData.id] = memberData
+                if (memberData.id && this.members[memberData.id]) {
+                    // Обновление существующего
+                    response = await teamAPI.update(memberData.id, memberData)
+                } else {
+                    // Создание нового
+                    response = await teamAPI.create(memberData)
+                }
+
+                // Перезагружаем команду
+                await this.fetchMembers(true)
 
                 console.log('✅ Член команды сохранен в базу данных')
                 return response.data

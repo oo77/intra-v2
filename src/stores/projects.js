@@ -50,16 +50,18 @@ export const useProjectsStore = defineStore('projects', {
             this.error = null
 
             try {
-                const response = await projectsAPI.update(projectData)
+                let response
 
-                // Обновляем локальное состояние
-                const index = this.projects.findIndex(p => p.id === projectData.id)
-                if (index !== -1) {
-                    this.projects[index] = projectData
+                if (projectData.id) {
+                    // Обновление существующего
+                    response = await projectsAPI.update(projectData.id, projectData)
                 } else {
-                    // Если это новый проект, добавляем его с ID из ответа
-                    this.projects.push({ ...projectData, id: response.data.id })
+                    // Создание нового
+                    response = await projectsAPI.create(projectData)
                 }
+
+                // Перезагружаем проекты
+                await this.fetchProjects(true)
 
                 console.log('✅ Проект сохранен в базу данных')
                 return response.data

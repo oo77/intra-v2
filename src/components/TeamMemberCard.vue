@@ -34,28 +34,34 @@ const closeModal = () => {
 <template>
   <!-- Карточка участника команды -->
   <div 
-    class="bg-white rounded-lg overflow-hidden shadow-lg card-hover cursor-pointer transform transition-all duration-300 hover:scale-105"
+    class="bg-white rounded-lg overflow-hidden shadow-lg card-hover cursor-pointer transform transition-all duration-300 hover:scale-105 flex flex-col h-full"
     @click="openModal"
   >
     <img 
       :src="member.image" 
       :alt="member.name"
-      class="w-full h-64 object-cover"
+      class="w-full h-64 object-cover flex-shrink-0"
     >
-    <div class="p-6">
+    <div class="p-6 flex flex-col flex-grow">
       <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ member.name }}</h3>
       <p class="text-primary-600 font-medium mb-3">{{ member.role }}</p>
-      <p class="text-gray-600 text-sm mb-4">{{ member.bio }}</p>
-      <div class="flex flex-wrap gap-2 mb-4">
+      <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">{{ member.bio }}</p>
+      <div class="flex flex-wrap gap-2 mb-4 min-h-[2rem]">
         <span 
-          v-for="(skill, skillIndex) in member.expertise" 
+          v-for="(skill, skillIndex) in member.expertise.slice(0, 3)" 
           :key="skillIndex"
           class="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full"
         >
           {{ skill }}
         </span>
+        <span 
+          v-if="member.expertise.length > 3"
+          class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+        >
+          +{{ member.expertise.length - 3 }}
+        </span>
       </div>
-      <div class="text-center">
+      <div class="text-center mt-auto pt-2">
         <span class="text-primary-600 text-sm font-medium">{{ $t('about.team.clickForDetails') }}</span>
       </div>
     </div>
@@ -212,5 +218,14 @@ const closeModal = () => {
 
 .card-hover:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Ограничение текста 3 строками */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

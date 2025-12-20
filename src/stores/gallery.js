@@ -49,20 +49,24 @@ export const useGalleryStore = defineStore('gallery', {
             this.error = null
 
             try {
-                const response = await galleryAPI.update({
-                    ...imageData,
-                    rowNumber
-                })
-
-                // Обновляем локальное состояние
-                const row = rowNumber === 1 ? 'row1' : 'row2'
-                const index = this.gallery[row].findIndex(img => img.id === imageData.id)
-
-                if (index !== -1) {
-                    this.gallery[row][index] = imageData
-                } else {
-                    this.gallery[row].push(imageData)
+                let response
+                const dataToSend = {
+                    url: imageData.url,
+                    alt: imageData.alt,
+                    row_num: rowNumber,
+                    position: imageData.position || 0
                 }
+
+                if (imageData.id) {
+                    // Обновление существующего
+                    response = await galleryAPI.update(imageData.id, dataToSend)
+                } else {
+                    // Создание нового
+                    response = await galleryAPI.create(dataToSend)
+                }
+
+                // Перезагружаем галерею
+                await this.fetchGallery(true)
 
                 console.log('✅ Изображение сохранено в базу данных')
                 return response.data
@@ -91,23 +95,6 @@ export const useGalleryStore = defineStore('gallery', {
             } catch (error) {
                 this.error = error.message
                 console.error('❌ Ошибка удаления изображения:', error)
-                throw error
-            } finally {
-                this.loading = false
-            }
-        },
-
-        // Обновить порядок изображений
-        async reorderImages(images) {
-            this.loading = true
-            this.error = null
-
-            try {
-                await galleryAPI.reorder(images)
-                console.log('✅ Порядок изображений обновлен')
-            } catch (error) {
-                this.error = error.message
-                console.error('❌ Ошибка обновления порядка:', error)
                 throw error
             } finally {
                 this.loading = false

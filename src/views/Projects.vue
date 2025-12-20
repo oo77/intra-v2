@@ -1,15 +1,27 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ProjectCard from '@/components/ProjectCard.vue'
 import ProjectModal from '@/components/ProjectModal.vue'
-import { projectsData } from '@/data/projectsData.js'
+import { useProjectsStore } from '@/stores/projects'
 
 const { t, locale } = useI18n()
+const projectsStore = useProjectsStore()
 
-const projects = ref(projectsData)
 const selectedProject = ref(null)
 const activeFilter = ref('All')
+
+// Загрузка проектов из базы данных
+onMounted(async () => {
+  try {
+    await projectsStore.fetchProjects()
+  } catch (error) {
+    console.error('Ошибка загрузки проектов:', error)
+  }
+})
+
+// Получаем проекты из store
+const projects = computed(() => projectsStore.allProjects)
 
 const filters = computed(() => [
   { key: 'All', label: t('projects.filters.all') },
