@@ -60,9 +60,7 @@ const showNotification = (type, title, message) => {
 
 const openAddForm = () => {
   resetForm()
-  // Генерируем новый ID
-  const maxId = projectsList.value.length > 0 ? Math.max(...projectsList.value.map(p => p.id)) : 0
-  formData.value.id = maxId + 1
+  // Не генерируем ID - база данных сделает это автоматически
   isEditing.value = false
   showModal.value = true
 }
@@ -129,8 +127,9 @@ const handleImageUpload = async (event) => {
 }
 
 const saveProject = async () => {
-  if (!formData.value.id) {
-    showNotification('error', 'Ошибка', 'ID обязателен!')
+  // Проверяем ID только при редактировании
+  if (isEditing.value && !formData.value.id) {
+    showNotification('error', 'Ошибка', 'ID обязателен при редактировании!')
     return
   }
 
@@ -149,7 +148,15 @@ const saveProject = async () => {
       })
     })
 
-    await projectsStore.saveProject(formData.value)
+    // Создаем копию данных
+    const dataToSend = { ...formData.value }
+    
+    // Если создаем новый проект, удаляем поле id
+    if (!isEditing.value) {
+      delete dataToSend.id
+    }
+
+    await projectsStore.saveProject(dataToSend)
     
     showNotification('success', 'Успешно!', 'Проект сохранен в базе данных')
     showModal.value = false
@@ -303,17 +310,17 @@ const closeModal = () => {
               </h3>
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
+                <div v-if="isEditing">
                   <label class="block text-sm font-semibold text-gray-700 mb-2">ID *</label>
                   <input
                     v-model="formData.id"
                     type="number"
-                    :disabled="isEditing"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    disabled
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
                   />
                 </div>
                 
-                <div>
+                <div :class="isEditing ? '' : 'md:col-span-2'">
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Статус *</label>
                   <select
                     v-model="formData.status"

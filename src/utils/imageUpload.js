@@ -9,8 +9,8 @@
  */
 
 // Cloudinary конфигурация
-const CLOUDINARY_CLOUD_NAME = 'YOUR_CLOUD_NAME' // Замените на ваш Cloud Name
-const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET' // Замените на ваш Upload Preset
+const CLOUDINARY_CLOUD_NAME = 'dnni9ruhs'
+const CLOUDINARY_UPLOAD_PRESET = 'intra_uploads'
 const CLOUDINARY_API_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`
 
 /**
