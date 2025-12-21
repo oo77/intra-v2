@@ -116,29 +116,7 @@ const contactInfo = computed(() => [
   }
 ])
 
-const departments = computed(() => [
-  {
-    icon: BuildingOfficeIcon,
-    name: $t('contacts.departments.direction.name'),
-    email: 'ilesaliev@mail.ru',
-    phone: '+998 99 806-41-99',
-    description: $t('contacts.departments.direction.description')
-  },
-  {
-    icon: GlobeAltIcon,
-    name: $t('contacts.departments.science.name'),
-    email: 'shaxr2107@gmail.com',
-    phone: '+998 93 583-45-69',
-    description: $t('contacts.departments.science.description')
-  },
-  {
-    icon: EnvelopeIcon,
-    name: $t('contacts.departments.general.name'),
-    email: 'Aleksandr-svetashev@bk.ru',
-    phone: '+998 90 992-77-03',
-    description: $t('contacts.departments.general.description')
-  }
-])
+
 
 const faqs = computed(() => [
   {
@@ -329,7 +307,7 @@ const toggleFaq = (index) => {
             <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">{{ $t('contacts.location.title') }}</h2>
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d69.2401!3d41.2995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0x348f651b9b5d2c5a!2sTashkent%20State%20Transport%20University!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3023.9093309719788!2d69.27794848097004!3d41.276172274774744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sru!2s!4v1766335072409!5m2!1sru!2s"
                 width="100%"
                 height="400"
                 style="border:0;"
@@ -358,51 +336,7 @@ const toggleFaq = (index) => {
       </div>
     </section>
 
-    <!-- Department Contacts -->
-    <section class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">{{ $t('contacts.departments.title') }}</h2>
-          <p class="text-xl text-gray-600">
-            {{ $t('contacts.departments.subtitle') }}
-          </p>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div
-            v-for="(dept, index) in departments"
-            :key="dept.name"
-            class="bg-gradient-to-br from-gray-50 to-white rounded-lg p-6 card-hover shadow-lg group"
-            data-aos="fade-up"
-            :data-aos-delay="index * 100"
-          >
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
-                <component :is="dept.icon" class="h-6 w-6 text-white" />
-              </div>
-              <h3 class="text-lg font-semibold text-gray-900">{{ dept.name }}</h3>
-            </div>
-            <p class="text-gray-600 mb-4">{{ dept.description }}</p>
-            <div class="space-y-2">
-              <a
-                :href="`mailto:${dept.email}`"
-                class="flex items-center text-primary-600 hover:text-primary-700 transition-colors duration-200"
-              >
-                <EnvelopeIcon class="h-4 w-4 mr-2" />
-                {{ dept.email }}
-              </a>
-              <a
-                :href="`tel:${dept.phone.replace(/\s/g, '')}`"
-                class="flex items-center text-primary-600 hover:text-primary-700 transition-colors duration-200"
-              >
-                <PhoneIcon class="h-4 w-4 mr-2" />
-                {{ dept.phone }}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- FAQ Section -->
     <section class="py-20 bg-gray-50">

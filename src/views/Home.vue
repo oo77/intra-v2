@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Partners from '@/components/Partners.vue'
@@ -8,7 +8,7 @@ import {
   ChartBarIcon,
   ArrowRightIcon,
   PlayIcon,
-  CheckCircleIcon,
+
   LightBulbIcon,
   CogIcon,
   ArrowTrendingUpIcon,
@@ -79,12 +79,6 @@ const newFeatures = ref([
 ])
 
 const isVideoModalOpen = ref(false)
-const email = ref('')
-const isSubscribed = ref(false)
-
-const backgroundPatternStyle = computed(() => ({
-  backgroundImage: `url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')`
-}))
 
 const openVideoModal = () => {
   isVideoModalOpen.value = true
@@ -92,16 +86,6 @@ const openVideoModal = () => {
 
 const closeVideoModal = () => {
   isVideoModalOpen.value = false
-}
-
-const subscribeNewsletter = () => {
-  if (email.value) {
-    isSubscribed.value = true
-    setTimeout(() => {
-      isSubscribed.value = false
-      email.value = ''
-    }, 3000)
-  }
 }
 
 onMounted(() => {
@@ -334,49 +318,7 @@ onMounted(() => {
     <!-- Partners Section -->
     <Partners />
 
-    <!-- Newsletter Section with Modern Design -->
-    <section class="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 relative overflow-hidden">
-      <!-- Background Pattern -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" :style="backgroundPatternStyle"></div>
-      </div>
-      
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div data-aos="fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-            {{ $t('home.newsletter.title') }}
-          </h2>
-          <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            {{ $t('home.newsletter.subtitle') }}
-          </p>
-          
-          <div class="max-w-md mx-auto">
-            <div class="flex flex-col sm:flex-row gap-4">
-              <input
-                v-model="email"
-                type="email"
-                :placeholder="$t('home.newsletter.placeholder')"
-                class="flex-1 px-6 py-4 rounded-full border-0 focus:ring-4 focus:ring-white/20 focus:outline-none text-gray-900 placeholder-gray-500 shadow-lg"
-              >
-              <button
-                @click="subscribeNewsletter"
-                :disabled="isSubscribed"
-                class="px-8 py-4 bg-white text-blue-600 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                <span v-if="!isSubscribed">{{ $t('home.newsletter.subscribe') }}</span>
-                <span v-else class="flex items-center">
-                  <CheckCircleIcon class="w-5 h-5 mr-2" />
-                  {{ $t('home.newsletter.subscribed') }}
-                </span>
-              </button>
-            </div>
-            <p class="text-blue-100 text-sm mt-4 opacity-80">
-              {{ $t('home.newsletter.privacy') }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- CTA Section with Enhanced Design -->
     <section class="py-20 bg-gradient-to-r from-slate-900 to-gray-900 relative overflow-hidden">
