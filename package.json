@@ -10,7 +10,9 @@
     "server": "node server/index.js",
     "server:dev": "nodemon server/index.js",
     "start": "NODE_ENV=production node server/index.js",
-    "start:all": "concurrently \"npm run dev\" \"npm run server:dev\""
+    "start:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
+    "migrate": "node server/migrate.js",
+    "migrate:force": "node server/migrate.js --force"
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",

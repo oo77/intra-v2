@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { testConnection } from './config/database.js';
+import { initializeDatabase } from './config/migrations.js';
 import teamRoutes from './routes/team-members.js';
 import projectsRoutes from './routes/projects.js';
 import galleryRoutes from './routes/gallery.js';
@@ -70,16 +71,36 @@ app.use((err, req, res, next) => {
 
 // Запуск
 async function start() {
-    const connected = await testConnection();
-    if (!connected) {
-        console.error('❌ Не удалось подключиться к базе данных');
+    try {
+        // Проверяем подключение к базе данных
+        const connected = await testConnection();
+        if (!connected) {
+            console.error('❌ Не удалось подключиться к базе данных');
+            console.error('💡 Проверьте настройки подключения в .env файле');
+            process.exit(1);
+        }
+
+        // Автоматическая инициализация и миграция БД
+        await initializeDatabase();
+
+        // Запускаем сервер
+        app.listen(PORT, () => {
+            console.log('='.repeat(60));
+            console.log('🚀 СЕРВЕР УСПЕШНО ЗАПУЩЕН');
+            console.log('='.repeat(60));
+            console.log(`📍 URL: http://localhost:${PORT}`);
+            console.log(`📊 База данных: ${process.env.DB_NAME}`);
+            console.log(`🌍 Режим: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
+            console.log('='.repeat(60) + '\n');
+        });
+    } catch (error) {
+        console.error('\n' + '='.repeat(60));
+        console.error('❌ КРИТИЧЕСКАЯ ОШИБКА ЗАПУСКА СЕРВЕРА');
+        console.error('='.repeat(60));
+        console.error('Причина:', error.message);
+        console.error('='.repeat(60) + '\n');
         process.exit(1);
     }
-
-    app.listen(PORT, () => {
-        console.log(`🚀 Сервер запущен: http://localhost:${PORT}`);
-        console.log(`📊 База данных: ${process.env.DB_NAME}`);
-    });
 }
 
 start();
