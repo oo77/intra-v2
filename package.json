@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "server": "node server/index.js",
     "server:dev": "nodemon server/index.js",
-    "migrate": "node server/migrations/run-migrations.js",
     "start:all": "concurrently \"npm run dev\" \"npm run server:dev\""
   },
   "dependencies": {

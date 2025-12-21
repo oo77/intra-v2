@@ -1,16 +1,24 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useProjectsStore } from '@/stores/projects'
+import AdminNav from '@/components/AdminNav.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 import { uploadImageToCloudinary, isCloudinaryConfigured } from '@/utils/imageUpload.js'
 
-const projects = ref([])
-const currentProject = ref(null)
-const isEditing = ref(false)
-const currentLanguage = ref('ru')
-const showModal = ref(false)
-const imagePreview = ref('')
-const isSaving = ref(false)
+const projectsStore = useProjectsStore()
 
-// Форма для нового/редактируемого проекта
+// State
+const showModal = ref(false)
+const showDeleteConfirm = ref(false)
+const showNotificationModal = ref(false)
+const notificationData = ref({ type: 'info', title: '', message: '' })
+const currentDeleteId = ref(null)
+const isEditing = ref(false)
+const isSaving = ref(false)
+const currentLanguage = ref('ru')
+const imagePreview = ref('')
+
+// Форма
 const formData = ref({
   id: null,
   image: '',
@@ -28,57 +36,44 @@ const formData = ref({
   }
 })
 
-// Загрузка данных из JSON
+// Загрузка данных
 onMounted(async () => {
-  await loadProjectsData()
+  try {
+    await projectsStore.fetchProjects()
+  } catch (error) {
+    showNotification('error', 'Ошибка загрузки', error.message)
+  }
 })
 
-// Функция загрузки данных
-const loadProjectsData = async () => {
-  try {
-    // Сначала проверяем localStorage
-    const localData = localStorage.getItem('projectsData')
-    if (localData) {
-      try {
-        projects.value = JSON.parse(localData)
-        console.log('✅ Данные проектов загружены из localStorage')
-        return
-      } catch (e) {
-        console.warn('Ошибка парсинга localStorage, загружаем из файла')
-      }
-    }
-    
-    // Если нет в localStorage, загружаем из файла
-    const timestamp = new Date().getTime()
-    const response = await fetch(`/projects.json?t=${timestamp}`)
-    projects.value = await response.json()
-    console.log('✅ Данные проектов загружены из projects.json')
-  } catch (error) {
-    console.error('Ошибка загрузки данных:', error)
-    projects.value = []
-  }
+// Computed
+const projectsList = computed(() => projectsStore.allProjects)
+const isLoading = computed(() => projectsStore.isLoading)
+
+// Статусы
+const statuses = ['Planning', 'Active', 'Completed']
+
+// Methods
+const showNotification = (type, title, message) => {
+  notificationData.value = { type, title, message }
+  showNotificationModal.value = true
 }
 
-// Открыть форму для добавления нового проекта
 const openAddForm = () => {
   resetForm()
   // Генерируем новый ID
-  const maxId = projects.value.length > 0 ? Math.max(...projects.value.map(p => p.id)) : 0
+  const maxId = projectsList.value.length > 0 ? Math.max(...projectsList.value.map(p => p.id)) : 0
   formData.value.id = maxId + 1
   isEditing.value = false
   showModal.value = true
 }
 
-// Открыть форму для редактирования
 const openEditForm = (project) => {
-  currentProject.value = project.id
   formData.value = JSON.parse(JSON.stringify(project))
   imagePreview.value = project.image
   isEditing.value = true
   showModal.value = true
 }
 
-// Сброс формы
 const resetForm = () => {
   formData.value = {
     id: null,
@@ -97,151 +92,102 @@ const resetForm = () => {
     }
   }
   imagePreview.value = ''
-  currentProject.value = null
 }
 
-// Добавить поле в массив
 const addField = (lang, field) => {
   formData.value.details[field][lang].push('')
 }
 
-// Удалить поле из массива
 const removeField = (lang, field, index) => {
   formData.value.details[field][lang].splice(index, 1)
 }
 
-// Обработка загрузки изображения
 const handleImageUpload = async (event) => {
   const file = event.target.files[0]
   if (!file) return
 
-  // Проверяем конфигурацию Cloudinary
   if (!isCloudinaryConfigured()) {
-    alert('⚠️ Cloudinary не настроен!\n\nПожалуйста, настройте Cloudinary в файле:\nsrc/utils/imageUpload.js\n\nИнструкция находится в комментариях файла.')
+    showNotification('warning', 'Cloudinary не настроен', 'Пожалуйста, настройте Cloudinary в файле src/utils/imageUpload.js')
     return
   }
 
   try {
     isSaving.value = true
-
-    // Загружаем в Cloudinary с SEO-оптимизацией
     const result = await uploadImageToCloudinary(file, {
-      folder: 'intra-v2/projects',
-      onProgress: (progress) => {
-        console.log(`Загрузка: ${progress}%`)
-      }
+      folder: 'intra-v2/projects'
     })
-
-    // Используем оптимизированный URL
+    
     imagePreview.value = result.optimizedUrl
     formData.value.image = result.optimizedUrl
-
-    alert(`✅ Изображение загружено и оптимизировано!\n\n📊 Информация:\n- Формат: ${result.format} (автоматически WebP/AVIF)\n- Размер: ${Math.round(result.size / 1024)} KB\n- Разрешение: ${result.width}x${result.height}\n- SEO: Оптимизировано для быстрой загрузки`)
+    
+    showNotification('success', 'Загружено!', `Изображение успешно загружено и оптимизировано (${Math.round(result.size / 1024)} KB)`)
   } catch (error) {
-    console.error('Ошибка загрузки:', error)
-    alert('❌ Ошибка загрузки изображения: ' + error.message)
+    showNotification('error', 'Ошибка загрузки', error.message)
   } finally {
     isSaving.value = false
   }
 }
 
-// Сохранить данные
 const saveProject = async () => {
-  if (!formData.value.title.ru) {
-    alert('Название проекта обязательно!')
+  if (!formData.value.id) {
+    showNotification('error', 'Ошибка', 'ID обязателен!')
+    return
+  }
+
+  if (!formData.value.title.ru || !formData.value.title.en || !formData.value.title.uz) {
+    showNotification('error', 'Ошибка', 'Названия на всех языках обязательны!')
     return
   }
 
   isSaving.value = true
-
+  
   try {
-    // Очистка пустых полей в массивах
+    // Очистка пустых полей
     ['en', 'ru', 'uz'].forEach(lang => {
       ['objectives', 'technologies'].forEach(field => {
         formData.value.details[field][lang] = formData.value.details[field][lang].filter(item => item.trim() !== '')
       })
     })
 
-    // Обновляем или добавляем проект
-    const index = projects.value.findIndex(p => p.id === formData.value.id)
-    if (index !== -1) {
-      projects.value[index] = JSON.parse(JSON.stringify(formData.value))
-    } else {
-      projects.value.push(JSON.parse(JSON.stringify(formData.value)))
-    }
+    await projectsStore.saveProject(formData.value)
     
-    // Сохраняем в localStorage
-    localStorage.setItem('projectsData', JSON.stringify(projects.value))
-    
-    alert('✅ Проект успешно сохранен!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать файл для замены.')
-    
+    showNotification('success', 'Успешно!', 'Проект сохранен в базе данных')
     showModal.value = false
     resetForm()
-    
-    await loadProjectsData()
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
-    alert('❌ Ошибка при сохранении данных: ' + error.message)
+    showNotification('error', 'Ошибка сохранения', error.message)
   } finally {
     isSaving.value = false
   }
 }
 
-// Удалить проект
-const deleteProject = async (id) => {
-  if (confirm('Вы уверены, что хотите удалить этот проект?')) {
-    isSaving.value = true
-    try {
-      projects.value = projects.value.filter(p => p.id !== id)
-      
-      // Сохраняем в localStorage
-      localStorage.setItem('projectsData', JSON.stringify(projects.value))
-      
-      alert('✅ Проект удален!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать обновленный файл.')
-      await loadProjectsData()
-    } catch (error) {
-      console.error('Ошибка удаления:', error)
-      alert('❌ Ошибка при удалении: ' + error.message)
-    } finally {
-      isSaving.value = false
-    }
+const deleteProject = (id) => {
+  currentDeleteId.value = id
+  showDeleteConfirm.value = true
+}
+
+const confirmDelete = async () => {
+  try {
+    await projectsStore.deleteProject(currentDeleteId.value)
+    showNotification('success', 'Удалено!', 'Проект удален из базы данных')
+  } catch (error) {
+    showNotification('error', 'Ошибка удаления', error.message)
   }
+  showDeleteConfirm.value = false
 }
 
-// Экспортировать JSON файл
-const exportJSON = () => {
-  const jsonData = JSON.stringify(projects.value, null, 2)
-  const blob = new Blob([jsonData], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'projects.json'
-  link.click()
-  URL.revokeObjectURL(url)
-  alert('✅ Файл projects.json скачан!\n\n📝 Замените файл /public/projects.json этим файлом.')
-}
-
-// Сбросить изменения
-const resetChanges = async () => {
-  if (confirm('Вы уверены? Все несохраненные изменения будут потеряны!')) {
-    localStorage.removeItem('projectsData')
-    await loadProjectsData()
-    alert('✅ Данные сброшены! Загружены оригинальные данные из файла.')
-  }
-}
-
-// Закрыть модальное окно
 const closeModal = () => {
   showModal.value = false
   resetForm()
 }
-
-// Статусы проектов
-const statuses = ['Planning', 'Active', 'Completed']
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <!-- Навигационная панель -->
+    <AdminNav />
+    
+    <div class="py-12 px-4 sm:px-6 lg:px-8">
     <!-- Индикатор загрузки -->
     <div v-if="isSaving" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-2xl p-8 shadow-2xl text-center">
@@ -259,53 +205,26 @@ const statuses = ['Planning', 'Active', 'Completed']
             <h1 class="text-4xl font-bold text-gray-900 mb-2">Управление проектами</h1>
             <p class="text-gray-600">Добавляйте и редактируйте информацию о проектах</p>
           </div>
-          <div class="flex gap-3">
-            <button
-              @click="resetChanges"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Сбросить все несохраненные изменения"
-            >
-              🔄 Сбросить
-            </button>
-            <button
-              @click="exportJSON"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              📥 Экспортировать JSON
-            </button>
-            <button
-              @click="openAddForm"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              + Добавить проект
-            </button>
-          </div>
+          <button
+            @click="openAddForm"
+            :disabled="isSaving"
+            class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            + Добавить проект
+          </button>
         </div>
       </div>
 
-      <!-- Инструкция -->
-      <div class="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-2xl p-6 mb-8">
-        <div class="flex items-start gap-4">
-          <div class="text-4xl">✅</div>
-          <div class="flex-1">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Как работать с админ-панелью:</h3>
-            <ol class="list-decimal list-inside space-y-2 text-gray-700">
-              <li><strong>Добавляйте/редактируйте</strong> проекты и нажимайте <strong>"💾 Сохранить"</strong> - данные сохраняются в браузере</li>
-              <li>Когда закончите все изменения, нажмите <strong class="text-green-600">"📥 Экспортировать JSON"</strong> - скачается файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">projects.json</code></li>
-              <li>Замените файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">/public/projects.json</code> скачанным файлом</li>
-              <li>Обновите страницу сайта (F5) - все изменения отобразятся! 🎉</li>
-            </ol>
-          </div>
-        </div>
+      <!-- Индикатор загрузки списка -->
+      <div v-if="isLoading && projectsList.length === 0" class="text-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto mb-4"></div>
+        <p class="text-gray-600">Загрузка данных...</p>
       </div>
 
       <!-- Список проектов -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
-          v-for="project in projects"
+          v-for="project in projectsList"
           :key="project.id"
           class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
         >
@@ -313,7 +232,7 @@ const statuses = ['Planning', 'Active', 'Completed']
             <img
               v-if="project.image"
               :src="project.image"
-              :alt="project.title.ru"
+              :alt="project.title?.ru"
               class="w-full h-full object-cover"
             />
             <div v-else class="w-full h-full flex items-center justify-center text-white text-6xl">
@@ -332,8 +251,8 @@ const statuses = ['Planning', 'Active', 'Completed']
           </div>
           
           <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ project.title.ru }}</h3>
-            <p class="text-gray-600 mb-2 line-clamp-2">{{ project.description.ru }}</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ project.title?.ru }}</h3>
+            <p class="text-gray-600 mb-2 line-clamp-2">{{ project.description?.ru }}</p>
             <p class="text-sm text-gray-500 mb-2">📅 {{ project.duration }}</p>
             <p class="text-sm text-gray-500 mb-4">👥 {{ project.team }}</p>
             
@@ -385,6 +304,16 @@ const statuses = ['Planning', 'Active', 'Completed']
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">ID *</label>
+                  <input
+                    v-model="formData.id"
+                    type="number"
+                    :disabled="isEditing"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Статус *</label>
                   <select
                     v-model="formData.status"
@@ -395,7 +324,9 @@ const statuses = ['Planning', 'Active', 'Completed']
                     </option>
                   </select>
                 </div>
-                
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Длительность *</label>
                   <input
@@ -405,16 +336,16 @@ const statuses = ['Planning', 'Active', 'Completed']
                     placeholder="2023-2025"
                   />
                 </div>
-              </div>
 
-              <div class="mb-4">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Команда *</label>
-                <input
-                  v-model="formData.team"
-                  type="text"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Dr. Sarah Johnson, Prof. Michael Chen"
-                />
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Команда *</label>
+                  <input
+                    v-model="formData.team"
+                    type="text"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Dr. Sarah Johnson, Prof. Michael Chen"
+                  />
+                </div>
               </div>
 
               <div class="mb-4">
@@ -557,9 +488,9 @@ const statuses = ['Planning', 'Active', 'Completed']
                 </button>
               </div>
 
-              <!-- Технологии/Теги -->
+              <!-- Технологии -->
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">🏷️ Технологии/Теги</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Технологии/Теги</label>
                 <div
                   v-for="(item, index) in formData.details.technologies[currentLanguage]"
                   :key="index"
@@ -608,6 +539,31 @@ const statuses = ['Planning', 'Active', 'Completed']
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Модальные окна подтверждения -->
+    <ConfirmModal
+      :isVisible="showDeleteConfirm"
+      type="warning"
+      title="Удалить проект?"
+      message="Это действие нельзя отменить. Данные будут удалены из базы данных."
+      confirmText="Удалить"
+      cancelText="Отмена"
+      :showCancel="true"
+      @confirm="confirmDelete"
+      @cancel="showDeleteConfirm = false"
+      @close="showDeleteConfirm = false"
+    />
+
+    <ConfirmModal
+      :isVisible="showNotificationModal"
+      :type="notificationData.type"
+      :title="notificationData.title"
+      :message="notificationData.message"
+      confirmText="OK"
+      @confirm="showNotificationModal = false"
+      @close="showNotificationModal = false"
+    />
     </div>
   </div>
 </template>

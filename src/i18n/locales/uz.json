@@ -67,24 +67,11 @@
         "description": "Bizning tadqiqotlarimiz haqiqiy transport muammolarini hal qilishga bevosita hissa qo'shadi."
       }
     },
-    "testimonials": {
-      "title": "Hamkorlarimiz nima deyishadi",
-      "subtitle": "Biz bilan hamkorlik qilgan sanoat rahbarlaridan eshiting",
-      "testimonial1": {
-        "text": "INNOVATSION TRANSPORT bilan ishlash bizning logistika operatsiyalarimizni sezilarli darajada yaxshiladi. Ularning transport tizimlari bo'yicha tajribasi ajoyib.",
-        "author": "Akmal Karimov",
-        "position": "Direktor, O'zbekiston temir yo'llari"
-      },
-      "testimonial2": {
-        "text": "Ushbu markaz bilan tadqiqot hamkorligi bizning transport infratuzilmamizni rivojlantirishda muhim rol o'ynadi. Haqiqatan ham innovatsion ish.",
-        "author": "Dr. Gulnora Abdullayeva",
-        "position": "Transport vazirligi maslahatchisi"
-      },
-      "testimonial3": {
-        "text": "Ularning logistikani optimallashtirish bo'yicha tajribasi bizga ta'minot zanjiri samaradorligini 25% ga oshirishga yordam berdi. Ajoyib tadqiqot sifati.",
-        "author": "Bobur Rahimov",
-        "position": "Logistika menejeri, ADBL"
-      }
+    "partners": {
+      "title": "Bizning hamkorlarimiz",
+      "subtitle": "Biz transport va logistika sohasidagi yetakchi tashkilotlar bilan hamkorlik qilamiz",
+      "error": "Hamkorlarni yuklashda xato",
+      "empty": "Hamkorlar hali qo'shilmagan"
     },
     "newsletter": {
       "title": "Xabardor bo'ling",

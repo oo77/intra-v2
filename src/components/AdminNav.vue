@@ -27,6 +27,18 @@ const navItems = [
     description: 'Управление галереей'
   },
   {
+    name: 'Проекты',
+    path: '/admin/projects',
+    icon: RectangleStackIcon,
+    description: 'Управление проектами'
+  },
+  {
+    name: 'Партнеры',
+    path: '/admin/partners',
+    icon: UserGroupIcon,
+    description: 'Управление партнерами'
+  },
+  {
     name: 'Команда',
     path: '/admin/team',
     icon: UserGroupIcon,

@@ -53,8 +53,7 @@ export const useGalleryStore = defineStore('gallery', {
                 const dataToSend = {
                     url: imageData.url,
                     alt: imageData.alt,
-                    row_num: rowNumber,
-                    position: imageData.position || 0
+                    row_num: rowNumber
                 }
 
                 if (imageData.id) {

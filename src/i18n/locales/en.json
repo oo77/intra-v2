@@ -67,24 +67,11 @@
         "description": "Our research directly contributes to solving real transportation challenges."
       }
     },
-    "testimonials": {
-      "title": "What Our Partners Say",
-      "subtitle": "Hear from industry leaders who have collaborated with us",
-      "testimonial1": {
-        "text": "Working with INNOVATIVE TRANSPORT has significantly improved our logistics operations. Their expertise in transport systems is exceptional.",
-        "author": "Akmal Karimov",
-        "position": "Director, Uzbekistan Railways"
-      },
-      "testimonial2": {
-        "text": "The research collaboration with this center has been instrumental in developing our transport infrastructure. Truly innovative work.",
-        "author": "Dr. Gulnara Abdullayeva",
-        "position": "Transport Ministry Advisor"
-      },
-      "testimonial3": {
-        "text": "Their expertise in logistics optimization helped us improve our supply chain efficiency by 25%. Outstanding research quality.",
-        "author": "Bobur Rakhimov",
-        "position": "Logistics Manager, ADBL"
-      }
+    "partners": {
+      "title": "Our Partners",
+      "subtitle": "We collaborate with leading organizations in transport and logistics",
+      "error": "Error loading partners",
+      "empty": "No partners added yet"
     },
     "newsletter": {
       "title": "Stay Updated",

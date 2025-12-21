@@ -2,12 +2,12 @@
 import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import Partners from '@/components/Partners.vue'
 import {
   GlobeAltIcon, 
   ChartBarIcon,
   ArrowRightIcon,
   PlayIcon,
-  StarIcon,
   CheckCircleIcon,
   LightBulbIcon,
   CogIcon,
@@ -76,30 +76,6 @@ const newFeatures = ref([
     icon: ArrowTrendingUpIcon,
     color: 'from-purple-500 to-violet-500'
   },
-])
-
-const testimonials = ref([
-  {
-    text: 'home.testimonials.testimonial1.text',
-    author: 'home.testimonials.testimonial1.author',
-    position: 'home.testimonials.testimonial1.position',
-    image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150',
-    rating: 5
-  },
-  {
-    text: 'home.testimonials.testimonial2.text',
-    author: 'home.testimonials.testimonial2.author',
-    position: 'home.testimonials.testimonial2.position',
-    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150',
-    rating: 5
-  },
-  {
-    text: 'home.testimonials.testimonial3.text',
-    author: 'home.testimonials.testimonial3.author',
-    position: 'home.testimonials.testimonial3.position',
-    image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
-    rating: 5
-  }
 ])
 
 const isVideoModalOpen = ref(false)
@@ -355,56 +331,8 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Testimonials Section with Enhanced Design -->
-    <section class="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16" data-aos="fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            {{ $t('home.testimonials.title') }}
-          </h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            {{ $t('home.testimonials.subtitle') }}
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div 
-            v-for="(testimonial, index) in testimonials" 
-            :key="index"
-            class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-            data-aos="fade-up"
-            :data-aos-delay="index * 200"
-          >
-            <!-- Rating Stars -->
-            <div class="flex items-center mb-6">
-              <div class="flex text-yellow-400">
-                <StarIcon v-for="i in testimonial.rating" :key="i" class="h-5 w-5 fill-current" />
-              </div>
-            </div>
-            
-            <!-- Quote -->
-            <blockquote class="text-gray-600 mb-6 italic leading-relaxed relative">
-              <span class="text-4xl text-blue-200 absolute -top-2 -left-2">"</span>
-              {{ $t(testimonial.text) }}
-              <span class="text-4xl text-blue-200">"</span>
-            </blockquote>
-            
-            <!-- Author -->
-            <div class="flex items-center">
-              <img 
-                :src="testimonial.image" 
-                :alt="$t(testimonial.author)"
-                class="w-14 h-14 rounded-full object-cover mr-4 ring-4 ring-blue-100"
-              >
-              <div>
-                <h4 class="font-semibold text-gray-900">{{ $t(testimonial.author) }}</h4>
-                <p class="text-sm text-gray-500">{{ $t(testimonial.position) }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Partners Section -->
+    <Partners />
 
     <!-- Newsletter Section with Modern Design -->
     <section class="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 relative overflow-hidden">

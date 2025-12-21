@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import TeamMemberCard from '@/components/TeamMemberCard.vue'
+import ImageLightbox from '@/components/ImageLightbox.vue'
 import { historyMilestones, achievements, researchAreas, getLocalizedData } from '@/data/aboutData.js'
 import { useI18n } from 'vue-i18n'
 import { useGalleryStore } from '@/stores/gallery'
@@ -59,6 +60,36 @@ const openMemberModal = (member) => {
 
 const closeMemberModal = () => {
   selectedMember.value = null
+}
+
+// Lightbox для галереи
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
+
+// Все изображения галереи для навигации
+const allGalleryImages = computed(() => {
+  const row1 = galleryData.value.row1 || []
+  const row2 = galleryData.value.row2 || []
+  return [...row1, ...row2]
+})
+
+const openLightbox = (image, row) => {
+  const row1 = galleryData.value.row1 || []
+  const row2 = galleryData.value.row2 || []
+  let index = 0
+  
+  if (row === 1) {
+    index = row1.findIndex(img => img.id === image.id)
+  } else {
+    index = row1.length + row2.findIndex(img => img.id === image.id)
+  }
+  
+  lightboxIndex.value = index >= 0 ? index : 0
+  lightboxOpen.value = true
+}
+
+const closeLightbox = () => {
+  lightboxOpen.value = false
 }
 </script>
 
@@ -236,13 +267,19 @@ const closeMemberModal = () => {
             <div 
               v-for="image in galleryData.row1" 
               :key="image.id"
-              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0 cursor-pointer group relative"
+              @click="openLightbox(image, 1)"
             >
               <img 
                 :src="image.url" 
                 :alt="image.alt[locale] || image.alt.ru" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               >
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
             </div>
           </div>
           <!-- Дублируем для бесшовной анимации -->
@@ -250,13 +287,19 @@ const closeMemberModal = () => {
             <div 
               v-for="image in galleryData.row1" 
               :key="`dup-${image.id}`"
-              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0 cursor-pointer group relative"
+              @click="openLightbox(image, 1)"
             >
               <img 
                 :src="image.url" 
                 :alt="image.alt[locale] || image.alt.ru" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               >
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -269,13 +312,19 @@ const closeMemberModal = () => {
             <div 
               v-for="image in galleryData.row2" 
               :key="image.id"
-              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0 cursor-pointer group relative"
+              @click="openLightbox(image, 2)"
             >
               <img 
                 :src="image.url" 
                 :alt="image.alt[locale] || image.alt.ru" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               >
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
             </div>
           </div>
           <!-- Дублируем для бесшовной анимации -->
@@ -283,13 +332,19 @@ const closeMemberModal = () => {
             <div 
               v-for="image in galleryData.row2" 
               :key="`dup-${image.id}`"
-              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0"
+              class="w-80 h-48 rounded-lg overflow-hidden shadow-lg flex-shrink-0 cursor-pointer group relative"
+              @click="openLightbox(image, 2)"
             >
               <img 
                 :src="image.url" 
                 :alt="image.alt[locale] || image.alt.ru" 
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               >
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -322,5 +377,15 @@ const closeMemberModal = () => {
         </div>
       </div>
     </section>
+    <!-- Lightbox для галереи -->
+    <ImageLightbox 
+      :images="allGalleryImages"
+      :current-index="lightboxIndex"
+      :is-open="lightboxOpen"
+      :locale="locale"
+      @close="closeLightbox"
+      @change="(idx) => lightboxIndex = idx"
+    />
   </div>
 </template>
+

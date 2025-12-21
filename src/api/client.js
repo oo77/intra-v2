@@ -75,6 +75,15 @@ export const galleryAPI = {
     delete: (id) => apiClient.delete(`/gallery/${id}`)
 }
 
+// API методы для партнеров
+export const partnersAPI = {
+    getAll: () => apiClient.get('/partners'),
+    getOne: (id) => apiClient.get(`/partners/${id}`),
+    create: (data) => apiClient.post('/partners', data),
+    update: (id, data) => apiClient.put(`/partners/${id}`, data),
+    delete: (id) => apiClient.delete(`/partners/${id}`)
+}
+
 // Проверка здоровья API
 export const healthCheck = () => apiClient.get('/health')
 

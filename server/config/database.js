@@ -13,11 +13,6 @@ const dbConfig = {
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0,
-    connectTimeout: 60000, // 60 секунд
-    acquireTimeout: 60000,
-    timeout: 60000,
     charset: 'utf8mb4'
 };
 
@@ -28,26 +23,19 @@ const pool = mysql.createPool(dbConfig);
 async function testConnection() {
     try {
         const connection = await pool.getConnection();
-        console.log('✅ Успешное подключение к MySQL базе данных');
-        console.log(`📊 База данных: ${process.env.DB_NAME}`);
-        console.log(`🌐 Хост: ${process.env.DB_HOST}`);
+        console.log('✅ Подключение к MySQL успешно');
         connection.release();
         return true;
     } catch (error) {
-        console.error('❌ Ошибка подключения к базе данных:', error.message);
+        console.error('❌ Ошибка подключения:', error.message);
         return false;
     }
 }
 
 // Выполнить запрос
 async function query(sql, params) {
-    try {
-        const [results] = await pool.execute(sql, params);
-        return results;
-    } catch (error) {
-        console.error('Ошибка выполнения запроса:', error);
-        throw error;
-    }
+    const [results] = await pool.execute(sql, params);
+    return results;
 }
 
 // Получить одну запись

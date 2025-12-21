@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const images = await query(
-            'SELECT * FROM gallery ORDER BY row_num, position'
+            'SELECT * FROM gallery ORDER BY row_num, id'
         );
 
         // Преобразуем в формат с row1 и row2
@@ -42,15 +42,16 @@ router.get('/', async (req, res) => {
 // Получить одно изображение по ID
 router.get('/:id', async (req, res) => {
     try {
-        const [image] = await query(
+        const images = await query(
             'SELECT * FROM gallery WHERE id = ?',
             [req.params.id]
         );
 
-        if (!image) {
+        if (images.length === 0) {
             return res.status(404).json({ error: 'Изображение не найдено' });
         }
 
+        const image = images[0];
         res.json({
             id: image.id,
             url: image.url,
@@ -59,8 +60,7 @@ router.get('/:id', async (req, res) => {
                 en: image.alt_en,
                 uz: image.alt_uz
             },
-            row_num: image.row_num,
-            position: image.position
+            row_num: image.row_num
         });
     } catch (error) {
         console.error('Ошибка при получении изображения:', error);
@@ -71,24 +71,21 @@ router.get('/:id', async (req, res) => {
 // Добавить новое изображение
 router.post('/', async (req, res) => {
     try {
-        const { url, alt, row_num = 1, position = 0 } = req.body;
+        const { url, alt, row_num = 1 } = req.body;
 
-        if (!url || !alt) {
-            return res.status(400).json({ error: 'URL и alt обязательны' });
+        if (!url || !alt || !alt.ru || !alt.en || !alt.uz) {
+            return res.status(400).json({ error: 'URL и описания на всех языках обязательны' });
         }
 
         const result = await query(
-            `INSERT INTO gallery (url, alt_ru, alt_en, alt_uz, row_num, position) 
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [url, alt.ru, alt.en, alt.uz, row_num, position]
+            `INSERT INTO gallery (url, alt_ru, alt_en, alt_uz, row_num) 
+             VALUES (?, ?, ?, ?, ?)`,
+            [url, alt.ru, alt.en, alt.uz, row_num]
         );
 
         res.status(201).json({
             id: result.insertId,
-            url,
-            alt,
-            row_num,
-            position
+            message: 'Изображение создано'
         });
     } catch (error) {
         console.error('Ошибка при добавлении изображения:', error);
@@ -99,14 +96,13 @@ router.post('/', async (req, res) => {
 // Обновить изображение
 router.put('/:id', async (req, res) => {
     try {
-        const { url, alt, row_num, position } = req.body;
+        const { url, alt, row_num } = req.body;
 
         const result = await query(
             `UPDATE gallery 
-             SET url = ?, alt_ru = ?, alt_en = ?, alt_uz = ?, 
-                 row_num = ?, position = ?
+             SET url = ?, alt_ru = ?, alt_en = ?, alt_uz = ?, row_num = ?
              WHERE id = ?`,
-            [url, alt.ru, alt.en, alt.uz, row_num, position, req.params.id]
+            [url, alt.ru, alt.en, alt.uz, row_num, req.params.id]
         );
 
         if (result.affectedRows === 0) {

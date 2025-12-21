@@ -1,14 +1,23 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useGalleryStore } from '@/stores/gallery'
 import AdminNav from '@/components/AdminNav.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
-const galleryData = ref({ row1: [], row2: [] })
+const galleryStore = useGalleryStore()
+
 const currentRow = ref('row1')
 const showModal = ref(false)
 const isEditing = ref(false)
 const currentImage = ref(null)
-const saveStatus = ref('')
 const isSaving = ref(false)
+
+// Модальные окна для уведомлений
+const showNotificationModal = ref(false)
+const showDeleteConfirm = ref(false)
+const notificationData = ref({ type: 'info', title: '', message: '' })
+const imageToDelete = ref(null)
+const rowToDelete = ref(null)
 
 // Форма для нового/редактируемого изображения
 const formData = ref({
@@ -21,41 +30,36 @@ const formData = ref({
   }
 })
 
-// Загрузка данных из JSON
+// Загрузка данных при монтировании
 onMounted(async () => {
   await loadGalleryData()
 })
 
-// Функция загрузки данных
+// Функция загрузки данных из API
 const loadGalleryData = async () => {
   try {
-    // Сначала проверяем localStorage
-    const localData = localStorage.getItem('galleryData')
-    if (localData) {
-      try {
-        galleryData.value = JSON.parse(localData)
-        console.log('✅ Данные загружены из localStorage (несохраненные изменения)')
-        return
-      } catch (e) {
-        console.warn('Ошибка парсинга localStorage, загружаем из файла')
-      }
-    }
-    
-    // Если нет в localStorage, загружаем из файла
-    const timestamp = new Date().getTime()
-    const response = await fetch(`/gallery.json?t=${timestamp}`)
-    galleryData.value = await response.json()
-    console.log('✅ Данные загружены из gallery.json')
+    await galleryStore.fetchGallery(true)
   } catch (error) {
     console.error('Ошибка загрузки данных:', error)
-    saveStatus.value = 'error'
+    showNotification('error', 'Ошибка загрузки', 'Не удалось загрузить данные галереи: ' + error.message)
   }
+}
+
+// Функция для показа уведомлений
+const showNotification = (type, title, message) => {
+  notificationData.value = { type, title, message }
+  showNotificationModal.value = true
 }
 
 // Список изображений для текущего ряда
 const currentRowImages = computed(() => {
-  return galleryData.value[currentRow.value] || []
+  return currentRow.value === 'row1' ? galleryStore.row1Images : galleryStore.row2Images
 })
+
+// Получить номер ряда
+const getCurrentRowNumber = () => {
+  return currentRow.value === 'row1' ? 1 : 2
+}
 
 // Открыть форму для добавления нового изображения
 const openAddForm = () => {
@@ -68,7 +72,11 @@ const openAddForm = () => {
 const openEditForm = (image, row) => {
   currentRow.value = row
   currentImage.value = image
-  formData.value = JSON.parse(JSON.stringify(image))
+  formData.value = {
+    id: image.id,
+    url: image.url,
+    alt: JSON.parse(JSON.stringify(image.alt))
+  }
   isEditing.value = true
   showModal.value = true
 }
@@ -90,106 +98,58 @@ const resetForm = () => {
 // Сохранить изображение
 const saveImage = async () => {
   if (!formData.value.url) {
-    alert('URL изображения обязателен!')
+    showNotification('error', 'Ошибка', 'URL изображения обязателен!')
     return
   }
 
   if (!formData.value.alt.ru || !formData.value.alt.en || !formData.value.alt.uz) {
-    alert('Заполните описание на всех языках!')
+    showNotification('error', 'Ошибка', 'Заполните описание на всех языках!')
     return
   }
 
   isSaving.value = true
-  saveStatus.value = 'saving'
 
   try {
-    if (isEditing.value) {
-      // Редактирование существующего изображения
-      const index = galleryData.value[currentRow.value].findIndex(img => img.id === formData.value.id)
-      if (index !== -1) {
-        galleryData.value[currentRow.value][index] = JSON.parse(JSON.stringify(formData.value))
-      }
-    } else {
-      // Добавление нового изображения
-      // Генерируем новый ID
-      const allIds = [...galleryData.value.row1, ...galleryData.value.row2].map(img => img.id)
-      const newId = allIds.length > 0 ? Math.max(...allIds) + 1 : 1
-      formData.value.id = newId
-      
-      galleryData.value[currentRow.value].push(JSON.parse(JSON.stringify(formData.value)))
-    }
+    const rowNumber = getCurrentRowNumber()
+    await galleryStore.saveImage(formData.value, rowNumber)
     
-    // Сохраняем в localStorage
-    localStorage.setItem('galleryData', JSON.stringify(galleryData.value))
-    
-    saveStatus.value = 'success'
-    
-    // Показываем уведомление
-    alert('✅ Изображение успешно сохранено!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать файл для замены.')
+    showNotification('success', 'Успешно!', 
+      isEditing.value 
+        ? 'Изображение успешно обновлено!' 
+        : 'Изображение успешно добавлено!')
     
     showModal.value = false
     resetForm()
-    
-    // Перезагружаем данные для синхронизации
-    await loadGalleryData()
   } catch (error) {
     console.error('Ошибка сохранения:', error)
-    saveStatus.value = 'error'
-    alert('❌ Ошибка при сохранении данных: ' + error.message)
+    showNotification('error', 'Ошибка сохранения', 'Ошибка при сохранении данных: ' + error.message)
   } finally {
     isSaving.value = false
   }
 }
 
 // Удалить изображение
-const deleteImage = async (image, row) => {
-  if (confirm('Вы уверены, что хотите удалить это изображение?')) {
-    isSaving.value = true
-    try {
-      const index = galleryData.value[row].findIndex(img => img.id === image.id)
-      if (index !== -1) {
-        galleryData.value[row].splice(index, 1)
-      }
-      
-      // Сохраняем в localStorage
-      localStorage.setItem('galleryData', JSON.stringify(galleryData.value))
-      
-      alert('✅ Изображение удалено!\n\n📝 Нажмите кнопку "Экспортировать JSON" чтобы скачать обновленный файл.')
-      await loadGalleryData()
-    } catch (error) {
-      console.error('Ошибка удаления:', error)
-      alert('❌ Ошибка при удалении: ' + error.message)
-    } finally {
-      isSaving.value = false
-    }
+const deleteImage = (image, row) => {
+  imageToDelete.value = image
+  rowToDelete.value = row
+  showDeleteConfirm.value = true
+}
+
+// Подтверждение удаления
+const confirmDelete = async () => {
+  isSaving.value = true
+  try {
+    const rowNumber = rowToDelete.value === 'row1' ? 1 : 2
+    await galleryStore.deleteImage(imageToDelete.value.id, rowNumber)
+    
+    showNotification('success', 'Удалено!', 'Изображение успешно удалено!')
+  } catch (error) {
+    console.error('Ошибка удаления:', error)
+    showNotification('error', 'Ошибка удаления', 'Ошибка при удалении: ' + error.message)
+  } finally {
+    isSaving.value = false
+    showDeleteConfirm.value = false
   }
-}
-
-// Экспортировать JSON файл
-const exportJSON = () => {
-  const jsonData = JSON.stringify(galleryData.value, null, 2)
-  downloadFile('gallery.json', jsonData, 'application/json')
-  alert('✅ Файл gallery.json скачан!\n\n📝 Замените файл /public/gallery.json этим файлом.')
-}
-
-// Сбросить изменения и загрузить из файла
-const resetChanges = async () => {
-  if (confirm('Вы уверены? Все несохраненные изменения будут потеряны!')) {
-    localStorage.removeItem('galleryData')
-    await loadGalleryData()
-    alert('✅ Данные сброшены! Загружены оригинальные данные из файла.')
-  }
-}
-
-// Универсальная функция скачивания файла
-const downloadFile = (filename, content, mimeType) => {
-  const blob = new Blob([content], { type: mimeType })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = filename
-  link.click()
-  URL.revokeObjectURL(url)
 }
 
 // Закрыть модальное окно
@@ -206,10 +166,10 @@ const closeModal = () => {
     
     <div class="py-12 px-4 sm:px-6 lg:px-8">
     <!-- Индикатор загрузки -->
-    <div v-if="isSaving" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="isSaving || galleryStore.isLoading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-2xl p-8 shadow-2xl text-center">
         <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-        <p class="text-xl font-semibold text-gray-900">Сохранение данных...</p>
+        <p class="text-xl font-semibold text-gray-900">{{ isSaving ? 'Сохранение данных...' : 'Загрузка...' }}</p>
         <p class="text-gray-600 mt-2">Пожалуйста, подождите</p>
       </div>
     </div>
@@ -224,37 +184,28 @@ const closeModal = () => {
           </div>
           <div class="flex gap-3">
             <button
-              @click="resetChanges"
-              :disabled="isSaving"
-              class="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              title="Сбросить все несохраненные изменения"
-            >
-              🔄 Сбросить
-            </button>
-            <button
-              @click="exportJSON"
-              :disabled="isSaving"
+              @click="loadGalleryData"
+              :disabled="isSaving || galleryStore.isLoading"
               class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              📥 Экспортировать JSON
+              🔄 Обновить
             </button>
           </div>
         </div>
       </div>
 
       <!-- Инструкция -->
-      <div class="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-2xl p-6 mb-8">
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-300 rounded-2xl p-6 mb-8">
         <div class="flex items-start gap-4">
-          <div class="text-4xl">✅</div>
+          <div class="text-4xl">💡</div>
           <div class="flex-1">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Как работать с админ-панелью:</h3>
-            <ol class="list-decimal list-inside space-y-2 text-gray-700">
-              <li><strong>Добавляйте/редактируйте</strong> изображения и нажимайте <strong>"💾 Сохранить"</strong> - данные сохраняются в браузере</li>
-              <li>Когда закончите все изменения, нажмите <strong class="text-green-600">"📥 Экспортировать JSON"</strong> - скачается файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">gallery.json</code></li>
-              <li>Замените файл <code class="bg-green-200 px-2 py-1 rounded font-semibold">/public/gallery.json</code> скачанным файлом</li>
-              <li>Обновите страницу сайта (F5) - все изменения отобразятся! 🎉</li>
-            </ol>
-            <div class="mt-4 p-3 bg-white rounded-lg border border-green-200">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Работа с галереей:</h3>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+              <li><strong>Добавляйте/редактируйте</strong> изображения - данные сохраняются в базу данных автоматически</li>
+              <li>Укажите <strong>URL изображения</strong> и <strong>описания на трех языках</strong></li>
+              <li>Изменения отображаются на сайте сразу после сохранения! 🎉</li>
+            </ul>
+            <div class="mt-4 p-3 bg-white rounded-lg border border-blue-200">
               <p class="text-sm text-gray-600">
                 <strong>💡 Совет:</strong> Используйте URL изображений из Cloudinary, Imgur, или других CDN сервисов для лучшей производительности.
               </p>
@@ -292,7 +243,7 @@ const closeModal = () => {
 
         <button
           @click="openAddForm"
-          :disabled="isSaving"
+          :disabled="isSaving || galleryStore.isLoading"
           class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
         >
           + Добавить изображение в {{ currentRow === 'row1' ? 'первый' : 'второй' }} ряд
@@ -326,19 +277,25 @@ const closeModal = () => {
               <div class="flex gap-2">
                 <button
                   @click="openEditForm(image, currentRow)"
-                  class="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                  class="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm"
                 >
                   ✏️ Редактировать
                 </button>
                 <button
                   @click="deleteImage(image, currentRow)"
-                  class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+                  class="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm"
                 >
                   🗑️ Удалить
                 </button>
               </div>
             </div>
           </div>
+        </div>
+
+        <div v-if="currentRowImages.length === 0" class="text-center py-12">
+          <div class="text-6xl mb-4">📷</div>
+          <p class="text-xl text-gray-600">В этом ряду пока нет изображений</p>
+          <p class="text-gray-500 mt-2">Нажмите кнопку "Добавить изображение" чтобы начать</p>
         </div>
       </div>
 
@@ -442,6 +399,30 @@ const closeModal = () => {
         </div>
       </div>
     </div>
+
+    <!-- Модальные окна подтверждения -->
+    <ConfirmModal
+      :isVisible="showDeleteConfirm"
+      type="warning"
+      title="Удалить изображение?"
+      message="Вы уверены, что хотите удалить это изображение? Это действие нельзя отменить."
+      confirmText="Удалить"
+      cancelText="Отмена"
+      :showCancel="true"
+      @confirm="confirmDelete"
+      @cancel="showDeleteConfirm = false"
+      @close="showDeleteConfirm = false"
+    />
+
+    <ConfirmModal
+      :isVisible="showNotificationModal"
+      :type="notificationData.type"
+      :title="notificationData.title"
+      :message="notificationData.message"
+      confirmText="OK"
+      @confirm="showNotificationModal = false"
+      @close="showNotificationModal = false"
+    />
     </div>
   </div>
 </template>
