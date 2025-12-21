@@ -5,9 +5,7 @@ import {
   MapPinIcon, 
   PhoneIcon, 
   EnvelopeIcon, 
-  ClockIcon,
-  BuildingOfficeIcon,
-  GlobeAltIcon
+  ClockIcon
 } from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { testConnection } from './config/database.js';
 import teamRoutes from './routes/team-members.js';
 import projectsRoutes from './routes/projects.js';
@@ -9,8 +11,12 @@ import partnersRoutes from './routes/partners.js';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // CORS - разрешаем все origins для простоты (или настройте под свой домен)
 app.use(cors({
@@ -38,10 +44,23 @@ app.get('/api/health', async (req, res) => {
     });
 });
 
-// 404 handler
-app.use((req, res) => {
-    res.status(404).json({ error: 'Маршрут не найден' });
+// API 404 handler - только для /api маршрутов
+app.all('/api/*', (req, res) => {
+    res.status(404).json({ error: 'API маршрут не найден' });
 });
+
+// Production: раздача статических файлов из dist/
+if (isProduction) {
+    const distPath = path.join(__dirname, '..', 'dist');
+
+    // Статические файлы
+    app.use(express.static(distPath));
+
+    // SPA fallback - все остальные маршруты отдают index.html
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+    });
+}
 
 // Error handler
 app.use((err, req, res, next) => {

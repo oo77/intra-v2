@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 // Базовый URL API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+// В production используем относительный путь (frontend и backend на одном домене)
+// В development используем proxy через Vite или явный URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 // Создаем экземпляр axios
 const apiClient = axios.create({
