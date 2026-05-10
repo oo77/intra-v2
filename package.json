@@ -9,10 +9,9 @@
     "preview": "vite preview",
     "server": "node server/index.js",
     "server:dev": "nodemon server/index.js",
+    "cms": "nodemon server/static-cms.js",
     "start": "NODE_ENV=production node server/index.js",
-    "start:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
-    "migrate": "node server/migrate.js",
-    "migrate:force": "node server/migrate.js --force"
+    "start:all": "concurrently \"npm run dev\" \"npm run cms\""
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
@@ -22,7 +21,6 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "multer": "^2.0.2",
-    "mysql2": "^3.16.0",
     "pinia": "^3.0.4",
     "vue": "^3.4.38",
     "vue-i18n": "^9.8.0",

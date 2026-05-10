@@ -9,7 +9,8 @@
   "home": {
     "hero": {
       "title": "INNOVATSION TRANSPORT",
-      "subtitle": "Transport va logistika sohasida integratsion ilmiy platformani yaratish, barqaror rivojlanish, innovatsiyalar va yuqori malakali kadrlar tayyorlashga yordam berish",
+      "badge": "“Innovatsion transport” ilmiy-tadqiqot instituti",
+      "subtitle": "Zamonaviy transportni rivojlantirish va Oʻzbekiston logistika salohiyatini kuchaytirish uchun ilmiy hamda innovatsion asos yaratamiz",
       "exploreProjects": "Loyihalarni o'rganish",
       "watchVideo": "Video ko'rish",
       "cards": {
@@ -24,52 +25,67 @@
       }
     },
     "stats": {
-      "title": "Raqamlarda bizning yutuqlarimiz",
+      "title": "Institutning ilmiy salohiyati va natijalari",
       "subtitle": "Transport innovatsiyalari sohasidagi ko'p yillik ish natijalari",
-      "activeProjects": "Faol loyihalar",
-      "researchPapers": "Tadqiqot ishlari",
-      "industryPartners": "Hamkorlar",
-      "yearsOfInnovation": "Innovatsiya yillari"
+      "implementedProjects": "Amalga oshirilayotgan loyihalar",
+      "scientificResearch": "Ilmiy-tahliliy tadqiqotlar",
+      "internationalPartners": "Xalqaro hamkorlar",
+      "transportInnovationYears": "Transport innovatsiyalari tajribasi",
+      "graduatedDScPhD": "Tayyorlangan DSc va PhD mutaxassislari",
+      "analyticalStudies": "Tahliliy tadqiqotlar",
+      "digitalSolutions": "Raqamli yechimlar"
     },
     "features": {
-      "title": "Bizning tadqiqot sohalari",
-      "subtitle": "Tadqiqot va ishlanmalar faoliyatimizning asosiy yo'nalishlari",
-      "smartLogistics": {
-        "title": "Transport jarayonlarini boshqarish",
-        "description": "Transport tizimlarini optimallashtirish va yuk tashish jarayonlarini boshqarish usullarini ishlab chiqish."
+      "title": "Bizning tadqiqot sohalarimiz",
+      "subtitle": "Tadqiqot va ishlanmalarimizning asosiy yo'nalishlari",
+      "logisticsCorridors": {
+        "title": "Transport logistikasi va xalqaro koridorlar",
+        "description": "Tranzit salohiyati, multimodal yo‘nalishlar va xalqaro transport koridorlarini rivojlantirish bo‘yicha tadqiqotlar."
+      },
+      "digitalization": {
+        "title": "Transport sohasini raqamlashtirish",
+        "description": "Transport va logistika uchun raqamli platformalar, intellektual boshqaruv tizimlari va analitik yechimlarni ishlab chiqish."
+      },
+      "analytics": {
+        "title": "Transport analitikasi va modellashtirish",
+        "description": "Yuk oqimlarini tahlil qilish, tashuvlarni prognozlash va transport jarayonlarini modellashtirish."
       },
       "sustainableTransport": {
-        "title": "Logistikani raqamlashtirish",
-        "description": "Logistika jarayonlari va ta'minot zanjiri boshqaruviga raqamli texnologiyalarni joriy etish."
+        "title": "Barqaror transport va yashil logistika",
+        "description": "Ekologik barqaror transport yechimlari va energiya samarador logistika bo‘yicha tadqiqotlar."
       },
-      "innovationResearch": {
-        "title": "Me'yoriy materiallar",
-        "description": "Transport sohasi uchun standartlar, metodikalar va tavsiyalar ishlab chiqish."
+      "regulatory": {
+        "title": "Normativ-huquqiy va tarmoq tadqiqotlari",
+        "description": "Transport sohasi uchun tavsiyalar, standartlar hamda ilmiy-tahliliy materiallarni ishlab chiqish."
+      },
+      "capacityBuilding": {
+        "title": "Ilmiy kadrlar tayyorlash va xalqaro hamkorlik",
+        "description": "Ilmiy maktablarni rivojlantirish, mutaxassislar tayyorlash va xalqaro ilmiy loyihalarni amalga oshirish."
       }
     },
     "newFeatures": {
-      "title": "Nima uchun bizni tanlaysiz",
-      "subtitle": "Bizni transport innovatsiyalari bo'yicha yetakchi tadqiqot markazi qiladigan narsalarni bilib oling",
+      "title": "Nima uchun institutga ishonishadi",
+      "subtitle": "Ilm-fan, tahlil, raqamlashtirish va xalqaro hamkorlik orqali zamonaviy transport yechimlarini shakllantiramiz",
       "expertise": {
-        "title": "Ilmiy mukammallik",
-        "description": "Bizning jamoamiz ko'p yillik tajribaga ega yetakchi tadqiqotchilar va sanoat ekspertlaridan iborat."
+        "title": "Yangi avlod transport analitikasi",
+        "description": "Transport jarayonlarini intellektual tadqiq qilish, modellashtirish va prognozlash."
       },
       "technology": {
-        "title": "Innovatsiyalarga e'tibor",
-        "description": "Biz transport va logistika sohasi uchun ilg'or yechimlar ishlab chiqamiz."
+        "title": "Innovatsiyalar va raqamlashtirish",
+        "description": "Transport sohasiga raqamli texnologiyalar va zamonaviy yechimlarni joriy etish."
       },
       "collaboration": {
-        "title": "Xalqaro hamkorlik",
-        "description": "Biz innovatsiyalarni rivojlantirish uchun butun dunyo bo'ylab yetakchi muassasalar va kompaniyalar bilan hamkorlik qilamiz."
+        "title": "Xalqaro ilmiy integratsiya",
+        "description": "Xalqaro tashkilotlar va ekspert markazlari bilan hamkorlik hamda qo‘shma tadqiqotlarni rivojlantirish."
       },
       "impact": {
-        "title": "Amaliy qo'llash",
-        "description": "Bizning tadqiqotlarimiz haqiqiy transport muammolarini hal qilishga bevosita hissa qo'shadi."
+        "title": "Oʻzbekiston transport tizimi uchun yechimlar",
+        "description": "Mamlakat transport infratuzilmasi samaradorligini oshirishga qaratilgan amaliy ishlanmalar."
       }
     },
     "partners": {
-      "title": "Bizning hamkorlarimiz",
-      "subtitle": "Biz transport va logistika sohasidagi yetakchi tashkilotlar bilan hamkorlik qilamiz",
+      "title": "Institut hamkorlik tarmog‘i",
+      "subtitle": "Oʻzbekiston transport tizimini rivojlantirish uchun xalqaro ilmiy va ekspert hamkorligi",
       "error": "Hamkorlarni yuklashda xato",
       "empty": "Hamkorlar hali qo'shilmagan"
     },
@@ -88,26 +104,26 @@
       "learnMore": "Ko'proq bilish"
     },
     "video": {
-      "title": "INNOVATSION TRANSPORT Tadqiqot markazi haqida",
+      "title": "“Innovatsion transport” ilmiy-tadqiqot instituti haqida",
       "description": "Markaz haqida taqdimot videosi",
       "comingSoon": "Video keyinroq qo'shiladi"
     }
   },
   "footer": {
-    "description": "Barqaror rivojlanish uchun transport va logistika texnologiyalarida innovatsiyalarni rivojlantiruvchi yetakchi ilmiy tadqiqot markazi.",
+    "description": "Barqaror rivojlanish uchun transport va logistika texnologiyalarida innovatsiyalarni rivojlantiruvchi yetakchi ilmiy-tadqiqot instituti.",
     "quickLinks": "Tezkor havolalar",
     "contactInfo": "Aloqa ma'lumotlari",
     "address": "Toshkent davlat transport universiteti, O'zbekiston",
     "phone": "+998 99 806-41-99",
     "email": "ilesaliev@mail.ru",
-    "copyright": "© 2024 INNOVATSION TRANSPORT Tadqiqot markazi. Barcha huquqlar himoyalangan."
+    "copyright": "© 2024 “Innovatsion transport” ilmiy-tadqiqot instituti. Barcha huquqlar himoyalangan."
   },
   "about": {
-    "title": "Bizning markaz haqida",
-    "subtitle": "INNOVATSION TRANSPORT Tadqiqot markazi - O'zbekistonda transport tizimlari va logistika sohasidagi yetakchi tashkilot",
+    "title": "Bizning institut haqida",
+    "subtitle": "“Innovatsion transport” ilmiy-tadqiqot instituti - O'zbekistonda transport tizimlari va logistika sohasidagi yetakchi tashkilot",
     "mission": {
       "title": "Bizning missiyamiz",
-      "description": "Transport va logistika sohasida integratsion ilmiy platformani yaratish, barqaror rivojlanish, innovatsiyalar va yuqori malakali kadrlar tayyorlashga yordam berish.",
+      "description": "Zamonaviy transportni rivojlantirish va Oʻzbekiston logistika salohiyatini kuchaytirish uchun ilmiy hamda innovatsion asos yaratamiz.",
       "goalsTitle": "Bizning maqsadlarimiz:",
       "goal1": "Transport tizimlari va logistika sohasida ilmiy tadqiqotlarni rivojlantirish",
       "goal2": "Sohaga innovatsion yechimlarni joriy etish",
@@ -116,7 +132,7 @@
     },
     "history": {
       "title": "Rivojlanish tarixi",
-      "subtitle": "G'oyadan O'zbekistonning yetakchi ilmiy markazigacha bo'lgan yo'l"
+      "subtitle": "G'oyadan O'zbekistonning yetakchi ilmiy-tadqiqot institutigacha bo'lgan yo'l"
     },
     "researchAreas": {
       "title": "Asosiy faoliyat yo'nalishlari",
@@ -134,7 +150,7 @@
         "description": "Transport sohasi uchun standartlar, metodikalar va tavsiyalar yaratish"
       },
       "area4": {
-        "title": "Konsalting, ekspertiza va ilmiy tadbirlar",
+        "title": "Konsalting, экспертиза и ilmiy tadbirlar",
         "description": "Ekspert xizmatlarini ko'rsatish va ilmiy konferensiyalar va seminarlar tashkil etish"
       }
     },
@@ -171,7 +187,10 @@
       "education": "Ta'lim va malaka",
       "experience": "Kasbiy tajriba",
       "publications": "Asosiy nashrlar",
-      "achievements": "Yutuqlar va e'tirof"
+      "achievements": "Yutuqlar va e'tirof",
+      "leadership": "Rahbariyat",
+      "researchers": "Ilmiy xodimlar",
+      "groupMembers": "Guruh a'zolari"
     }
   },
   "contacts": {
@@ -239,9 +258,9 @@
     },
     "faq": {
       "title": "Tez-tez beriladigan savollar",
-      "subtitle": "Tadqiqot markazimiz haqida umumiy savollarga javoblarni toping",
+      "subtitle": "Institutimiz haqida umumiy savollarga javoblarni toping",
       "q1": {
-        "question": "INNOVATSION TRANSPORT Tadqiqot markazi bilan qanday hamkorlik qilish mumkin?",
+        "question": "“Innovatsion transport” ilmiy-tadqiqot instituti bilan qanday hamkorlik qilish mumkin?",
         "answer": "Biz akademik muassasalar, sanoat hamkorlari va davlat tashkilotlari bilan hamkorlikni mamnuniyat bilan qabul qilamiz. Imkoniyatlarni muhokama qilish uchun hamkorlik bo'limiga murojaat qiling."
       },
       "q2": {
@@ -290,8 +309,8 @@
     }
   },
   "partners": {
-    "title": "Bizning hamkorlarimiz",
-    "subtitle": "Transport texnologiyalarini rivojlantirish uchun yetakchi universitetlar, sanoat kompaniyalari va xalqaro tashkilotlar bilan hamkorlik",
+    "title": "Institut hamkorlik tarmog‘i",
+    "subtitle": "Oʻzbekiston transport tizimini rivojlantirish uchun xalqaro ilmiy va ekspert hamkorligi",
     "stats": {
       "partnerships": {
         "value": "8+",
@@ -399,7 +418,7 @@
     "new": "Yangi",
     "updated": "Yangilangan",
     "beta": "Beta",
-    "alpha": "Alfa",
+    "alpha": "Alpha",
     "stable": "Barqaror",
     "experimental": "Eksperimental",
     "preview": "Oldindan ko'rish"

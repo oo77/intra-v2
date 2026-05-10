@@ -9,7 +9,8 @@
   "home": {
     "hero": {
       "title": "INNOVATIVE TRANSPORT",
-      "subtitle": "Creating an integrated scientific platform in transport and logistics, promoting sustainable development, innovation and training of highly qualified personnel",
+      "badge": "Research Institute “Innovative Transport”",
+      "subtitle": "Building the scientific and innovative foundation for modern transport development and strengthening Uzbekistan’s logistics potential",
       "exploreProjects": "Explore Projects",
       "watchVideo": "Watch Video",
       "cards": {
@@ -24,52 +25,67 @@
       }
     },
     "stats": {
-      "title": "Our Achievements in Numbers",
+      "title": "Scientific Potential and Institutional Achievements",
       "subtitle": "Results of years of work in transport innovation",
-      "activeProjects": "Active Projects",
-      "researchPapers": "Research Papers",
-      "industryPartners": "Industry Partners",
-      "yearsOfInnovation": "Years of Innovation"
+      "implementedProjects": "Implemented Projects",
+      "scientificResearch": "Scientific and Analytical Research Papers",
+      "internationalPartners": "International Partners",
+      "transportInnovationYears": "Years of Transport Innovation",
+      "graduatedDScPhD": "Graduated DSc and PhD Specialists",
+      "analyticalStudies": "Analytical Studies",
+      "digitalSolutions": "Digital Solutions"
     },
     "features": {
       "title": "Our Research Areas",
       "subtitle": "Key areas of our research and development activities",
-      "smartLogistics": {
-        "title": "Transport Process Management",
-        "description": "Development of methods for optimizing transport systems and traffic management processes."
+      "logisticsCorridors": {
+        "title": "Transport Logistics and International Corridors",
+        "description": "Research on transit potential, multimodal routes and development of international transport corridors."
+      },
+      "digitalization": {
+        "title": "Digitalization of the Transport Sector",
+        "description": "Development of digital platforms, intelligent management systems and analytical solutions for transport and logistics."
+      },
+      "analytics": {
+        "title": "Transport Analytics and Modeling",
+        "description": "Cargo flow analysis, transport forecasting and modeling of transportation processes."
       },
       "sustainableTransport": {
-        "title": "Digitalization of Logistics",
-        "description": "Implementation of digital technologies in logistics processes and supply chain management."
+        "title": "Sustainable Transport and Green Logistics",
+        "description": "Research on environmentally sustainable transport solutions and energy-efficient logistics."
       },
-      "innovationResearch": {
-        "title": "Regulatory Materials",
-        "description": "Development of standards, methodologies and recommendations for the transport industry."
+      "regulatory": {
+        "title": "Regulatory and Sectoral Research",
+        "description": "Development of recommendations, standards and scientific analytical materials for the transport sector."
+      },
+      "capacityBuilding": {
+        "title": "Scientific Capacity Building and International Cooperation",
+        "description": "Development of scientific schools, specialist training and implementation of international research projects."
       }
     },
     "newFeatures": {
-      "title": "Why Choose Us",
-      "subtitle": "Discover what makes us the leading research center in transportation innovation",
+      "title": "Why the Institute Is Trusted",
+      "subtitle": "Developing modern transport solutions through science, analytics, digitalization and international cooperation",
       "expertise": {
-        "title": "Scientific Excellence",
-        "description": "Our team consists of leading researchers and industry experts with decades of experience."
+        "title": "Next-Generation Transport Analytics",
+        "description": "Intelligent research, modeling and forecasting of transport processes."
       },
       "technology": {
-        "title": "Innovation Focus",
-        "description": "We develop cutting-edge solutions for the transport and logistics industry."
+        "title": "Innovation and Digitalization",
+        "description": "Implementation of digital technologies and modern solutions in the transport sector."
       },
       "collaboration": {
-        "title": "International Cooperation",
-        "description": "We partner with leading institutions and companies worldwide to drive innovation."
+        "title": "International Scientific Integration",
+        "description": "Development of partnerships and joint research with international organizations and expert centers."
       },
       "impact": {
-        "title": "Practical Application",
-        "description": "Our research directly contributes to solving real transportation challenges."
+        "title": "Solutions for Uzbekistan’s Transport System",
+        "description": "Practical developments aimed at improving the efficiency of the country’s transport infrastructure."
       }
     },
     "partners": {
-      "title": "Our Partners",
-      "subtitle": "We collaborate with leading organizations in transport and logistics",
+      "title": "Institute Partnership Network",
+      "subtitle": "International scientific and expert cooperation for the development of Uzbekistan’s transport system",
       "error": "Error loading partners",
       "empty": "No partners added yet"
     },
@@ -88,26 +104,26 @@
       "learnMore": "Learn More"
     },
     "video": {
-      "title": "About INNOVATIVE TRANSPORT Research Center",
+      "title": "About Research Institute “Innovative Transport”",
       "description": "Presentation video about the center",
       "comingSoon": "Video will be added later"
     }
   },
   "footer": {
-    "description": "Leading Scientific Research Center advancing innovation in transport and logistics technologies for sustainable development.",
+    "description": "Leading Research Institute advancing innovation in transport and logistics technologies for sustainable development.",
     "quickLinks": "Quick Links",
     "contactInfo": "Contact Info",
     "address": "Tashkent State Transport University, Uzbekistan",
     "phone": "+998 99 806-41-99",
     "email": "ilesaliev{'@'}mail.ru",
-    "copyright": "© 2024 INNOVATIVE TRANSPORT Research Center. All rights reserved."
+    "copyright": "© 2024 Research Institute “Innovative Transport”. All rights reserved."
   },
   "about": {
-    "title": "About Our Center",
-    "subtitle": "INNOVATIVE TRANSPORT Research Center - a leading organization in the field of transport systems and logistics in Uzbekistan",
+    "title": "About Our Institute",
+    "subtitle": "Research Institute “Innovative Transport” - a leading organization in the field of transport systems and logistics in Uzbekistan",
     "mission": {
       "title": "Our Mission",
-      "description": "Creating an integrated scientific platform in transport and logistics, promoting sustainable development, innovation and training of highly qualified personnel.",
+      "description": "Building the scientific and innovative foundation for modern transport development and strengthening Uzbekistan’s logistics potential.",
       "goalsTitle": "Our Goals:",
       "goal1": "Development of scientific research in transport systems and logistics",
       "goal2": "Implementation of innovative solutions in the industry",
@@ -116,7 +132,7 @@
     },
     "history": {
       "title": "Development History",
-      "subtitle": "The journey from idea to leading research center in Uzbekistan"
+      "subtitle": "The journey from idea to leading research institute in Uzbekistan"
     },
     "researchAreas": {
       "title": "Main Areas of Activity",
@@ -171,7 +187,10 @@
       "education": "Education and Qualifications",
       "experience": "Professional Experience",
       "publications": "Main Publications",
-      "achievements": "Achievements and Recognition"
+      "achievements": "Achievements and Recognition",
+      "leadership": "Leadership",
+      "researchers": "Research Staff",
+      "groupMembers": "Group Members"
     }
   },
   "contacts": {
@@ -239,9 +258,9 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
-      "subtitle": "Find answers to common questions about our research center",
+      "subtitle": "Find answers to common questions about our research institute",
       "q1": {
-        "question": "How can I collaborate with INNOVATIVE TRANSPORT Research Center?",
+        "question": "How can I collaborate with Research Institute “Innovative Transport”?",
         "answer": "We welcome collaboration with academic institutions, industry partners and government organizations. Contact our partnerships department to discuss opportunities."
       },
       "q2": {
@@ -290,8 +309,8 @@
     }
   },
   "partners": {
-    "title": "Our Partners",
-    "subtitle": "Collaboration with leading universities, industry companies and international organizations for the development of transport technologies",
+    "title": "Institute Partnership Network",
+    "subtitle": "International scientific and expert cooperation for the development of Uzbekistan’s transport system",
     "stats": {
       "partnerships": {
         "value": "8+",

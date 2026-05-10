@@ -7,7 +7,8 @@ import {
   RectangleStackIcon,
   UserGroupIcon,
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  Cog6ToothIcon
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -43,6 +44,12 @@ const navItems = [
     path: '/admin/team',
     icon: UserGroupIcon,
     description: 'Управление командой'
+  },
+  {
+    name: 'Настройки',
+    path: '/admin/settings',
+    icon: Cog6ToothIcon,
+    description: 'Настройки проекта (DEV)'
   }
 ]
 

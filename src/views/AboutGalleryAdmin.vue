@@ -38,7 +38,7 @@ onMounted(async () => {
 // Функция загрузки данных из API
 const loadGalleryData = async () => {
   try {
-    await galleryStore.fetchGallery(true)
+    await galleryStore.fetchItems(true)
   } catch (error) {
     console.error('Ошибка загрузки данных:', error)
     showNotification('error', 'Ошибка загрузки', 'Не удалось загрузить данные галереи: ' + error.message)
@@ -95,10 +95,21 @@ const resetForm = () => {
   currentImage.value = null
 }
 
-// Сохранить изображение
+const selectedFile = ref(null)
+const imagePreview = ref('')
+
+const handleImageUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  selectedFile.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => { imagePreview.value = e.target.result }
+  reader.readAsDataURL(file)
+}
+
 const saveImage = async () => {
-  if (!formData.value.url) {
-    showNotification('error', 'Ошибка', 'URL изображения обязателен!')
+  if (!formData.value.url && !selectedFile.value) {
+    showNotification('error', 'Ошибка', 'Выберите файл или укажите URL!')
     return
   }
 
@@ -108,44 +119,36 @@ const saveImage = async () => {
   }
 
   isSaving.value = true
-
   try {
     const rowNumber = getCurrentRowNumber()
-    await galleryStore.saveImage(formData.value, rowNumber)
+    await galleryStore.saveItem({ ...formData.value, row_num: rowNumber }, selectedFile.value)
     
-    showNotification('success', 'Успешно!', 
-      isEditing.value 
-        ? 'Изображение успешно обновлено!' 
-        : 'Изображение успешно добавлено!')
-    
+    showNotification('success', 'Успешно!', 'Галерея обновлена (JSON)')
     showModal.value = false
     resetForm()
+    selectedFile.value = null
+    imagePreview.value = ''
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
-    showNotification('error', 'Ошибка сохранения', 'Ошибка при сохранении данных: ' + error.message)
+    showNotification('error', 'Ошибка сохранения', error.message)
   } finally {
     isSaving.value = false
   }
 }
 
-// Удалить изображение
+// Открыть подтверждение удаления
 const deleteImage = (image, row) => {
   imageToDelete.value = image
   rowToDelete.value = row
   showDeleteConfirm.value = true
 }
 
-// Подтверждение удаления
 const confirmDelete = async () => {
   isSaving.value = true
   try {
-    const rowNumber = rowToDelete.value === 'row1' ? 1 : 2
-    await galleryStore.deleteImage(imageToDelete.value.id, rowNumber)
-    
-    showNotification('success', 'Удалено!', 'Изображение успешно удалено!')
+    await galleryStore.deleteItem(imageToDelete.value.id)
+    showNotification('success', 'Удалено!', 'Изображение удалено из JSON')
   } catch (error) {
-    console.error('Ошибка удаления:', error)
-    showNotification('error', 'Ошибка удаления', 'Ошибка при удалении: ' + error.message)
+    showNotification('error', 'Ошибка удаления', error.message)
   } finally {
     isSaving.value = false
     showDeleteConfirm.value = false
@@ -321,23 +324,33 @@ const closeModal = () => {
           </div>
 
           <div class="p-6">
+            <!-- Выбор файла -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Загрузить файл</label>
+              <input
+                type="file"
+                accept="image/*"
+                @change="handleImageUpload"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
             <!-- URL изображения -->
             <div class="mb-6">
-              <label class="block text-sm font-semibold text-gray-700 mb-2">URL изображения *</label>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Или укажите URL</label>
               <input
                 v-model="formData.url"
                 type="url"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="https://example.com/image.jpg"
               />
-              <p class="text-xs text-gray-500 mt-1">Вставьте прямую ссылку на изображение</p>
             </div>
 
             <!-- Предпросмотр -->
-            <div v-if="formData.url" class="mb-6">
+            <div v-if="imagePreview || formData.url" class="mb-6">
               <label class="block text-sm font-semibold text-gray-700 mb-2">Предпросмотр</label>
               <img 
-                :src="formData.url" 
+                :src="imagePreview || formData.url" 
                 alt="Preview" 
                 class="w-full h-48 object-cover rounded-lg shadow-md"
                 @error="(e) => e.target.src = 'https://via.placeholder.com/400x300?text=Invalid+URL'"

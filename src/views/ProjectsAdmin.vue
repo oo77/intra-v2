@@ -100,34 +100,25 @@ const removeField = (lang, field, index) => {
   formData.value.details[field][lang].splice(index, 1)
 }
 
+// State для файла
+const selectedFile = ref(null)
+
 const handleImageUpload = async (event) => {
   const file = event.target.files[0]
   if (!file) return
 
-  if (!isCloudinaryConfigured()) {
-    showNotification('warning', 'Cloudinary не настроен', 'Пожалуйста, настройте Cloudinary в файле src/utils/imageUpload.js')
-    return
+  // Просто создаем превью локально
+  selectedFile.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    imagePreview.value = e.target.result
   }
-
-  try {
-    isSaving.value = true
-    const result = await uploadImageToCloudinary(file, {
-      folder: 'intra-v2/projects'
-    })
-    
-    imagePreview.value = result.optimizedUrl
-    formData.value.image = result.optimizedUrl
-    
-    showNotification('success', 'Загружено!', `Изображение успешно загружено и оптимизировано (${Math.round(result.size / 1024)} KB)`)
-  } catch (error) {
-    showNotification('error', 'Ошибка загрузки', error.message)
-  } finally {
-    isSaving.value = false
-  }
+  reader.readAsDataURL(file)
+  
+  showNotification('info', 'Файл выбран', 'Изображение будет загружено на сервер при сохранении проекта')
 }
 
 const saveProject = async () => {
-  // Проверяем ID только при редактировании
   if (isEditing.value && !formData.value.id) {
     showNotification('error', 'Ошибка', 'ID обязателен при редактировании!')
     return
@@ -148,19 +139,15 @@ const saveProject = async () => {
       })
     })
 
-    // Создаем копию данных
     const dataToSend = { ...formData.value }
     
-    // Если создаем новый проект, удаляем поле id
-    if (!isEditing.value) {
-      delete dataToSend.id
-    }
-
-    await projectsStore.saveProject(dataToSend)
+    // Вызываем обновленный метод стора, передавая файл если он есть
+    await projectsStore.saveProject(dataToSend, selectedFile.value)
     
-    showNotification('success', 'Успешно!', 'Проект сохранен в базе данных')
+    showNotification('success', 'Успешно!', 'Проект сохранен (JSON и фото обновлены)')
     showModal.value = false
     resetForm()
+    selectedFile.value = null
   } catch (error) {
     showNotification('error', 'Ошибка сохранения', error.message)
   } finally {

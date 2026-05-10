@@ -3,90 +3,104 @@ import { teamAPI } from '@/api/client'
 
 export const useTeamStore = defineStore('team', {
     state: () => ({
-        members: {},
+        members: [],
         loading: false,
         error: null,
         lastFetch: null
     }),
 
     getters: {
-        membersList: (state) => Object.values(state.members),
-        getMemberById: (state) => (id) => state.members[id],
+        membersList: (state) => state.members,
+        getMemberById: (state) => (id) => state.members.find(m => m.id === id),
         isLoading: (state) => state.loading,
         hasError: (state) => !!state.error
     },
 
     actions: {
-        // Загрузить всех членов команды
         async fetchMembers(force = false) {
-            // Кэширование: не загружаем повторно, если данные свежие (< 5 минут)
-            if (!force && this.lastFetch && Date.now() - this.lastFetch < 5 * 60 * 1000) {
-                console.log('📦 Используем кэшированные данные команды')
-                return
-            }
+            if (!force && this.lastFetch && Date.now() - this.lastFetch < 5 * 60 * 1000) return
 
             this.loading = true
-            this.error = null
-
             try {
-                const response = await teamAPI.getAll()
-                this.members = response.data
-                this.lastFetch = Date.now()
-                console.log('✅ Команда загружена из базы данных')
-            } catch (error) {
-                this.error = error.message
-                console.error('❌ Ошибка загрузки команды:', error)
-                throw error
-            } finally {
-                this.loading = false
-            }
-        },
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                let membersData;
 
-        // Создать или обновить члена команды
-        async saveMember(memberData) {
-            this.loading = true
-            this.error = null
-
-            try {
-                let response
-
-                if (memberData.id && this.members[memberData.id]) {
-                    // Обновление существующего
-                    response = await teamAPI.update(memberData.id, memberData)
+                if (isStatic) {
+                    const response = await fetch('/team-members.json?' + Date.now())
+                    if (!response.ok) throw new Error('Не удалось загрузить команду')
+                    membersData = await response.json()
                 } else {
-                    // Создание нового
-                    response = await teamAPI.create(memberData)
+                    const response = await teamAPI.getAll()
+                    membersData = response.data
                 }
 
-                // Перезагружаем команду
-                await this.fetchMembers(true)
-
-                console.log('✅ Член команды сохранен в базу данных')
-                return response.data
+                this.members = membersData
+                this.lastFetch = Date.now()
             } catch (error) {
                 this.error = error.message
-                console.error('❌ Ошибка сохранения члена команды:', error)
                 throw error
             } finally {
                 this.loading = false
             }
         },
 
-        // Удалить члена команды
-        async deleteMember(id) {
+        async saveMember(memberData, imageFile = null) {
             this.loading = true
-            this.error = null
-
             try {
-                await teamAPI.delete(id)
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+                const token = 'my_super_secret_token_123'
 
-                // Удаляем из локального состояния
-                delete this.members[id]
+                if (isStatic) {
+                    let finalImagePath = memberData.image
+                    if (imageFile) {
+                        const formData = new FormData()
+                        formData.append('image', imageFile)
+                        const uploadRes = await fetch(`${cmsUrl}/api/static/upload`, {
+                            method: 'POST',
+                            headers: { 'x-cms-token': token },
+                            body: formData
+                        })
+                        const uploadData = await uploadRes.json()
+                        finalImagePath = uploadData.url
+                    }
 
-                console.log('✅ Член команды удален из базы данных')
+                    await fetch(`${cmsUrl}/api/static/team`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-cms-token': token },
+                        body: JSON.stringify({ ...memberData, image: finalImagePath })
+                    })
+                    await this.fetchMembers(true)
+                } else {
+                    if (memberData.id) await teamAPI.update(memberData.id, memberData)
+                    else await teamAPI.create(memberData)
+                    await this.fetchMembers(true)
+                }
             } catch (error) {
                 this.error = error.message
-                console.error('❌ Ошибка удаления члена команды:', error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async deleteMember(id) {
+            this.loading = true
+            try {
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                if (isStatic) {
+                    const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+                    const token = 'my_super_secret_token_123'
+                    await fetch(`${cmsUrl}/api/static/team/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'x-cms-token': token }
+                    })
+                } else {
+                    await teamAPI.delete(id)
+                }
+                await this.fetchMembers(true)
+            } catch (error) {
+                this.error = error.message
                 throw error
             } finally {
                 this.loading = false

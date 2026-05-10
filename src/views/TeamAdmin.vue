@@ -24,6 +24,7 @@ const formData = ref({
   image: '',
   email: '',
   phone: '',
+  type: 'researchers',
   ru: {
     name: '',
     role: '',
@@ -97,6 +98,7 @@ const resetForm = () => {
     image: '',
     email: '',
     phone: '',
+    type: 'researchers',
     ru: {
       name: '',
       role: '',
@@ -142,30 +144,18 @@ const removeField = (lang, field, index) => {
   formData.value[lang][field].splice(index, 1)
 }
 
-const handleImageUpload = async (event) => {
+const handleImageUpload = (event) => {
   const file = event.target.files[0]
   if (!file) return
 
-  if (!isCloudinaryConfigured()) {
-    showNotification('warning', 'Cloudinary не настроен', 'Пожалуйста, настройте Cloudinary в файле src/utils/imageUpload.js')
-    return
+  selectedFile.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    imagePreview.value = e.target.result
   }
-
-  try {
-    isSaving.value = true
-    const result = await uploadImageToCloudinary(file, {
-      folder: 'intra-v2/team'
-    })
-    
-    imagePreview.value = result.optimizedUrl
-    formData.value.image = result.optimizedUrl
-    
-    showNotification('success', 'Загружено!', `Изображение успешно загружено и оптимизировано (${Math.round(result.size / 1024)} KB)`)
-  } catch (error) {
-    showNotification('error', 'Ошибка загрузки', error.message)
-  } finally {
-    isSaving.value = false
-  }
+  reader.readAsDataURL(file)
+  
+  showNotification('info', 'Файл выбран', 'Изображение будет загружено при сохранении')
 }
 
 const saveMember = async () => {
@@ -189,11 +179,12 @@ const saveMember = async () => {
       })
     })
 
-    await teamStore.saveMember(formData.value)
+    await teamStore.saveMember(formData.value, selectedFile.value)
     
-    showNotification('success', 'Успешно!', 'Данные сохранены в базе данных')
+    showNotification('success', 'Успешно!', 'Данные команды обновлены (JSON)')
     showModal.value = false
     resetForm()
+    selectedFile.value = null
   } catch (error) {
     showNotification('error', 'Ошибка сохранения', error.message)
   } finally {
@@ -283,6 +274,9 @@ const closeModal = () => {
           <div class="p-6">
             <h3 class="text-xl font-bold text-gray-900 mb-2">{{ member.ru?.name }}</h3>
             <p class="text-gray-600 mb-2">{{ member.ru?.role }}</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-2">
+              {{ member.type === 'leadership' ? 'Руководство' : member.type === 'groupMembers' ? 'Члены группы' : 'Научный сотрудник' }}
+            </p>
             <p class="text-sm text-gray-500 mb-4">{{ member.email }}</p>
             
             <div class="flex gap-2">
@@ -352,9 +346,19 @@ const closeModal = () => {
                     placeholder="email@example.com"
                   />
                 </div>
-              </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Тип участника *</label>
+                  <select
+                    v-model="formData.type"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="leadership">Руководство</option>
+                    <option value="researchers">Научный сотрудник</option>
+                    <option value="groupMembers">Член группы</option>
+                  </select>
+                </div>
+
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Телефон *</label>
                   <input
@@ -364,7 +368,9 @@ const closeModal = () => {
                     placeholder="+998 XX XXX-XX-XX"
                   />
                 </div>
+              </div>
 
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Изображение</label>
                   <input

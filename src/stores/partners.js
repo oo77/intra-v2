@@ -16,20 +16,26 @@ export const usePartnersStore = defineStore('partners', () => {
 
     // Actions
     async function fetchPartners(force = false) {
-        if (partners.value.length > 0 && !force) {
-            return partners.value
-        }
+        if (partners.value.length > 0 && !force) return partners.value
 
         isLoading.value = true
-        error.value = null
-
         try {
-            const response = await partnersAPI.getAll()
-            partners.value = response.data
-            return response.data
+            const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+            let partnersData;
+
+            if (isStatic) {
+                const response = await fetch('/partners.json?' + Date.now())
+                if (!response.ok) throw new Error('Не удалось загрузить партнеров')
+                partnersData = await response.json()
+            } else {
+                const response = await partnersAPI.getAll()
+                partnersData = response.data
+            }
+
+            partners.value = partnersData
+            return partnersData
         } catch (err) {
             error.value = err.message
-            console.error('❌ Ошибка загрузки партнеров:', err)
             throw err
         } finally {
             isLoading.value = false
@@ -38,35 +44,52 @@ export const usePartnersStore = defineStore('partners', () => {
 
     async function getPartner(id) {
         try {
-            const response = await partnersAPI.getOne(id)
-            return response.data
+            const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+            if (isStatic) {
+                return partners.value.find(p => String(p.id) === String(id))
+            } else {
+                const response = await partnersAPI.getOne(id)
+                return response.data
+            }
         } catch (err) {
             error.value = err.message
-            console.error(`❌ Ошибка загрузки партнера ${id}:`, err)
             throw err
         }
     }
 
-    async function savePartner(partnerData) {
+    async function savePartner(partnerData, imageFile = null) {
         isLoading.value = true
-        error.value = null
-
         try {
-            if (partnerData.id) {
-                // Обновление существующего партнера
-                await partnersAPI.update(partnerData.id, partnerData)
-                console.log('✅ Партнер обновлен:', partnerData.id)
-            } else {
-                // Создание нового партнера
-                await partnersAPI.create(partnerData)
-                console.log('✅ Партнер создан')
-            }
+            const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+            const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+            const token = 'my_super_secret_token_123'
 
-            // Обновляем список
+            if (isStatic) {
+                let finalImagePath = partnerData.logo
+                if (imageFile) {
+                    const formData = new FormData()
+                    formData.append('image', imageFile)
+                    const uploadRes = await fetch(`${cmsUrl}/api/static/upload`, {
+                        method: 'POST',
+                        headers: { 'x-cms-token': token },
+                        body: formData
+                    })
+                    const uploadData = await uploadRes.json()
+                    finalImagePath = uploadData.url
+                }
+
+                await fetch(`${cmsUrl}/api/static/partners`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-cms-token': token },
+                    body: JSON.stringify({ ...partnerData, logo: finalImagePath })
+                })
+            } else {
+                if (partnerData.id) await partnersAPI.update(partnerData.id, partnerData)
+                else await partnersAPI.create(partnerData)
+            }
             await fetchPartners(true)
         } catch (err) {
             error.value = err.message
-            console.error('❌ Ошибка сохранения партнера:', err)
             throw err
         } finally {
             isLoading.value = false
@@ -75,17 +98,21 @@ export const usePartnersStore = defineStore('partners', () => {
 
     async function deletePartner(id) {
         isLoading.value = true
-        error.value = null
-
         try {
-            await partnersAPI.delete(id)
-            console.log('✅ Партнер удален:', id)
-
-            // Обновляем список
+            const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+            if (isStatic) {
+                const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+                const token = 'my_super_secret_token_123'
+                await fetch(`${cmsUrl}/api/static/partners/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'x-cms-token': token }
+                })
+            } else {
+                await partnersAPI.delete(id)
+            }
             await fetchPartners(true)
         } catch (err) {
             error.value = err.message
-            console.error('❌ Ошибка удаления партнера:', err)
             throw err
         } finally {
             isLoading.value = false

@@ -3,97 +3,105 @@ import { galleryAPI } from '@/api/client'
 
 export const useGalleryStore = defineStore('gallery', {
     state: () => ({
-        gallery: { row1: [], row2: [] },
+        items: [],
         loading: false,
         error: null,
         lastFetch: null
     }),
 
     getters: {
-        row1Images: (state) => state.gallery.row1,
-        row2Images: (state) => state.gallery.row2,
-        allImages: (state) => [...state.gallery.row1, ...state.gallery.row2],
+        row1Images: (state) => state.items.filter(item => item.row_num === 1 || item.row_num === '1'),
+        row2Images: (state) => state.items.filter(item => item.row_num === 2 || item.row_num === '2'),
+        allImages: (state) => state.items,
         isLoading: (state) => state.loading,
         hasError: (state) => !!state.error
     },
 
     actions: {
-        // Загрузить галерею
-        async fetchGallery(force = false) {
-            // Кэширование
-            if (!force && this.lastFetch && Date.now() - this.lastFetch < 5 * 60 * 1000) {
-                console.log('📦 Используем кэшированные данные галереи')
-                return
-            }
+        async fetchItems(force = false) {
+            if (!force && this.lastFetch && Date.now() - this.lastFetch < 5 * 60 * 1000) return
 
             this.loading = true
-            this.error = null
-
             try {
-                const response = await galleryAPI.getAll()
-                this.gallery = response.data
-                this.lastFetch = Date.now()
-                console.log('✅ Галерея загружена из базы данных')
-            } catch (error) {
-                this.error = error.message
-                console.error('❌ Ошибка загрузки галереи:', error)
-                throw error
-            } finally {
-                this.loading = false
-            }
-        },
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                let itemsData;
 
-        // Создать или обновить изображение
-        async saveImage(imageData, rowNumber) {
-            this.loading = true
-            this.error = null
-
-            try {
-                let response
-                const dataToSend = {
-                    url: imageData.url,
-                    alt: imageData.alt,
-                    row_num: rowNumber
-                }
-
-                if (imageData.id) {
-                    // Обновление существующего
-                    response = await galleryAPI.update(imageData.id, dataToSend)
+                if (isStatic) {
+                    const response = await fetch('/gallery.json?' + Date.now())
+                    if (!response.ok) throw new Error('Не удалось загрузить галерею')
+                    itemsData = await response.json()
                 } else {
-                    // Создание нового
-                    response = await galleryAPI.create(dataToSend)
+                    const response = await galleryAPI.getAll()
+                    itemsData = response.data
                 }
 
-                // Перезагружаем галерею
-                await this.fetchGallery(true)
-
-                console.log('✅ Изображение сохранено в базу данных')
-                return response.data
+                this.items = itemsData
+                this.lastFetch = Date.now()
             } catch (error) {
                 this.error = error.message
-                console.error('❌ Ошибка сохранения изображения:', error)
                 throw error
             } finally {
                 this.loading = false
             }
         },
 
-        // Удалить изображение
-        async deleteImage(id, rowNumber) {
+        async saveItem(itemData, imageFile = null) {
             this.loading = true
-            this.error = null
-
             try {
-                await galleryAPI.delete(id)
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+                const token = 'my_super_secret_token_123'
 
-                // Удаляем из локального состояния
-                const row = rowNumber === 1 ? 'row1' : 'row2'
-                this.gallery[row] = this.gallery[row].filter(img => img.id !== id)
+                if (isStatic) {
+                    let finalImagePath = itemData.image
+                    if (imageFile) {
+                        const formData = new FormData()
+                        formData.append('image', imageFile)
+                        const uploadRes = await fetch(`${cmsUrl}/api/static/upload`, {
+                            method: 'POST',
+                            headers: { 'x-cms-token': token },
+                            body: formData
+                        })
+                        const uploadData = await uploadRes.json()
+                        finalImagePath = uploadData.url
+                    }
 
-                console.log('✅ Изображение удалено из базы данных')
+                    await fetch(`${cmsUrl}/api/static/gallery`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-cms-token': token },
+                        body: JSON.stringify({ ...itemData, url: finalImagePath, image: finalImagePath })
+                    })
+                    await this.fetchItems(true)
+                } else {
+                    if (itemData.id) await galleryAPI.update(itemData.id, itemData)
+                    else await galleryAPI.create(itemData)
+                    await this.fetchItems(true)
+                }
             } catch (error) {
                 this.error = error.message
-                console.error('❌ Ошибка удаления изображения:', error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async deleteItem(id) {
+            this.loading = true
+            try {
+                const isStatic = import.meta.env.VITE_LOCAL_CMS_ENABLED === 'true'
+                if (isStatic) {
+                    const cmsUrl = import.meta.env.VITE_CMS_API_URL || ''
+                    const token = 'my_super_secret_token_123'
+                    await fetch(`${cmsUrl}/api/static/gallery/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'x-cms-token': token }
+                    })
+                } else {
+                    await galleryAPI.delete(id)
+                }
+                await this.fetchItems(true)
+            } catch (error) {
+                this.error = error.message
                 throw error
             } finally {
                 this.loading = false
@@ -107,7 +115,7 @@ export const useGalleryStore = defineStore('gallery', {
 
         // Сбросить состояние
         reset() {
-            this.gallery = { row1: [], row2: [] }
+            this.items = []
             this.loading = false
             this.error = null
             this.lastFetch = null

@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { Bars3Icon, XMarkIcon, LanguageIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, XMarkIcon, LanguageIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -15,7 +15,6 @@ const navigation = [
   { name: 'nav.home', href: '/' },
   { name: 'nav.about', href: '/about' },
   { name: 'nav.projects', href: '/projects' },
-  // { name: 'nav.partners', href: '/partners' },
   { name: 'nav.contacts', href: '/contacts' },
 ]
 
@@ -26,7 +25,7 @@ const languages = [
 ]
 
 const handleScroll = () => {
-  isScrolled.value = true
+  isScrolled.value = window.scrollY > 20
 }
 
 const toggleMenu = () => {
@@ -52,6 +51,7 @@ const getCurrentLanguage = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  handleScroll() // Initial check
 })
 
 onUnmounted(() => {
@@ -61,43 +61,50 @@ onUnmounted(() => {
 
 <template>
   <nav :class="[
-    'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-    isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-xl' : 'bg-transparent'
+    'fixed top-0 left-0 right-0 z-[100] transition-all duration-700',
+    isScrolled ? 'py-4' : 'py-8'
   ]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
+      <div :class="[
+        'relative px-6 py-3 rounded-full transition-all duration-700 border flex justify-between items-center',
+        isScrolled 
+          ? 'bg-white/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] border-white/20' 
+          : 'bg-transparent border-transparent'
+      ]">
         <!-- Logo -->
         <div class="flex items-center">
-          <RouterLink to="/" class="flex items-center space-x-3 group">
-            <div class="transform group-hover:scale-110 transition-all duration-300">
+          <RouterLink to="/" class="flex items-center group">
+            <div class="transform group-hover:scale-110 transition-all duration-500">
               <img 
                 src="/src/assets/logo_full.png" 
-                alt="INNOVATIVE TRANSPORT Logo" 
-                class="h-10 w-auto"
+                alt="Logo" 
+                :class="['h-10 w-auto transition-all duration-500', isScrolled ? 'brightness-100' : 'brightness-0 invert']"
               >
             </div>
-   
           </RouterLink>
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-1">
+        <div class="hidden md:flex items-center gap-1">
           <RouterLink
             v-for="item in navigation"
             :key="item.name"
             :to="item.href"
             :class="[
-              'relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105',
+              'relative px-6 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-500 overflow-hidden group',
               route.path === item.href
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : isScrolled
-                ? 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-500 hover:shadow-lg'
-                : 'text-white hover:text-white hover:bg-gradient-to-r hover:from-cyan-400 hover:to-blue-500 hover:shadow-lg'
+                ? (isScrolled ? 'text-blue-600' : 'text-white')
+                : (isScrolled ? 'text-slate-600 hover:text-blue-600' : 'text-white/80 hover:text-white')
             ]"
             @click="closeMenu"
           >
             <span class="relative z-10">{{ $t(item.name) }}</span>
-            <div v-if="route.path === item.href" class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse opacity-20"></div>
+            <div 
+              :class="[
+                'absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-blue-600 rounded-full transition-all duration-500 group-hover:w-8',
+                route.path === item.href ? 'w-8' : ''
+              ]"
+            ></div>
           </RouterLink>
 
           <!-- Language Selector -->
@@ -105,38 +112,40 @@ onUnmounted(() => {
             <button
               @click="toggleLanguageMenu"
               :class="[
-                'flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105',
+                'flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-500 border',
                 isScrolled
-                  ? 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-teal-500 hover:shadow-lg'
-                  : 'text-white hover:text-white hover:bg-gradient-to-r hover:from-emerald-400 hover:to-cyan-500 hover:shadow-lg'
+                  ? 'text-slate-700 bg-slate-50 border-slate-100 hover:bg-slate-100'
+                  : 'text-white bg-white/10 border-white/20 hover:bg-white/20'
               ]"
             >
-              <LanguageIcon class="h-4 w-4" />
               <span>{{ getCurrentLanguage().flag }}</span>
-              <span class="hidden sm:inline">{{ getCurrentLanguage().name }}</span>
+              <span>{{ getCurrentLanguage().code }}</span>
+              <ChevronDownIcon :class="['w-4 h-4 transition-transform duration-500', isLanguageMenuOpen ? 'rotate-180' : '']" />
             </button>
 
             <!-- Language Dropdown -->
             <Transition
-              enter-active-class="transition duration-200 ease-out"
-              enter-from-class="transform scale-95 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in"
-              leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
+              enter-active-class="transition duration-500 ease-out"
+              enter-from-class="transform scale-95 opacity-0 -translate-y-4"
+              enter-to-class="transform scale-100 opacity-100 translate-y-0"
+              leave-active-class="transition duration-300 ease-in"
+              leave-from-class="transform scale-100 opacity-100 translate-y-0"
+              leave-to-class="transform scale-95 opacity-0 -translate-y-4"
             >
-              <div v-if="isLanguageMenuOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden">
+              <div v-if="isLanguageMenuOpen" class="absolute right-0 mt-4 w-56 bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white/20 overflow-hidden p-2">
                 <button
                   v-for="lang in languages"
                   :key="lang.code"
                   @click="changeLanguage(lang.code)"
                   :class="[
-                    'w-full flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-purple-700 transition-all duration-200',
-                    locale === lang.code ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-purple-700 font-medium' : ''
+                    'w-full flex items-center gap-4 px-6 py-4 text-sm font-black rounded-2xl transition-all duration-300',
+                    locale === lang.code 
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-blue-600'
                   ]"
                 >
-                  <span class="text-lg">{{ lang.flag }}</span>
-                  <span>{{ lang.name }}</span>
+                  <span class="text-xl">{{ lang.flag }}</span>
+                  <span class="uppercase tracking-widest">{{ lang.name }}</span>
                 </button>
               </div>
             </Transition>
@@ -144,23 +153,14 @@ onUnmounted(() => {
         </div>
 
         <!-- Mobile menu button -->
-        <div class="md:hidden flex items-center space-x-2">
-          <!-- Mobile Language Selector -->
-          <button
-            @click="toggleLanguageMenu"
-            :class="[
-              'p-2 rounded-full transition-all duration-300',
-              isScrolled ? 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' : 'text-white hover:text-purple-200 hover:bg-white/10'
-            ]"
-          >
-            <span class="text-lg">{{ getCurrentLanguage().flag }}</span>
-          </button>
-
+        <div class="md:hidden flex items-center gap-4">
           <button
             @click="toggleMenu"
             :class="[
-              'inline-flex items-center justify-center p-2 rounded-full transition-all duration-300 transform hover:scale-110',
-              isScrolled ? 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-500' : 'text-white hover:text-white hover:bg-gradient-to-r hover:from-cyan-400 hover:to-blue-500'
+              'w-12 h-12 flex items-center justify-center rounded-full transition-all duration-500 border',
+              isScrolled 
+                ? 'text-slate-900 border-slate-100 bg-slate-50' 
+                : 'text-white border-white/20 bg-white/10'
             ]"
           >
             <Bars3Icon v-if="!isMenuOpen" class="h-6 w-6" />
@@ -172,75 +172,47 @@ onUnmounted(() => {
 
     <!-- Mobile Navigation -->
     <Transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-200 ease-in"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
+      enter-active-class="transition duration-500 ease-out"
+      enter-from-class="opacity-0 -translate-y-10"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition duration-300 ease-in"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 -translate-y-10"
     >
-      <div v-if="isMenuOpen" class="md:hidden bg-white/95 backdrop-blur-sm shadow-xl border-t border-gray-200">
-        <div class="px-2 pt-2 pb-3 space-y-1">
+      <div v-if="isMenuOpen" class="md:hidden mt-4 mx-4">
+        <div class="bg-white/90 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/20 p-8 space-y-4">
           <RouterLink
             v-for="item in navigation"
             :key="item.name"
             :to="item.href"
             :class="[
-              'block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 transform hover:scale-105',
+              'block px-8 py-5 rounded-[2rem] text-lg font-black uppercase tracking-widest transition-all duration-300',
               route.path === item.href
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-500 hover:shadow-lg'
+                ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/30'
+                : 'text-slate-600 hover:bg-slate-50'
             ]"
             @click="closeMenu"
           >
             {{ $t(item.name) }}
           </RouterLink>
-        </div>
 
-        <!-- Mobile Language Menu -->
-        <div class="border-t border-gray-200 px-2 py-3">
-          <div class="space-y-1">
+          <div class="pt-8 border-t border-slate-100 grid grid-cols-3 gap-4">
             <button
               v-for="lang in languages"
               :key="lang.code"
               @click="changeLanguage(lang.code)"
               :class="[
-                'w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-sm transition-all duration-200',
+                'flex flex-col items-center gap-2 py-4 rounded-2xl transition-all duration-300',
                 locale === lang.code 
-                  ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white font-medium' 
-                  : 'text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-teal-50 hover:text-teal-700'
+                  ? 'bg-blue-50 text-blue-600 ring-2 ring-blue-600' 
+                  : 'bg-slate-50 text-slate-400'
               ]"
             >
-              <span class="text-lg">{{ lang.flag }}</span>
-              <span>{{ lang.name }}</span>
+              <span class="text-2xl">{{ lang.flag }}</span>
+              <span class="text-[10px] font-black uppercase tracking-widest">{{ lang.code }}</span>
             </button>
           </div>
         </div>
-      </div>
-    </Transition>
-
-    <!-- Mobile Language Dropdown -->
-    <Transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-in"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
-    >
-      <div v-if="isLanguageMenuOpen && !isMenuOpen" class="md:hidden absolute right-4 top-16 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
-        <button
-          v-for="lang in languages"
-          :key="lang.code"
-          @click="changeLanguage(lang.code)"
-          :class="[
-            'w-full flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-purple-700 transition-all duration-200',
-            locale === lang.code ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-purple-700 font-medium' : ''
-          ]"
-        >
-          <span class="text-lg">{{ lang.flag }}</span>
-          <span>{{ lang.name }}</span>
-        </button>
       </div>
     </Transition>
   </nav>

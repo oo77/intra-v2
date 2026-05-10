@@ -11,7 +11,12 @@ export default defineConfig({
     }
   },
   server: {
+    allowedHosts: true,
     proxy: {
+      '/api/static': {
+        target: 'http://localhost:3005',
+        changeOrigin: true
+      },
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true

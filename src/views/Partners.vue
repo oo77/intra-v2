@@ -1,5 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const partners = ref([
   {
@@ -16,7 +19,7 @@ const partners = ref([
     id: 2,
     name: 'Ташкентский государственный транспортный университет',
     logo: 'https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=300',
-    description: 'Базовый университет, на основе которого создан НИЦ "Инновационный транспорт".',
+    description: 'Базовый университет, на основе которого создан Научно-исследовательский институт «Инновационный транспорт».',
     category: 'Образовательные учреждения',
     partnership: 'Базовое партнерство',
     since: '2016',
@@ -84,14 +87,24 @@ const partners = ref([
   }
 ])
 
-const categories = ref(['Все', 'Международные организации', 'Образовательные учреждения', 'Транспортные компании', 'Научные лаборатории', 'Научные мероприятия', 'Научные центры', 'Отраслевые ассоциации'])
-const activeCategory = ref('Все')
+const categories = ref(['all', 'international', 'educational', 'transport', 'labs', 'events', 'centers', 'associations'])
+const activeCategory = ref('all')
+
 
 const filteredPartners = computed(() => {
-  if (activeCategory.value === 'Все') {
+  if (activeCategory.value === 'all') {
     return partners.value
   }
-  return partners.value.filter(partner => partner.category === activeCategory.value)
+  const categoryMap = {
+    'international': 'Международные организации',
+    'educational': 'Образовательные учреждения',
+    'transport': 'Транспортные компании',
+    'labs': 'Научные лаборатории',
+    'events': 'Научные мероприятия',
+    'centers': 'Научные центры',
+    'associations': 'Отраслевые ассоциации'
+  }
+  return partners.value.filter(partner => partner.category === categoryMap[activeCategory.value])
 })
 
 const getCategoryColor = (category) => {
@@ -107,12 +120,29 @@ const getCategoryColor = (category) => {
   return colors[category] || 'bg-gray-100 text-gray-800'
 }
 
-const stats = ref([
-  { name: 'Активные партнерства', value: '8+', description: 'Действующие соглашения о сотрудничестве' },
-  { name: 'Стран', value: '6+', description: 'Международное присутствие и охват' },
-  { name: 'Совместные проекты', value: '15+', description: 'Реализованные исследовательские инициативы' },
-  { name: 'Лет сотрудничества', value: '8+', description: 'Совокупный опыт партнерства' }
+const stats = computed(() => [
+  { 
+    name: t('partners.stats.partnerships.name'), 
+    value: t('partners.stats.partnerships.value'), 
+    description: t('partners.stats.partnerships.description') 
+  },
+  { 
+    name: t('partners.stats.countries.name'), 
+    value: t('partners.stats.countries.value'), 
+    description: t('partners.stats.countries.description') 
+  },
+  { 
+    name: t('partners.stats.projects.name'), 
+    value: t('partners.stats.projects.value'), 
+    description: t('partners.stats.projects.description') 
+  },
+  { 
+    name: t('partners.stats.years.name'), 
+    value: t('partners.stats.years.value'), 
+    description: t('partners.stats.years.description') 
+  }
 ])
+
 </script>
 
 <template>
@@ -121,9 +151,9 @@ const stats = ref([
     <section class="bg-gradient-to-r from-primary-600 to-secondary-600 py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center text-white" data-aos="fade-up">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">Наши партнеры</h1>
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">{{ $t('partners.title') }}</h1>
           <p class="text-xl max-w-3xl mx-auto">
-            Сотрудничество с ведущими университетами, отраслевыми компаниями и международными организациями для развития транспортных технологий
+            {{ $t('partners.subtitle') }}
           </p>
         </div>
       </div>
@@ -163,7 +193,7 @@ const stats = ref([
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             ]"
           >
-            {{ category }}
+            {{ $t(`partners.categories.${category}`) }}
           </button>
         </div>
       </div>
@@ -207,11 +237,11 @@ const stats = ref([
               <!-- Partnership Details -->
               <div class="space-y-2 text-sm text-gray-500 mb-4">
                 <div class="flex justify-between">
-                  <span>Партнерство:</span>
+                  <span>{{ $t('partners.partnership') }}:</span>
                   <span class="font-medium">{{ partner.partnership }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>С:</span>
+                  <span>{{ $t('partners.since') }}:</span>
                   <span class="font-medium">{{ partner.since }}</span>
                 </div>
               </div>
@@ -223,7 +253,7 @@ const stats = ref([
                 rel="noopener noreferrer"
                 class="block w-full text-center bg-primary-50 text-primary-600 py-2 rounded-md hover:bg-primary-100 transition-colors duration-200 font-medium"
               >
-                Посетить сайт
+                {{ $t('partners.visitWebsite') }}
               </a>
             </div>
           </div>
@@ -235,9 +265,9 @@ const stats = ref([
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Возможности партнерства</h2>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">{{ $t('partners.opportunities.title') }}</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Присоединяйтесь к нашей сети партнеров и сотрудничайте с нами в формировании будущего транспорта и логистики
+            {{ $t('partners.opportunities.subtitle') }}
           </p>
         </div>
 
@@ -248,8 +278,8 @@ const stats = ref([
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Научное сотрудничество</h3>
-            <p class="text-gray-600">Участвуйте в совместных исследовательских проектах и инновационных инициативах.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $t('partners.opportunities.research.title') }}</h3>
+            <p class="text-gray-600">{{ $t('partners.opportunities.research.description') }}</p>
           </div>
 
           <div class="text-center p-6" data-aos="fade-up" data-aos-delay="200">
@@ -258,8 +288,8 @@ const stats = ref([
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Отраслевое партнерство</h3>
-            <p class="text-gray-600">Присоединяйтесь к нашей отраслевой сети для разработки практических решений.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $t('partners.opportunities.industry.title') }}</h3>
+            <p class="text-gray-600">{{ $t('partners.opportunities.industry.description') }}</p>
           </div>
 
           <div class="text-center p-6" data-aos="fade-up" data-aos-delay="300">
@@ -268,14 +298,14 @@ const stats = ref([
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">Образовательные программы</h3>
-            <p class="text-gray-600">Сотрудничайте в области подготовки кадров и повышения квалификации специалистов.</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $t('partners.opportunities.education.title') }}</h3>
+            <p class="text-gray-600">{{ $t('partners.opportunities.education.description') }}</p>
           </div>
         </div>
 
         <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="400">
           <a href="/contacts" class="btn-primary inline-flex items-center">
-            Стать партнером
+            {{ $t('partners.opportunities.becomePartner') }}
             <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>

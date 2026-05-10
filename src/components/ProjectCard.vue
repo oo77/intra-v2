@@ -4,7 +4,8 @@ import { useI18n } from 'vue-i18n'
 import { 
   EyeIcon, 
   CalendarIcon, 
-  UserGroupIcon
+  UserGroupIcon,
+  ArrowRightIcon
 } from '@heroicons/vue/24/outline'
 
 const { locale } = useI18n()
@@ -37,33 +38,21 @@ const localizedCategory = computed(() => {
 const getStatusColor = (status) => {
   switch (status) {
     case 'Active':
-      return 'bg-green-100 text-green-800'
+      return 'bg-emerald-500 text-white'
     case 'Completed':
-      return 'bg-blue-100 text-blue-800'
+      return 'bg-blue-600 text-white'
     case 'Planning':
-      return 'bg-yellow-100 text-yellow-800'
+      return 'bg-amber-500 text-white'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'bg-slate-500 text-white'
   }
 }
 
 const getLocalizedStatus = (status) => {
   const statusMap = {
-    'Active': {
-      en: 'Active',
-      ru: 'Активный',
-      uz: 'Faol'
-    },
-    'Completed': {
-      en: 'Completed',
-      ru: 'Завершен',
-      uz: 'Tugallangan'
-    },
-    'Planning': {
-      en: 'Planning',
-      ru: 'Планирование',
-      uz: 'Rejalashtirilmoqda'
-    }
+    'Active': { en: 'Active', ru: 'Активный', uz: 'Faol' },
+    'Completed': { en: 'Completed', ru: 'Завершен', uz: 'Tugallangan' },
+    'Planning': { en: 'Planning', ru: 'Планирование', uz: 'Rejalashtirilmoqda' }
   }
   return statusMap[status]?.[locale.value] || status
 }
@@ -75,61 +64,66 @@ const handleCardClick = () => {
 
 <template>
   <div
-    class="bg-white rounded-lg shadow-lg overflow-hidden card-hover cursor-pointer flex flex-col h-full"
-    data-aos="fade-up"
-    :data-aos-delay="index * 100"
+    class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 cursor-pointer flex flex-col h-full transform hover:-translate-y-2"
     @click="handleCardClick"
   >
-    <img
-      :src="project.image"
-      :alt="localizedTitle"
-      class="w-full h-48 object-cover flex-shrink-0"
-    >
-    <div class="p-6 flex flex-col flex-grow">
-      <div class="flex items-center justify-between mb-2">
-        <span class="text-sm font-medium text-primary-600">{{ localizedCategory }}</span>
+    <div class="relative h-64 overflow-hidden">
+      <img
+        :src="project.image"
+        :alt="localizedTitle"
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        loading="lazy"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-8">
+        <div class="glass px-6 py-2 rounded-full flex items-center gap-2 text-white">
+          <EyeIcon class="w-4 h-4" />
+          <span class="text-sm font-black tracking-widest uppercase">{{ $t('projects.viewDetails') }}</span>
+        </div>
+      </div>
+      <div class="absolute top-6 left-6">
         <span :class="[
-          'px-2 py-1 text-xs font-medium rounded-full',
+          'px-4 py-1.5 text-xs font-black rounded-xl uppercase tracking-widest shadow-lg',
           getStatusColor(project.status)
         ]">
           {{ getLocalizedStatus(project.status) }}
         </span>
       </div>
-      <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">{{ localizedTitle }}</h3>
-      <p class="text-gray-600 mb-4 line-clamp-3 flex-grow">{{ localizedDescription }}</p>
-      
-      <div class="space-y-2 text-sm text-gray-500 mb-4">
-        <div class="flex items-center">
-          <CalendarIcon class="h-4 w-4 mr-2" />
-          <span>{{ project.duration }}</span>
-        </div>
-        <div class="flex items-center">
-          <UserGroupIcon class="h-4 w-4 mr-2" />
-          <span>{{ project.team }}</span>
-        </div>
-      </div>
+    </div>
 
-      <div class="mt-auto pt-2 flex items-center justify-between">
-        <button class="text-primary-600 hover:text-primary-700 font-medium flex items-center">
-          <EyeIcon class="h-4 w-4 mr-1" />
-          {{ $t('projects.viewDetails') }}
-        </button>
+    <div class="p-10 flex flex-col flex-grow">
+      <div class="text-xs font-black text-blue-600 uppercase tracking-widest mb-4">{{ localizedCategory }}</div>
+      <h3 class="text-2xl font-black text-slate-800 mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">{{ localizedTitle }}</h3>
+      <p class="text-slate-500 font-medium mb-8 line-clamp-3 leading-relaxed">{{ localizedDescription }}</p>
+      
+      <div class="mt-auto space-y-4">
+        <div class="flex items-center gap-6 pt-6 border-t border-slate-100">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+              <CalendarIcon class="h-4 w-4" />
+            </div>
+            <span class="text-sm font-bold text-slate-500">{{ project.duration }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+              <UserGroupIcon class="h-4 w-4" />
+            </div>
+            <span class="text-sm font-bold text-slate-500">{{ project.team }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.card-hover {
-  transition: all 0.3s ease;
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Ограничение текста */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

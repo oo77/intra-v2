@@ -76,30 +76,16 @@ const resetForm = () => {
   imagePreview.value = ''
 }
 
-const handleImageUpload = async (event) => {
+const selectedFile = ref(null)
+
+const handleImageUpload = (event) => {
   const file = event.target.files[0]
   if (!file) return
-
-  if (!isCloudinaryConfigured()) {
-    showNotification('warning', 'Cloudinary не настроен', 'Пожалуйста, настройте Cloudinary в файле src/utils/imageUpload.js')
-    return
-  }
-
-  try {
-    isSaving.value = true
-    const result = await uploadImageToCloudinary(file, {
-      folder: 'intra-v2/partners'
-    })
-    
-    imagePreview.value = result.optimizedUrl
-    formData.value.logo_url = result.optimizedUrl
-    
-    showNotification('success', 'Загружено!', `Логотип успешно загружен (${Math.round(result.size / 1024)} KB)`)
-  } catch (error) {
-    showNotification('error', 'Ошибка загрузки', error.message)
-  } finally {
-    isSaving.value = false
-  }
+  selectedFile.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => { imagePreview.value = e.target.result }
+  reader.readAsDataURL(file)
+  showNotification('info', 'Файл выбран', 'Логотип будет загружен при сохранении')
 }
 
 const savePartner = async () => {
@@ -107,25 +93,17 @@ const savePartner = async () => {
     showNotification('error', 'Ошибка', 'Название партнера обязательно!')
     return
   }
-
-  if (!formData.value.logo_url) {
+  if (!formData.value.logo_url && !selectedFile.value) {
     showNotification('error', 'Ошибка', 'Логотип обязателен!')
     return
   }
-
-  if (!formData.value.website_url) {
-    showNotification('error', 'Ошибка', 'Ссылка на сайт обязательна!')
-    return
-  }
-
   isSaving.value = true
-  
   try {
-    await partnersStore.savePartner(formData.value)
-    
-    showNotification('success', 'Успешно!', 'Партнер сохранен в базе данных')
+    await partnersStore.savePartner(formData.value, selectedFile.value)
+    showNotification('success', 'Успешно!', 'Список партнеров обновлен (JSON)')
     showModal.value = false
     resetForm()
+    selectedFile.value = null
   } catch (error) {
     showNotification('error', 'Ошибка сохранения', error.message)
   } finally {
@@ -141,7 +119,7 @@ const deletePartner = (id) => {
 const confirmDelete = async () => {
   try {
     await partnersStore.deletePartner(currentDeleteId.value)
-    showNotification('success', 'Удалено!', 'Партнер удален из базы данных')
+    showNotification('success', 'Удалено!', 'Партнер удален из JSON')
   } catch (error) {
     showNotification('error', 'Ошибка удаления', error.message)
   }
@@ -304,8 +282,9 @@ const closeModal = () => {
                 </label>
               </div>
 
+              <!-- Выбор файла -->
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Логотип *</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Логотип партнера</label>
                 <input
                   type="file"
                   accept="image/*"
@@ -314,15 +293,17 @@ const closeModal = () => {
                 />
               </div>
 
-              <div v-if="imagePreview" class="mb-4">
+              <!-- Предпросмотр -->
+              <div v-if="imagePreview || formData.logo_url" class="mb-4">
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Предпросмотр</label>
-                <div class="bg-gray-100 p-4 rounded-lg flex items-center justify-center h-32">
-                  <img :src="imagePreview" alt="Preview" class="max-h-full max-w-full object-contain" />
+                <div class="bg-gray-100 p-4 rounded-lg flex items-center justify-center h-32 border-2 border-dashed border-gray-300">
+                  <img :src="imagePreview || formData.logo_url" alt="Preview" class="max-h-full max-w-full object-contain" />
                 </div>
               </div>
 
+              <!-- URL логотипа -->
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">URL логотипа (альтернатива)</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Или укажите URL логотипа</label>
                 <input
                   v-model="formData.logo_url"
                   type="text"

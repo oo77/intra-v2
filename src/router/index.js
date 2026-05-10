@@ -8,6 +8,7 @@ import TeamAdmin from '@/views/TeamAdmin.vue'
 import ProjectsAdmin from '@/views/ProjectsAdmin.vue'
 import AboutGalleryAdmin from '@/views/AboutGalleryAdmin.vue'
 import PartnersAdmin from '@/views/PartnersAdmin.vue'
+import SettingsAdmin from '@/views/SettingsAdmin.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/admin/partners',
     name: 'PartnersAdmin',
     component: PartnersAdmin
+  },
+  {
+    path: '/admin/settings',
+    name: 'SettingsAdmin',
+    component: SettingsAdmin
   },
   // Catch-all маршрут для несуществующих страниц - редирект на главную
   {

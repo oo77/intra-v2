@@ -6,7 +6,10 @@ import {
   ChartBarIcon,
   LightBulbIcon,
   CogIcon,
-  ArrowTrendingUpIcon
+  ArrowTrendingUpIcon,
+  ComputerDesktopIcon,
+  PresentationChartBarIcon,
+  DocumentTextIcon
 } from '@heroicons/vue/24/outline'
 
 // История НИЦ - основные вехи
@@ -19,9 +22,9 @@ export const historyMilestones = [
       uz: 'G\'oyaning paydo bo\'lishi'
     },
     description: {
-      en: 'Initiative to create a Research Center based on TashIIT under the leadership of Doctor of Technical Sciences, Professor D.I. Ilesaliev',
-      ru: 'Инициатива создания НИЦ на базе ТашИИТ под руководством д.т.н., профессора Д.И. Илесалиева',
-      uz: 'D.t.n., professor D.I. Ilesaliev rahbarligida ToshIIT bazasida NITs yaratish tashabbusi'
+      en: 'Initiative to create a Research Institute based on TashIIT under the leadership of Doctor of Technical Sciences, Professor D.I. Ilesaliev',
+      ru: 'Инициатива создания НИИ на базе ТашИИТ под руководством д.т.н., профессора Д.И. Илесалиева',
+      uz: 'D.t.n., professor D.I. Ilesaliev rahbarligida ToshIIT bazasida ilmiy-tadqiqot instituti yaratish tashabbusi'
     }
   },
   {
@@ -45,9 +48,9 @@ export const historyMilestones = [
       uz: 'Rasmiy tashkil etish'
     },
     description: {
-      en: 'Formalization of the Research Center as a structural subdivision at Tashkent State Transport University',
-      ru: 'Оформление НИЦ как структурного подразделения при Ташкентском государственном транспортном университете',
-      uz: 'Toshkent davlat transport universitetida NITsni tarkibiy bo\'linma sifatida rasmiylashtirish'
+      en: 'Formalization of the Research Institute as a structural subdivision at Tashkent State Transport University',
+      ru: 'Оформление НИИ как структурного подразделения при Ташкентском государственном транспортном университете',
+      uz: 'Toshkent davlat transport universitetida ilmiy-tadqiqot institutini tarkibiy bo\'linma sifatida rasmiylashtirish'
     }
   },
   {
@@ -154,60 +157,88 @@ export const achievements = [
 // Направления деятельности
 export const researchAreas = [
   {
-    icon: CogIcon,
+    icon: GlobeAltIcon,
     title: {
-      en: 'Management and Modeling of Transport Processes',
-      ru: 'Управление и моделирование транспортных процессов',
-      uz: 'Transport jarayonlarini boshqarish va modellashtirish'
+      en: 'Transport Logistics and International Corridors',
+      ru: 'Транспортная логистика и международные коридоры',
+      uz: 'Transport logistikasi va xalqaro koridorlar'
     },
     description: {
-      en: 'Development of methods for optimizing transport systems and transportation management processes',
-      ru: 'Разработка методов оптимизации транспортных систем и процессов управления перевозками',
-      uz: 'Transport tizimlarini va tashish boshqaruvi jarayonlarini optimallashtirish usullarini ishlab chiqish'
+      en: 'Research on transit potential, multimodal routes and development of international transport corridors.',
+      ru: 'Исследование транзитного потенциала, мультимодальных маршрутов и развития международных транспортных коридоров.',
+      uz: 'Tranzit salohiyati, multimodal yo‘nalishlar va xalqaro transport koridorlarini rivojlantirish bo‘yicha tadqiqotlar.'
     },
     color: 'from-blue-500 to-cyan-500'
   },
   {
+    icon: ComputerDesktopIcon,
+    title: {
+      en: 'Digitalization of the Transport Sector',
+      ru: 'Цифровизация транспортной отрасли',
+      uz: 'Transport sohasini raqamlashtirish'
+    },
+    description: {
+      en: 'Development of digital platforms, intelligent management systems and analytical solutions for transport and logistics.',
+      ru: 'Разработка цифровых платформ, интеллектуальных систем управления и аналитических решений для транспорта и логистики.',
+      uz: 'Transport va logistika uchun raqamli platformalar, intellektual boshqaruv tizimlari va analitik yechimlarni ishlab chiqish.'
+    },
+    color: 'from-indigo-500 to-blue-500'
+  },
+  {
+    icon: PresentationChartBarIcon,
+    title: {
+      en: 'Transport Analytics and Modeling',
+      ru: 'Транспортная аналитика и моделирование',
+      uz: 'Transport analitikasi va modellashtirish'
+    },
+    description: {
+      en: 'Cargo flow analysis, transport forecasting and modeling of transportation processes.',
+      ru: 'Анализ грузопотоков, прогнозирование перевозок и моделирование транспортных процессов.',
+      uz: 'Yuk oqimlarini tahlil qilish, tashuvlarni prognozlash va transport jarayonlarini modellashtirish.'
+    },
+    color: 'from-purple-500 to-pink-500'
+  },
+  {
     icon: LightBulbIcon,
     title: {
-      en: 'Digitalization of Logistics Systems',
-      ru: 'Цифровизация логистических систем',
-      uz: 'Logistika tizimlarini raqamlashtirish'
+      en: 'Sustainable Transport and Green Logistics',
+      ru: 'Устойчивый транспорт и зеленая логистика',
+      uz: 'Barqaror transport va yashil logistika'
     },
     description: {
-      en: 'Implementation of digital technologies in logistics processes and supply chain management',
-      ru: 'Внедрение цифровых технологий в логистические процессы и управление цепями поставок',
-      uz: 'Logistika jarayonlari va ta\'minot zanjiri boshqaruviga raqamli texnologiyalarni joriy etish'
+      en: 'Research on environmentally sustainable transport solutions and energy-efficient logistics.',
+      ru: 'Исследования в области экологически устойчивых транспортных решений и энергоэффективной логистики.',
+      uz: 'Ekologik barqaror transport yechimlari va energiya samarador logistika bo‘yicha tadqiqotlar.'
     },
-    color: 'from-green-500 to-emerald-500'
+    color: 'from-green-500 to-teal-500'
   },
   {
-    icon: ArrowTrendingUpIcon,
+    icon: DocumentTextIcon,
     title: {
-      en: 'Development of Regulatory and Methodological Materials',
-      ru: 'Разработка нормативных и методических материалов',
-      uz: 'Me\'yoriy va uslubiy materiallarni ishlab chiqish'
+      en: 'Regulatory and Sectoral Research',
+      ru: 'Нормативно-правовые и отраслевые исследования',
+      uz: 'Normativ-huquqiy va tarmoq tadqiqotlari'
     },
     description: {
-      en: 'Creation of standards, methodologies and recommendations for the transport industry',
-      ru: 'Создание стандартов, методик и рекомендаций для транспортной отрасли',
-      uz: 'Transport sohasi uchun standartlar, metodikalar va tavsiyalar yaratish'
-    },
-    color: 'from-purple-500 to-violet-500'
-  },
-  {
-    icon: ChartBarIcon,
-    title: {
-      en: 'Consulting, Expertise and Scientific Events',
-      ru: 'Консалтинг, экспертиза и научные мероприятия',
-      uz: 'Konsalting, ekspertiza va ilmiy tadbirlar'
-    },
-    description: {
-      en: 'Providing expert services and organizing scientific conferences and seminars',
-      ru: 'Предоставление экспертных услуг и организация научных конференций и семинаров',
-      uz: 'Ekspert xizmatlarini ko\'rsatish va ilmiy konferensiya va seminarlarni tashkil etish'
+      en: 'Development of recommendations, standards and scientific analytical materials for the transport sector.',
+      ru: 'Разработка рекомендаций, стандартов и научно-аналитических материалов для транспортной отрасли.',
+      uz: 'Transport sohasi uchun tavsiyalar, standartlar hamda ilmiy-tahliliy materiallarni ishlab chiqish.'
     },
     color: 'from-orange-500 to-red-500'
+  },
+  {
+    icon: AcademicCapIcon,
+    title: {
+      en: 'Scientific Capacity Building and International Cooperation',
+      ru: 'Подготовка научных кадров и международное сотрудничество',
+      uz: 'Ilmiy kadrlar tayyorlash va xalqaro hamkorlik'
+    },
+    description: {
+      en: 'Development of scientific schools, specialist training and implementation of international research projects.',
+      ru: 'Развитие научных школ, подготовка специалистов и реализация международных исследовательских проектов.',
+      uz: 'Ilmiy maktablarni rivojlantirish, mutaxassislar tayyorlash va xalqaro ilmiy loyihalarni amalga oshirish.'
+    },
+    color: 'from-teal-500 to-emerald-500'
   }
 ]
 
