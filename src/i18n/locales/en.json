@@ -122,13 +122,17 @@
     "title": "About Our Institute",
     "subtitle": "Research Institute “Innovative Transport” - a leading organization in the field of transport systems and logistics in Uzbekistan",
     "mission": {
-      "title": "Our Mission",
-      "description": "Building the scientific and innovative foundation for modern transport development and strengthening Uzbekistan’s logistics potential.",
-      "goalsTitle": "Our Goals:",
-      "goal1": "Development of scientific research in transport systems and logistics",
-      "goal2": "Implementation of innovative solutions in the industry",
-      "goal3": "Support for educational programs and professional development of specialists",
-      "goal4": "International cooperation in scientific and practical spheres"
+      "title": "Institute Mission",
+      "description": "Development of modern scientific, analytical and digital solutions for the sustainable development of Uzbekistan’s transport system.",
+      "goalsTitle": "Strategic Priorities",
+      "priorities": [
+        "Development of transport analytics and scientific research",
+        "Implementation of digital and innovative solutions",
+        "Development of international transport corridors",
+        "Improvement of logistics infrastructure efficiency",
+        "Training of highly qualified specialists",
+        "International scientific and industry cooperation"
+      ]
     },
     "history": {
       "title": "Development History",
@@ -282,7 +286,7 @@
     }
   },
   "projects": {
-    "title": "Our Projects",
+    "title": "Key Government and International Projects",
     "subtitle": "Explore our cutting-edge research projects that are shaping the future of transportation and logistics",
     "filters": {
       "all": "All",

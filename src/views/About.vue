@@ -149,11 +149,11 @@ const closeLightbox = () => {
             </p>
             <h3 class="text-2xl font-bold text-slate-800 mb-6">{{ $t('about.mission.goalsTitle') }}</h3>
             <div class="space-y-6">
-              <div v-for="i in 4" :key="i" class="flex items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 group hover:border-blue-200 transition-colors">
+              <div v-for="(priority, index) in $tm('about.mission.priorities')" :key="index" class="flex items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 group hover:border-blue-200 transition-colors">
                 <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mr-4 group-hover:bg-blue-500 transition-colors">
                   <div class="w-2 h-2 bg-blue-500 rounded-full group-hover:bg-white"></div>
                 </div>
-                <span class="text-slate-700 font-bold">{{ $t(`about.mission.goal${i}`) }}</span>
+                <span class="text-slate-700 font-bold">{{ priority }}</span>
               </div>
             </div>
           </div>

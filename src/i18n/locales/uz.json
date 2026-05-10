@@ -122,13 +122,17 @@
     "title": "Bizning institut haqida",
     "subtitle": "“Innovatsion transport” ilmiy-tadqiqot instituti - O'zbekistonda transport tizimlari va logistika sohasidagi yetakchi tashkilot",
     "mission": {
-      "title": "Bizning missiyamiz",
-      "description": "Zamonaviy transportni rivojlantirish va Oʻzbekiston logistika salohiyatini kuchaytirish uchun ilmiy hamda innovatsion asos yaratamiz.",
-      "goalsTitle": "Bizning maqsadlarimiz:",
-      "goal1": "Transport tizimlari va logistika sohasida ilmiy tadqiqotlarni rivojlantirish",
-      "goal2": "Sohaga innovatsion yechimlarni joriy etish",
-      "goal3": "Ta'lim dasturlari va mutaxassislarning malakasini oshirishni qo'llab-quvvatlash",
-      "goal4": "Ilmiy va amaliy sohalarda xalqaro hamkorlik"
+      "title": "Institut missiyasi",
+      "description": "Oʻzbekiston transport tizimining barqaror rivojlanishi uchun zamonaviy ilmiy, tahliliy va raqamli yechimlarni yaratish.",
+      "goalsTitle": "Strategik ustuvor yo‘nalishlar",
+      "priorities": [
+        "Transport analitikasi va ilmiy tadqiqotlarni rivojlantirish",
+        "Raqamli va innovatsion yechimlarni joriy etish",
+        "Xalqaro transport koridorlarini rivojlantirish",
+        "Logistika infratuzilmasi samaradorligini oshirish",
+        "Yuqori malakali mutaxassislarni tayyorlash",
+        "Xalqaro ilmiy va tarmoq hamkorligini rivojlantirish"
+      ]
     },
     "history": {
       "title": "Rivojlanish tarixi",
@@ -282,7 +286,7 @@
     }
   },
   "projects": {
-    "title": "Bizning loyihalarimiz",
+    "title": "Asosiy davlat va xalqaro loyihalar",
     "subtitle": "Transport va logistikaning kelajagini shakllantiruvchi ilg'or tadqiqot loyihalarimizni o'rganing",
     "filters": {
       "all": "Barchasi",
