@@ -286,8 +286,27 @@
     }
   },
   "projects": {
-    "title": "Asosiy davlat va xalqaro loyihalar",
-    "subtitle": "Transport va logistikaning kelajagini shakllantiruvchi ilg'or tadqiqot loyihalarimizni o'rganing",
+    "title": "Institutning ilmiy va ekspert yutuqlari",
+    "subtitle": "Oʻzbekistonning zamonaviy transport tizimi va logistika salohiyatini rivojlantirish uchun ilmiy tadqiqotlar, strategik tahlil va xalqaro loyihalar.",
+    "badge": "Ilmiy va ekspert yutuqlari",
+    "achievements": {
+      "research": {
+        "title": "Ilmiy-tahliliy tadqiqotlar",
+        "description": "Transport sohasi uchun monografiyalar, tahliliy materiallar, tarmoq tadqiqotlari va amaliy tavsiyalar tayyorlash."
+      },
+      "capacity": {
+        "title": "Ilmiy kadrlar tayyorlash",
+        "description": "Transport, logistika va raqamli texnologiyalar yo‘nalishida yuqori malakali DSc va PhD mutaxassislarini tayyorlash."
+      },
+      "analytics": {
+        "title": "Transport analitikasi va modellashtirish",
+        "description": "Yuk oqimlarini tahlil qilish, tashuvlarni prognozlash va transport-logistika jarayonlarini modellashtirish."
+      },
+      "international": {
+        "title": "Xalqaro loyihalar va hamkorlik",
+        "description": "Xorijiy tashkilotlar, universitetlar va tahliliy markazlar bilan qo‘shma tadqiqot hamda ekspert loyihalarini amalga oshirish."
+      }
+    },
     "filters": {
       "all": "Barchasi",
       "autonomousVehicles": "Avtonom transport vositalari",

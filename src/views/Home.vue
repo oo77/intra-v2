@@ -250,11 +250,11 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="flex flex-wrap justify-center -m-4">
           <div 
             v-for="(stat, index) in stats" 
             :key="stat.name"
-            class="group reveal-on-scroll"
+            class="p-4 w-full sm:w-1/2 lg:w-1/4 group reveal-on-scroll"
             :style="{ transitionDelay: `${index * 100}ms` }"
           >
             <div class="h-full bg-slate-50 p-10 rounded-[2.5rem] border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-3">

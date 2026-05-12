@@ -5,11 +5,40 @@ import ProjectCard from '@/components/ProjectCard.vue'
 import ProjectModal from '@/components/ProjectModal.vue'
 import { useProjectsStore } from '@/stores/projects'
 
+import {
+  DocumentTextIcon,
+  AcademicCapIcon,
+  PresentationChartBarIcon,
+  GlobeAltIcon
+} from '@heroicons/vue/24/outline'
+
 const { t, locale } = useI18n()
 const projectsStore = useProjectsStore()
 
 const selectedProject = ref(null)
-const activeFilter = ref('All')
+
+const achievements = [
+  {
+    key: 'research',
+    icon: DocumentTextIcon,
+    color: 'from-blue-500 to-cyan-500'
+  },
+  {
+    key: 'capacity',
+    icon: AcademicCapIcon,
+    color: 'from-indigo-500 to-blue-500'
+  },
+  {
+    key: 'analytics',
+    icon: PresentationChartBarIcon,
+    color: 'from-purple-500 to-pink-500'
+  },
+  {
+    key: 'international',
+    icon: GlobeAltIcon,
+    color: 'from-emerald-500 to-teal-500'
+  }
+]
 
 // Загрузка проектов из базы данных
 onMounted(async () => {
@@ -38,24 +67,8 @@ onMounted(async () => {
 // Получаем проекты из store
 const projects = computed(() => projectsStore.allProjects)
 
-const filters = computed(() => [
-  { key: 'All', label: t('projects.filters.all') },
-  { key: 'Autonomous Vehicles', label: t('projects.filters.autonomousVehicles') },
-  { key: 'Supply Chain', label: t('projects.filters.supplyChain') },
-  { key: 'Sustainability', label: t('projects.filters.sustainability') },
-  { key: 'Urban Planning', label: t('projects.filters.urbanPlanning') },
-  { key: 'Autonomous Systems', label: t('projects.filters.autonomousSystems') },
-  { key: 'Infrastructure', label: t('projects.filters.infrastructure') }
-])
-
 const filteredProjects = computed(() => {
-  if (activeFilter.value === 'All') {
-    return projects.value
-  }
-  return projects.value.filter(project => {
-    const categoryEn = project.category.en
-    return categoryEn === activeFilter.value
-  })
+  return projects.value
 })
 
 const openProjectModal = (project) => {
@@ -82,9 +95,11 @@ const closeProjectModal = () => {
         <div class="text-center reveal-on-scroll">
           <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-300 text-sm font-bold uppercase tracking-widest mb-8 shadow-xl">
             <span class="relative flex h-2 w-2 mr-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span></span>
-            {{ $t('projects.badge') || 'Our Research' }}
+            {{ $t('projects.badge') }}
           </div>
-          <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight leading-[1.05]">{{ $t('projects.title') }}</h1>
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight leading-[1.1] max-w-5xl mx-auto">
+            {{ $t('projects.title') }}
+          </h1>
           <p class="text-xl md:text-2xl text-blue-100/90 max-w-3xl mx-auto font-medium leading-relaxed">
             {{ $t('projects.subtitle') }}
           </p>
@@ -97,29 +112,33 @@ const closeProjectModal = () => {
       </div>
     </section>
 
-    <!-- Filter Section -->
-    <section class="sticky top-0 z-30 py-6 bg-white/90 backdrop-blur-xl border-b border-slate-100 shadow-sm">
+    <section class="py-24 bg-white relative z-20 -mt-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-wrap justify-center gap-4">
-          <button
-            v-for="filter in filters"
-            :key="filter.key"
-            @click="activeFilter = filter.key"
-            :class="[
-              'px-6 py-3 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105',
-              activeFilter === filter.key
-                ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/30'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-            ]"
+        <div class="flex flex-wrap justify-center -m-4">
+          <div 
+            v-for="(item, index) in achievements" 
+            :key="item.key"
+            class="p-4 w-full sm:w-1/2 lg:w-1/4 group reveal-on-scroll"
+            :style="{ transitionDelay: `${index * 100}ms` }"
           >
-            {{ filter.label }}
-          </button>
+            <div class="h-full p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2">
+              <div :class="['w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br shadow-lg transform group-hover:rotate-6 transition-transform duration-500', item.color]">
+                <component :is="item.icon" class="h-7 w-7 text-white" />
+              </div>
+              <h3 class="text-lg font-black text-slate-900 mb-3 leading-snug group-hover:text-blue-600 transition-colors">
+                {{ $t(`projects.achievements.${item.key}.title`) }}
+              </h3>
+              <p class="text-sm text-slate-500 font-bold leading-relaxed">
+                {{ $t(`projects.achievements.${item.key}.description`) }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Projects Grid -->
-    <section class="py-24 bg-white min-h-screen">
+    <section class="py-24 bg-slate-50 min-h-screen">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div v-if="filteredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           <div 
@@ -138,7 +157,7 @@ const closeProjectModal = () => {
         <div v-else class="text-center py-40 reveal-on-scroll">
           <div class="text-8xl mb-8">🔍</div>
           <h3 class="text-2xl font-black text-slate-800 mb-4">Ничего не найдено</h3>
-          <p class="text-slate-500 font-medium">Попробуйте изменить фильтры</p>
+          <p class="text-slate-500 font-medium">Проекты скоро появятся</p>
         </div>
       </div>
     </section>

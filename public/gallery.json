@@ -1,92 +1,82 @@
 [
   {
-    "id": 4,
-    "url": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "id": 1,
+    "url": "/projects-images/2F3A0650.jpg",
     "row_num": 1,
     "alt": {
-      "ru": "Технологии 1",
-      "en": "Technologies 1",
-      "uz": "Texnologiyalar 1"
+      "ru": "Научная деятельность института",
+      "en": "Institute research activity",
+      "uz": "Institut ilmiy faoliyati"
+    }
+  },
+  {
+    "id": 2,
+    "url": "/projects-images/3B6A0269.jpg",
+    "row_num": 1,
+    "alt": {
+      "ru": "Исследовательская работа",
+      "en": "Research work",
+      "uz": "Tadqiqot ishi"
+    }
+  },
+  {
+    "id": 3,
+    "url": "/projects-images/3B6A0280.jpg",
+    "row_num": 1,
+    "alt": {
+      "ru": "Лабораторные исследования",
+      "en": "Laboratory research",
+      "uz": "Laboratoriya tadqiqotlari"
+    }
+  },
+  {
+    "id": 4,
+    "url": "/projects-images/3B6A0834.jpg",
+    "row_num": 1,
+    "alt": {
+      "ru": "Экспертная деятельность",
+      "en": "Expert activity",
+      "uz": "Ekspert faoliyati"
     }
   },
   {
     "id": 5,
-    "url": "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 1,
+    "url": "/projects-images/3B6A2058.jpg",
+    "row_num": 2,
     "alt": {
-      "ru": "Оборудование 1",
-      "en": "Equipment 1",
-      "uz": "Jihozlar 1"
+      "ru": "Инновационные разработки",
+      "en": "Innovative developments",
+      "uz": "Innovatsion ishlanmalar"
     }
   },
   {
     "id": 6,
-    "url": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 1,
+    "url": "/projects-images/3B6A2086.jpg",
+    "row_num": 2,
     "alt": {
-      "ru": "Конференция 1",
-      "en": "Conference 1",
-      "uz": "Konferensiya 1"
+      "ru": "Транспортные исследования",
+      "en": "Transport research",
+      "uz": "Transport tadqiqotlari"
     }
   },
   {
     "id": 7,
-    "url": "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "url": "/projects-images/3B6A2167.jpg",
     "row_num": 2,
     "alt": {
-      "ru": "Презентация 2",
-      "en": "Presentation 2",
-      "uz": "Taqdimot 2"
+      "ru": "Научные конференции",
+      "en": "Scientific conferences",
+      "uz": "Ilmiy konferentsiyalar"
     }
   },
   {
     "id": 8,
-    "url": "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "url": "/projects-images/3B6A2240.jpg",
     "row_num": 2,
     "alt": {
-      "ru": "Анализ данных 2",
-      "en": "Data analysis 2",
-      "uz": "Ma'lumotlar tahlili 2"
-    }
-  },
-  {
-    "id": 9,
-    "url": "https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 2,
-    "alt": {
-      "ru": "Совещание 2",
-      "en": "Meeting 2",
-      "uz": "Yig'ilish 2"
-    }
-  },
-  {
-    "id": 10,
-    "url": "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 2,
-    "alt": {
-      "ru": "Эксперимент 2",
-      "en": "Experiment 2",
-      "uz": "Tajriba 2"
-    }
-  },
-  {
-    "id": 11,
-    "url": "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 2,
-    "alt": {
-      "ru": "Разработка 2",
-      "en": "Development 2",
-      "uz": "Ishlab chiqish 2"
-    }
-  },
-  {
-    "id": 12,
-    "url": "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
-    "row_num": 2,
-    "alt": {
-      "ru": "Инновации 2",
-      "en": "Innovations 2",
-      "uz": "Innovatsiyalar 2"
+      "ru": "Проектная деятельность",
+      "en": "Project activities",
+      "uz": "Loyiha faoliyati"
     }
   }
 ]

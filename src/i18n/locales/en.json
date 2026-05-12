@@ -286,8 +286,27 @@
     }
   },
   "projects": {
-    "title": "Key Government and International Projects",
-    "subtitle": "Explore our cutting-edge research projects that are shaping the future of transportation and logistics",
+    "title": "Scientific and Expert Achievements of the Institute",
+    "subtitle": "Scientific research, strategic analytics and international projects for the development of Uzbekistan’s modern transport system and logistics potential.",
+    "badge": "Scientific and Expert Achievements",
+    "achievements": {
+      "research": {
+        "title": "Scientific and Analytical Research",
+        "description": "Preparation of monographs, analytical materials, sectoral studies and practical recommendations for the transport industry."
+      },
+      "capacity": {
+        "title": "Scientific Capacity Building",
+        "description": "Training highly qualified DSc and PhD specialists in transport, logistics and digital technologies."
+      },
+      "analytics": {
+        "title": "Transport Analytics and Modeling",
+        "description": "Cargo flow analysis, transport forecasting and modeling of transport and logistics processes."
+      },
+      "international": {
+        "title": "International Projects and Cooperation",
+        "description": "Implementation of joint research and expert initiatives with foreign organizations, universities and analytical centers."
+      }
+    },
     "filters": {
       "all": "All",
       "autonomousVehicles": "Autonomous Vehicles",
